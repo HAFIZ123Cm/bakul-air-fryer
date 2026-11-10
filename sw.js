@@ -1,5 +1,5 @@
 // Offline support: app files are cached; the page tries the network first so updates arrive.
-const CACHE = "bakul-v1";
+const CACHE = "bakul-v2";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
