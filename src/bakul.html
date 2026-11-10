@@ -2,260 +2,349 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Susun atur: tajuk ringkas + suis tema, bar tab melekat (makanan | maklumat), satu paparan pada satu masa.
-   Dua tema yang pengguna boleh tukar: Pagi (kecerunan biru-putih) dan Malam (kecerunan merah gelap-hitam). */
+/* Susun atur: app telefon. Kepala ringkas, satu lajur kandungan, dok terapung di bawah (Menu · Kalendar · Belanja · Panduan).
+   Tanda pengenalan: dail masa bulat pada setiap resepi (biru/merah = air fryer, jingga = dapur induksi).
+   Dua tema boleh tukar: Pagi (biru ke putih) dan Malam (merah gelap ke hitam). */
 :root{
   color-scheme:light;
-  --grad:linear-gradient(165deg,#CFE3FF 0%,#EEF5FF 32%,#FFFFFF 60%,#E2EEFF 100%);
-  --bg:#F2F7FF; --bar:rgba(242,247,255,.86); --surface:rgba(255,255,255,.86); --surface2:#EAF2FF; --ink:#0B1B33; --muted:#53647E; --line:#D3E0F2;
-  --blue:#1F6FEB; --blue-hi:#1A4FC4; --blue-btn:#1F6FEB; --blue-tint:#E1ECFF;
-  --cyan:#0E6E8C; --cyan-tint:#DDF2F8;
-  --green:#157A3B; --green-tint:#DCF4E4;
-  --warn:#C2410C; --warn-tint:#FFE9DE;
-  --lcd:#0B1B33; --lcd-text:#8CC8FF; --lcd-border:#0B1B33; --lcd-glow:rgba(140,200,255,.45);
-  --glow:rgba(31,111,235,.22); --shadow:0 1px 2px rgba(11,27,51,.06),0 6px 18px rgba(31,111,235,.07);
-  --title:linear-gradient(100deg,#0B1B33 10%,#1F6FEB 90%);
-  --scrim:rgba(11,27,51,.45);
-  --f-ayam:#E8C4AE; --s-ayam:#B98C74; --f-daging:#A8483F; --s-daging:#6E2A24;
+  --grad:linear-gradient(180deg,#B7D3FF 0%,#DDEBFF 22%,#F6FAFF 52%,#FFFFFF 100%);
+  --bg:#F6FAFF; --ink:#0A1A33; --muted:#586A8C; --line:#D9E5F7;
+  --card:#FFFFFF; --card2:#EDF3FF; --sheet:#FFFFFF; --dock:rgba(255,255,255,.84);
+  --acc:#1B5FE3; --acc-ink:#1447B8; --acc-soft:#E2ECFF; --on-acc:#FFFFFF;
+  --heat:#C96A04; --heat-soft:#FFF0D9;
+  --good:#12804A; --good-soft:#DCF4E6; --warn:#B4360B; --warn-soft:#FFE8DD;
+  --hero:linear-gradient(135deg,#1650C9 0%,#2F74F0 50%,#7FB2FF 100%); --hero-ink:#FFFFFF; --hero-soft:rgba(255,255,255,.2);
+  --shadow:0 1px 2px rgba(10,26,51,.05),0 8px 24px rgba(27,95,227,.09);
+  --scrim:rgba(10,26,51,.45);
+  --f-ayam:#F0CDA8; --s-ayam:#C79A6B; --f-daging:#A8483F; --s-daging:#6E2A24;
   --f-kentang:#D9B868; --s-kentang:#9C7D30; --f-roti:#EAD3A2; --s-roti:#B07E3C;
-  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
-  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --f-display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Consolas,monospace;
 }
 :root[data-skin="malam"]{
   color-scheme:dark;
-  --grad:linear-gradient(165deg,#3B070C 0%,#1C0306 30%,#090102 62%,#000000 100%);
-  --bg:#0A0203; --bar:rgba(14,3,5,.88); --surface:rgba(26,7,10,.82); --surface2:#250A0E; --ink:#F7ECEC; --muted:#BC9FA2; --line:#3C151A;
-  --blue:#E5484D; --blue-hi:#FF9A9D; --blue-btn:#B4232A; --blue-tint:#33090E;
-  --cyan:#F2B66D; --cyan-tint:#2E1A08;
-  --green:#7AD9A0; --green-tint:#0F2418;
-  --warn:#FFC069; --warn-tint:#2E1E08;
-  --lcd:#000000; --lcd-text:#FF6B6B; --lcd-border:#4A1218; --lcd-glow:rgba(255,80,80,.5);
-  --glow:rgba(229,72,77,.3); --shadow:0 6px 22px rgba(0,0,0,.45);
-  --title:linear-gradient(100deg,#FFE3E3 10%,#E5484D 90%);
+  --grad:linear-gradient(180deg,#4E0B12 0%,#26060B 24%,#0D0203 56%,#000000 100%);
+  --bg:#0B0203; --ink:#FBEFEF; --muted:#C6A6A9; --line:rgba(255,255,255,.1);
+  --card:rgba(255,255,255,.05); --card2:rgba(255,255,255,.09); --sheet:#1A070A; --dock:rgba(26,6,9,.86);
+  --acc:#FF5A5F; --acc-ink:#FF9093; --acc-soft:rgba(255,90,95,.16); --on-acc:#1A0204;
+  --heat:#FFB347; --heat-soft:rgba(255,179,71,.15);
+  --good:#6EDB9E; --good-soft:rgba(110,219,158,.14); --warn:#FFC069; --warn-soft:rgba(255,192,105,.13);
+  --hero:linear-gradient(135deg,#6A0C14 0%,#A81A25 52%,#F0474D 100%); --hero-ink:#FFFFFF; --hero-soft:rgba(0,0,0,.25);
+  --shadow:0 10px 30px rgba(0,0,0,.45);
   --scrim:rgba(0,0,0,.8);
 }
 *{box-sizing:border-box}
 html{background:var(--bg)}
-body{background:var(--grad);background-color:var(--bg);background-attachment:fixed;min-height:100vh;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;transition:color .3s}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bar)}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+body{background:var(--grad);background-color:var(--bg);background-attachment:fixed;min-height:100vh;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
 button,select,input{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button{cursor:pointer}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;text-wrap:balance}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:.9rem}
 
-.head{padding-block:22px 14px;display:flex;flex-direction:column;gap:6px}
-.toprow{display:flex;align-items:flex-start;gap:12px}
-h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:900;font-stretch:125%;line-height:1;letter-spacing:-.02em;background:var(--title);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:2px}
-.lead{color:var(--muted);margin:0;max-width:60ch}
-.skin{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);cursor:pointer}
-.skin span{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:999px;font-weight:700;font-size:.85rem;color:var(--muted);transition:background .25s,color .25s}
-.skin svg{width:16px;height:16px;fill:currentColor}
-:root:not([data-skin="malam"]) .skin .s-pagi,:root[data-skin="malam"] .skin .s-malam{background:var(--blue-btn);color:#fff}
+/* kepala */
+.appbar{display:flex;align-items:center;gap:12px;padding-block:18px 10px}
+.brand{display:flex;align-items:baseline;gap:8px;min-width:0}
+.brand h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.brand h1 i{font-style:normal;color:var(--acc)}
+.brand span{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.skin{margin-left:auto;flex:none;display:inline-flex;padding:3px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.skin span{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-weight:700;font-size:.8rem;color:var(--muted)}
+.skin svg{width:15px;height:15px;fill:currentColor}
+:root:not([data-skin="malam"]) .skin .s-pagi,:root[data-skin="malam"] .skin .s-malam{background:var(--acc);color:var(--on-acc)}
 
-/* tab bar */
-.tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bar);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap;font-weight:700;font-size:.92rem}
-.tab[aria-selected="true"]{background:var(--blue-btn);border-color:var(--blue-btn);color:#fff}
-.tab .n{font-family:var(--f-mono);font-size:.75rem;opacity:.7;margin-left:5px}
-.tabsep{flex:none;width:1px;background:var(--line);margin:4px 4px}
-.tab.info{background:transparent}
-.tab.info[aria-selected="true"]{background:var(--blue-btn)}
+main{padding-block:6px calc(110px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
 
-main{padding-block:18px 80px}
-.view{display:flex;flex-direction:column;gap:16px}
+/* dok bawah */
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(430px,calc(100% - 24px));display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:6px;border-radius:24px;background:var(--dock);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow);z-index:15}
+.dock button{border:0;background:transparent;border-radius:18px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:700;color:var(--muted)}
+.dock svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.dock button[aria-current="page"]{background:var(--acc);color:var(--on-acc)}
 
-/* toolbar */
-.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg button{border:0;background:transparent;padding:7px 12px;cursor:pointer}
-.seg button + button{border-left:1px solid var(--line)}
-.seg button[aria-pressed="true"]{background:var(--surface2);color:var(--blue-hi);font-weight:700}
-select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 10px}
-.shuffle{margin-left:auto;border:0;border-radius:10px;padding:8px 14px;background:var(--blue-btn);color:#fff;font-weight:700;cursor:pointer}
-.count{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);margin:0}
+/* hari ini */
+.today{background:var(--hero);color:var(--hero-ink);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.today .lbl{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;opacity:.85;font-weight:700}
+.today h2{font-size:1.5rem;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.today .picks{display:flex;flex-wrap:wrap;gap:8px}
+.today .pick{border:0;background:var(--hero-soft);color:inherit;border-radius:999px;padding:7px 12px;font-weight:700;font-size:.88rem;text-align:left}
+.today .cta{align-self:flex-start;border:0;background:#fff;color:#0A1A33;border-radius:999px;padding:8px 14px;font-weight:700;font-size:.9rem}
+.today .next{font-size:.85rem;opacity:.9;margin:0}
 
-/* cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
-.card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s;min-width:0;box-shadow:var(--shadow)}
-.card:hover{border-color:var(--blue);transform:translateY(-2px)}
-.card:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.lcd{font-family:var(--f-mono);font-weight:700;font-size:.78rem;background:var(--lcd);color:var(--lcd-text);border:1px solid var(--lcd-border);padding:4px 8px;border-radius:6px;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 0 8px var(--lcd-glow)}
-.card .lcd{margin-left:auto}
-.chip{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.03em}
-.chip.m{background:var(--blue-tint);color:var(--blue-hi)}
-.chip.w{background:var(--cyan-tint);color:var(--cyan)}
-.chip.hp{background:var(--green-tint);color:var(--green)}
-.card-name{font-family:var(--f-display);font-weight:800;font-stretch:108%;font-size:1.15rem;line-height:1.15}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto}
-.stats span{display:flex;flex-direction:column}
-.stats b{font-family:var(--f-mono);font-size:1rem;font-variant-numeric:tabular-nums}
-.stats small{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
+/* suis alat masak */
+.method{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.method button{border:1.5px solid var(--line);background:var(--card);border-radius:18px;padding:12px;display:flex;align-items:center;gap:10px;text-align:left;min-width:0}
+.method svg{width:30px;height:30px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--muted)}
+.method b{display:block;font-family:var(--f-display);font-size:1.05rem;font-weight:700;line-height:1.1}
+.method small{color:var(--muted);font-size:.78rem}
+.method button[aria-pressed="true"]{border-color:var(--acc);background:var(--acc-soft)}
+.method button[aria-pressed="true"] svg{color:var(--acc)}
+.method button.in[aria-pressed="true"]{border-color:var(--heat);background:var(--heat-soft)}
+.method button.in[aria-pressed="true"] svg{color:var(--heat)}
 
-/* boxes */
-.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0;box-shadow:var(--shadow)}
-.box h2{font-size:1.2rem;font-weight:800;font-stretch:112%;margin-bottom:10px}
-.box h3{font-size:1rem;font-weight:800;font-stretch:110%;margin:14px 0 6px}
+/* kategori */
+.cats{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-block:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-weight:700;font-size:.88rem;white-space:nowrap}
+.cat .n{font-family:var(--f-mono);font-weight:400;font-size:.74rem;opacity:.65;margin-left:5px}
+.cat[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tools{display:flex;gap:8px;align-items:center}
+.search{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 12px}
+.search::placeholder{color:var(--muted)}
+select{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 8px;max-width:46%}
+:root[data-skin="malam"] select option{background:#1A070A;color:#FBEFEF}
+
+/* senarai resepi */
+.list{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:720px){.list{grid-template-columns:1fr 1fr}}
+.rc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 12px 10px 10px;box-shadow:var(--shadow);min-width:0}
+.rc:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.rc:hover{border-color:var(--acc)}
+.dial{position:relative;flex:none;width:56px;height:56px;display:grid;place-items:center;color:var(--acc)}
+.dial.in{color:var(--heat)}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.dial .tr{fill:none;stroke:var(--card2);stroke-width:5}
+.dial .ar{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round}
+.dial b{font-family:var(--f-mono);font-weight:500;font-size:1.05rem;line-height:1;color:var(--ink);display:block;text-align:center}
+.dial small{display:block;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center}
+.rc-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.rc-n{font-family:var(--f-display);font-weight:700;font-size:1.06rem;line-height:1.15}
+.rc-m{font-size:.8rem;color:var(--muted)}
+.rc-m .num{color:var(--ink)}
+.tag{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--good-soft);color:var(--good);white-space:nowrap}
+.chev{flex:none;width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.empty{border:1.5px dashed var(--line);border-radius:18px;padding:22px;text-align:center;color:var(--muted)}
+
+/* kotak */
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow);min-width:0}
+.box > h2{font-size:1.25rem;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+.box h3{font-size:1rem;font-weight:700;margin:14px 0 6px}
 .box p{margin:0 0 10px}
 .box ul,.box ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
-.box li::marker{color:var(--blue);font-weight:700}
-.sub{color:var(--muted);font-size:.9rem}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.warn{color:var(--warn);font-weight:700}
-.verdict{background:var(--blue-tint);border-radius:12px;padding:12px 14px;margin-bottom:12px}
-.verdict b{color:var(--blue-hi)}
+.box li::marker{color:var(--acc);font-weight:700}
+.page-h{font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+.btn{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:8px 12px;font-weight:600;font-size:.9rem}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--on-acc);font-weight:700}
+.btn.danger{color:var(--warn)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.verdict{background:var(--acc-soft);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.verdict b{color:var(--acc-ink)}
+.caution{background:var(--warn-soft);border-radius:14px;padding:12px 14px}
+.caution b{color:var(--warn)}
 .tablewrap{overflow-x:auto;margin:6px 0 12px}
-table{border-collapse:collapse;width:100%;min-width:420px;font-size:.92rem}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
-td.win{color:var(--green);font-weight:700}
-.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table{border-collapse:collapse;width:100%;min-width:400px;font-size:.9rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.win{color:var(--good);font-weight:700}
+details.acc{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+details.acc > summary{list-style:none;cursor:pointer;padding:16px;font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+details.acc > summary::-webkit-details-marker{display:none}
+details.acc > summary::after{content:"+";margin-left:auto;font-family:var(--f-mono);font-weight:400;font-size:1.3rem;color:var(--muted)}
+details.acc[open] > summary::after{content:"–"}
+details.acc > .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
+details.acc ul,details.acc ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+details.acc li::marker{color:var(--acc);font-weight:700}
+details.acc h3{font-size:1rem;font-weight:700;margin:4px 0 0}
+details.acc p{margin:0}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.level{background:var(--card2);border-radius:14px;padding:10px 12px;font-size:.88rem}
+.level b{display:block;font-family:var(--f-display);font-size:1rem}
+.level .num{color:var(--heat);font-size:.8rem}
 
-/* cutting diagrams */
-.cutgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.cut{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.cut h3{font-size:1.1rem;font-weight:800;font-stretch:110%;margin:0}
-.cut .ref{font-family:var(--f-mono);font-size:.8rem;color:var(--blue-hi)}
-.cut ol{margin:0;padding-left:1.2em;font-size:.92rem;display:flex;flex-direction:column;gap:3px}
-.cut ol li::marker{color:var(--blue);font-family:var(--f-mono);font-weight:700}
-.cut .used{font-size:.82rem;color:var(--muted)}
-.cut .used button{all:unset;cursor:pointer;color:var(--blue-hi);text-decoration:underline;text-underline-offset:2px}
-svg.cv{width:100%;height:auto;max-width:100%;display:block;background:var(--surface2);border-radius:10px}
+/* kalendar */
+.calhead{display:flex;align-items:center;gap:8px}
+.calhead h2{font-size:1.35rem;font-weight:800;flex:1;letter-spacing:-.01em}
+.icon-btn{border:1px solid var(--line);background:var(--card);border-radius:12px;width:40px;height:40px;display:grid;place-items:center}
+.icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;padding:4px 0;font-weight:700}
+.day{all:unset;box-sizing:border-box;cursor:pointer;aspect-ratio:1/1.08;border-radius:12px;background:var(--card);border:1px solid var(--line);padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.day:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.day .d{font-family:var(--f-mono);font-size:.9rem;line-height:1.2}
+.day .dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center}
+.day .dot{width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.day .dot.in{background:var(--heat)}
+.day .more{font-family:var(--f-mono);font-size:.6rem;color:var(--muted);line-height:1}
+.day.out{visibility:hidden}
+.day.past{opacity:.55}
+.day.today .d{background:var(--ink);color:var(--bg);border-radius:999px;padding:0 6px}
+.day.sel{border-color:var(--acc);background:var(--acc-soft);border-width:2px}
+.legend{display:flex;gap:14px;font-size:.78rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc);margin-right:5px}
+.legend i.in{background:var(--heat)}
+.dayrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.dayrow:last-child{border-bottom:0}
+.dayrow .nm{flex:1;min-width:0;all:unset;cursor:pointer;flex:1;font-weight:600}
+.dayrow .nm small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
+.mdot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--acc)}
+.mdot.in{background:var(--heat)}
+.rm{border:1px solid var(--line);background:transparent;border-radius:10px;width:34px;height:34px;color:var(--muted)}
+.needs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.need-t{background:var(--card2);border-radius:14px;padding:10px 12px}
+.need-t small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.need-t b{font-family:var(--f-mono);font-weight:500;font-size:1.1rem}
+
+/* belanja */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:12px}
+.tile{background:var(--card2);border-radius:16px;padding:12px}
+.tile small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tile b{font-family:var(--f-mono);font-weight:500;font-size:1.3rem}
+.tile.big{background:var(--hero);color:var(--hero-ink)}
+.tile.big small{color:inherit;opacity:.85}
+.tile.big b{font-size:1.8rem}
+.bar{display:grid;grid-template-columns:96px 1fr 76px;gap:10px;align-items:center;font-size:.88rem;margin-top:6px}
+.bar .track{background:var(--card2);border-radius:6px;height:12px;overflow:hidden}
+.bar .fill{display:block;height:100%;background:var(--acc);border-radius:6px}
+.bar .fill.out{background:var(--muted)}
+.inline-in{width:72px;border:1px solid var(--line);background:var(--card2);border-radius:8px;padding:4px 8px;font-family:var(--f-mono)}
+.shop h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc-ink);margin:14px 0 4px;font-family:var(--f-body);font-weight:700}
+.shop ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+.shop li{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.shop li label{display:flex;gap:10px;align-items:baseline;flex:1;min-width:0;cursor:pointer}
+.shop li input{accent-color:var(--acc);transform:translateY(2px)}
+.shop li .nm{flex:1;min-width:0}
+.shop li .nm small{display:block;color:var(--muted);font-size:.78rem}
+.shop li .pr{font-family:var(--f-mono);white-space:nowrap;font-size:.9rem}
+.shop li.done .nm{text-decoration:line-through;color:var(--muted)}
+.shop li.no .pr{color:var(--warn)}
+.prow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.prow .pn{flex:1;min-width:0}
+.prow .pn small{display:block;color:var(--muted);font-size:.78rem}
+.step{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.step button{border:0;background:var(--card2);width:34px;height:34px;font-weight:700}
+.step span{min-width:34px;text-align:center;font-family:var(--f-mono)}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.price-grid label{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--muted)}
+.price-grid input{border:1px solid var(--line);background:var(--card2);border-radius:10px;padding:8px 10px;font-family:var(--f-mono);color:var(--ink)}
+label.tog{display:flex;gap:8px;align-items:center;cursor:pointer;margin:6px 0}
+label.tog input{accent-color:var(--acc)}
+
+/* lukisan potong */
+.cutgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cut{background:var(--card2);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.cut h4{font-size:1.02rem;font-weight:700}
+.cut .ref{font-family:var(--f-mono);font-size:.78rem;color:var(--acc-ink)}
+.cut ol{font-size:.9rem;gap:3px!important}
+.cut .used{font-size:.8rem;color:var(--muted)}
+.cut .used button{all:unset;cursor:pointer;color:var(--acc-ink);text-decoration:underline;text-underline-offset:2px}
+svg.cv{width:100%;height:auto;display:block;background:var(--card);border-radius:12px;border:1px solid var(--line)}
 svg.cv text{fill:var(--muted);font:600 10px var(--f-body)}
-svg.cv .stepn{fill:var(--blue-hi);font:700 10px var(--f-mono)}
+svg.cv .stepn{fill:var(--acc-ink);font:500 10px var(--f-mono)}
 svg.cv .ay{fill:var(--f-ayam);stroke:var(--s-ayam);stroke-width:1.5}
 svg.cv .dg{fill:var(--f-daging);stroke:var(--s-daging);stroke-width:1.5}
 svg.cv .kt{fill:var(--f-kentang);stroke:var(--s-kentang);stroke-width:1.5}
 svg.cv .rt{fill:var(--f-roti)}
 svg.cv .rtc{fill:var(--s-roti)}
-svg.cv .hole{fill:var(--surface2);stroke:var(--s-roti);stroke-width:1.5}
-svg.cv .grain{stroke:var(--s-daging);stroke-width:1.2;fill:none;opacity:.9}
-svg.cv .knife{stroke:var(--blue);stroke-width:2;stroke-dasharray:4 3;fill:none}
+svg.cv .hole{fill:var(--card2);stroke:var(--s-roti);stroke-width:1.5}
+svg.cv .grain{stroke:var(--s-daging);stroke-width:1.2;fill:none}
+svg.cv .knife{stroke:var(--acc);stroke-width:2;stroke-dasharray:4 3;fill:none}
 svg.cv .knife.thin{stroke-width:1.2;stroke-dasharray:3 2}
-svg.cv .arr{fill:var(--blue)}
-svg.cv .grater{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+svg.cv .arr{fill:var(--acc)}
+svg.cv .grater{fill:var(--card2);stroke:var(--muted);stroke-width:1.5}
 svg.cv .slot{stroke:var(--muted);stroke-width:2}
 svg.cv .shred{stroke:var(--f-kentang);stroke-width:2.5;fill:none;stroke-linecap:round}
-svg.cv .drop{fill:var(--blue-hi)}
-.sizes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.size{background:var(--surface2);border-radius:10px;padding:10px 12px}
-.size b{font-family:var(--f-mono);color:var(--blue-hi);display:block}
+svg.cv .drop{fill:var(--acc)}
+svg.cv .fold{stroke:var(--f-ayam);stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+svg.cv .stick{stroke:var(--s-roti);stroke-width:2.5;stroke-linecap:round}
+.sizes{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.size{background:var(--card2);border-radius:12px;padding:8px 10px;font-size:.85rem}
+.size b{font-family:var(--f-mono);font-weight:500;color:var(--acc-ink);display:block}
 
-/* cost */
-.plan{display:flex;flex-direction:column}
-.prow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
-.prow .pn{flex:1;min-width:0}
-.prow .pn small{display:block;color:var(--muted);font-size:.78rem}
-.step{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.step button{border:0;background:var(--surface2);width:34px;height:34px;cursor:pointer;font-weight:700;font-size:1.05rem}
-.step span{min-width:34px;text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-.addrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.addrow select{flex:1;min-width:200px}
-.btn{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:7px 12px;cursor:pointer}
-.btn.pri{background:var(--blue-btn);border-color:var(--blue-btn);color:#fff;font-weight:700}
-.total{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
-.tile{background:var(--surface2);border-radius:12px;padding:12px}
-.tile small{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.tile b{font-family:var(--f-mono);font-size:1.4rem;font-variant-numeric:tabular-nums}
-.tile.big{background:var(--blue-tint)}
-.tile.big b{color:var(--blue-hi);font-size:1.9rem}
-.cmp{display:flex;flex-direction:column;gap:8px;margin-top:6px}
-.bar{display:grid;grid-template-columns:110px 1fr 90px;gap:10px;align-items:center;font-size:.9rem}
-.bar .track{background:var(--surface2);border-radius:6px;height:14px;overflow:hidden}
-.bar .fill{height:100%;background:var(--blue);border-radius:6px}
-.bar .fill.out{background:var(--warn)}
-.inline-in{width:80px;border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:5px 8px;font-family:var(--f-mono)}
-.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:8px}
-.price-grid label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
-.price-grid input{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:8px 10px;font-family:var(--f-mono)}
-label.tog{display:flex;gap:8px;align-items:center;cursor:pointer;margin:8px 0}
-label.tog input{accent-color:var(--blue)}
-
-/* shop */
-.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-.shop h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue-hi);margin:0 0 6px;font-stretch:110%}
-.shop ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
-.shop li{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
-.shop li label{display:flex;gap:10px;align-items:baseline;flex:1;min-width:0;cursor:pointer}
-.shop li input{accent-color:var(--blue);transform:translateY(2px)}
-.shop li .nm{flex:1;min-width:0}
-.shop li .nm small{display:block;color:var(--muted);font-size:.78rem}
-.shop li .pr{font-family:var(--f-mono);white-space:nowrap}
-.shop li.done .nm{text-decoration:line-through;color:var(--muted)}
-.shop li.no .pr{color:var(--warn)}
-
-/* dialog */
-dialog{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--ink);border-radius:18px;width:min(660px,calc(100% - 24px));max-height:88dvh;overflow:auto}
+/* helaian */
+dialog{border:1px solid var(--line);padding:0;background:var(--sheet);color:var(--ink);border-radius:24px;width:min(640px,calc(100% - 24px));max-height:90dvh;overflow:auto}
 dialog::backdrop{background:var(--scrim)}
-.sheet{padding:20px;display:flex;flex-direction:column;gap:16px}
-.sheet-head{display:flex;gap:12px;align-items:flex-start}
-.sheet-head h3{font-size:1.6rem;font-weight:900;font-stretch:115%;line-height:1.05}
-.sheet-head p{margin:4px 0 0;color:var(--muted)}
-.x{margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);cursor:pointer;font-size:1.1rem;line-height:1}
-.sheet .stats{grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;padding:10px}
-.sheet h4{font-family:var(--f-display);font-stretch:110%;font-size:.95rem;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-hi)}
+.sheet{padding:18px;display:flex;flex-direction:column;gap:14px}
+.sh-head{display:flex;gap:12px;align-items:center}
+.sh-head .dial{width:64px;height:64px}
+.sh-head .dial b{font-size:1.2rem}
+.sh-head h3{font-size:1.5rem;font-weight:800;line-height:1.05;letter-spacing:-.01em}
+.sh-head p{margin:3px 0 0;color:var(--muted);font-size:.88rem}
+.sh-head > div{flex:1;min-width:0}
+.x{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card2);font-size:1rem;line-height:1;align-self:flex-start}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fact{background:var(--card2);border-radius:14px;padding:8px 10px}
+.fact b{display:block;font-family:var(--f-mono);font-weight:500;font-size:1rem}
+.fact small{font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.sheet h4{font-family:var(--f-body);font-size:.74rem;margin:0 0 6px;text-transform:uppercase;letter-spacing:.09em;color:var(--acc-ink);font-weight:700}
 .sheet ul,.sheet ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:6px}
-.sheet ol li::marker{font-family:var(--f-mono);font-weight:700;color:var(--blue)}
-.need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tip{background:var(--blue-tint);border-radius:12px;padding:12px 14px}
-.tip b{color:var(--blue-hi)}
-.alertbox{background:var(--warn-tint);border-radius:12px;padding:10px 14px;font-size:.9rem}
-.alertbox b{color:var(--warn)}
-.cutbox{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.timer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px}
-.timer .lcd{font-size:1.6rem;padding:6px 12px}
-.timer-msg{flex:1;min-width:140px;font-size:.9rem;color:var(--muted)}
+.sheet ol li::marker{font-family:var(--f-mono);color:var(--acc)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tip{background:var(--acc-soft);border-radius:14px;padding:12px 14px}
+.tip b{color:var(--acc-ink)}
+.cutbox{border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.cutbox .ref{font-family:var(--f-mono);font-size:.78rem;color:var(--acc-ink)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.big-btn{border:0;border-radius:16px;padding:14px;font-weight:700;font-size:1rem;background:var(--acc);color:var(--on-acc)}
+.big-btn.ghost{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+.planbox{border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.planbox input[type="date"]{border:1px solid var(--line);background:var(--card2);border-radius:10px;padding:7px 8px;color:var(--ink);min-width:0}
+.timer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:16px;padding:12px}
+.clock{font-family:var(--f-mono);font-weight:500;font-size:1.6rem;font-variant-numeric:tabular-nums;background:var(--card2);border-radius:12px;padding:4px 12px}
+.timer-msg{flex:1;min-width:130px;font-size:.86rem;color:var(--muted)}
 .timer-msg.alert{color:var(--warn);font-weight:700}
-.go{border:0;border-radius:10px;padding:10px 16px;background:var(--blue-btn);color:#fff;font-weight:700;cursor:pointer}
-.sheet-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.sheet-foot .sub{flex:1}
 
-.pill{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--lcd);color:var(--lcd-text);border:1px solid var(--blue);border-radius:999px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 28px var(--glow);z-index:20;max-width:calc(100% - 32px)}
-.pill button{border:0;background:transparent;color:inherit;cursor:pointer;font-family:var(--f-mono);font-weight:700;padding:4px}
-.pill .pname{font-family:var(--f-body);font-size:.8rem;color:#F2F2F2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
-.pill .pt{font-size:1rem;font-variant-numeric:tabular-nums}
-.pill .px{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1)}
-.pill.alert{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--surface2);border:1px solid var(--blue);padding:8px 14px;border-radius:10px;z-index:30;font-size:.9rem}
+/* mod masak */
+.cook{padding:18px;display:flex;flex-direction:column;gap:16px;min-height:min(70dvh,560px)}
+.cook-top{display:flex;align-items:center;gap:10px}
+.cook-top .ttl{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cook-prog{display:flex;gap:4px}
+.cook-prog i{flex:1;height:5px;border-radius:3px;background:var(--card2)}
+.cook-prog i.on{background:var(--acc)}
+.cook-n{font-family:var(--f-mono);font-size:.85rem;color:var(--acc-ink)}
+.cook-step{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,5.4vw,1.8rem);line-height:1.25;margin:0;flex:1}
+.cook-nav{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
 
-@media (max-width:480px){
-  h1{font-size:1.85rem}
+/* pemilih menu */
+.pick-list{display:flex;flex-direction:column}
+.pick-row{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+.pick-row:focus-visible{outline:3px solid var(--acc)}
+.pick-row .nm{flex:1;min-width:0;font-weight:600}
+.pick-row .nm small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.pick-row .plus{font-family:var(--f-mono);color:var(--acc-ink);font-size:1.2rem}
+.pick-row.added .plus{color:var(--good)}
+
+.pill{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);border-radius:999px;padding:7px 7px 7px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);z-index:20;max-width:calc(100% - 28px)}
+.pill button{border:0;background:transparent;color:inherit;padding:4px}
+.pill .pname{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}
+.pill .pt{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.pill .px{width:30px;height:30px;border-radius:50%;background:rgba(127,127,127,.3)}
+.pill.alert{background:var(--warn);color:#1A0204}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(148px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;z-index:40;font-size:.88rem;font-weight:600;white-space:nowrap}
+
+@media (max-width:560px){
+  .two{grid-template-columns:1fr}
+  .facts{grid-template-columns:repeat(2,1fr)}
   .skin .lbl{display:none}
-  .skin span{padding:8px 10px}
-}
-@media (max-width:620px){
-  .shuffle{margin-left:0}
-  .need{grid-template-columns:1fr}
-  .sheet .stats{grid-template-columns:repeat(2,1fr);row-gap:8px}
-  .cutgrid{grid-template-columns:1fr}
-  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:18px 18px 0 0;max-height:92dvh}
-  .sheet{padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
-  .bar{grid-template-columns:80px 1fr 80px}
+  .skin span{padding:7px 9px}
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:24px 24px 0 0;max-height:93dvh;border-bottom:0}
+  .sheet,.cook{padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+  .bar{grid-template-columns:80px 1fr 70px}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 
 <script>(function(){var s=null;try{s=localStorage.getItem('bakul-skin')}catch(e){}if(s!=='pagi'&&s!=='malam'){var h=new Date().getHours();s=(h>=7&&h<19)?'pagi':'malam'}document.documentElement.setAttribute('data-skin',s)})();</script>
-<div class="wrap head">
-  <div class="toprow">
-    <h1>Bakul Air Fryer.</h1>
-    <button type="button" class="skin" id="skin" aria-label="Tukar tema Pagi atau Malam">
-      <span class="s-pagi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="lbl">Pagi</b></span>
-      <span class="s-malam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg><b class="lbl">Malam</b></span>
-    </button>
-  </div>
-  <p class="lead">40 snek air fryer yang murah, sihat dan senang, daripada ayam, daging, kentang, roti dan telur.</p>
-</div>
-<nav class="tabbar" aria-label="Bahagian"><div class="wrap"><div class="tabs" id="tabs" role="tablist"></div></div></nav>
+<header class="wrap appbar">
+  <div class="brand"><h1>Bakul<i>.</i></h1><span>air fryer &amp; induksi</span></div>
+  <button type="button" class="skin" id="skin" aria-label="Tukar tema Pagi atau Malam">
+    <span class="s-pagi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="lbl">Pagi</b></span>
+    <span class="s-malam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg><b class="lbl">Malam</b></span>
+  </button>
+</header>
 <main class="wrap" id="main"></main>
 
-<dialog id="sheet" aria-labelledby="sheet-title"><div class="sheet" id="sheet-body"></div></dialog>
+<nav class="dock" id="dock" aria-label="Bahagian">
+  <button type="button" data-view="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M9 3c0 2 2 2 2 4M14 3c0 2 2 2 2 4"/><path d="M3 21h18"/></svg>Menu</button>
+  <button type="button" data-view="kalendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Kalendar</button>
+  <button type="button" data-view="belanja"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>Belanja</button>
+  <button type="button" data-view="panduan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 8h6M9 12h6"/></svg>Panduan</button>
+</nav>
+
+<dialog id="sheet" aria-label="Butiran"><div id="sheet-body"></div></dialog>
 <div class="pill" id="pill" hidden>
   <button type="button" class="pname" id="pill-open"></button>
   <span class="pt" id="pill-time">00:00</span>
@@ -263,43 +352,33 @@ dialog::backdrop{background:var(--scrim)}
 </div>
 <div class="toast" id="toast" hidden></div>
 <script>
+/* c = kulit ayam mentah (anggaran selepas minyaknya keluar), b = daging lembu, p = kentang, r = roti putih (keping), e = telur (biji) */
 const ING = {
-  c:{ms:'Ayam', sub:'dada / keema', p:.23, k:1.2},
+  c:{ms:'Kulit ayam', sub:'kulit ayam mentah', p:.13, k:2.4},
   b:{ms:'Daging', sub:'daging lembu', p:.21, k:1.7},
   p:{ms:'Kentang', sub:'kentang', p:.02, k:.77},
   r:{ms:'Roti', sub:'roti putih', p:2.3, k:66},
   e:{ms:'Telur', sub:'telur ayam', p:6.3, k:72}
 };
 const ORDER = ['c','b','p','r','e'];
-const DEFAULT_PRICES = {c:550, b:500, p:34, r:60, e:9};
+const DEFAULT_PRICES = {skinBudget:300, skinKg:3, b:500, p:34, r:60, e:9};
 const SLICES = 16;
-const PRICE_LABEL = {c:'Dada ayam, sekilo', b:'Daging lembu, sekilo (kedai daging)', p:'Kentang, sekilo', r:'Roti putih, sebuku (~16 keping)', e:'Telur, sebiji'};
-
-const TABS = [
-  {id:'semua', label:'Semua'},
-  {id:'ayam', label:'Ayam', k:'c'},
-  {id:'daging', label:'Daging', k:'b'},
-  {id:'kentang', label:'Kentang', k:'p'},
-  {id:'roti', label:'Roti', k:'r'},
-  {id:'telur', label:'Telur', k:'e'},
-  {sep:true},
-  {id:'potong', label:'Cara Potong', info:true},
-  {id:'peringatan', label:'Peringatan', info:true},
-  {id:'kos', label:'Kos Sebulan', info:true},
-  {id:'beli', label:'Senarai Beli', info:true},
-  {id:'tips', label:'Tips', info:true}
-];
+const CATS = [['all','Semua'],['k','Kulit Ayam'],['b','Daging'],['p','Kentang'],['r','Roti'],['e','Telur']];
+const HEAT = {P:'Api perlahan', S:'Api sederhana', K:'Api kuat'};
+const MONTHS = ['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'];
+const DAYS = ['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'];
+const DOW = ['Isn','Sel','Rab','Kha','Jum','Sab','Aha'];
 
 const SHOP = [
   {g:'Bahan utama', items:[
-    {id:'s-ayam', n:'Dada ayam', d:'Meat Window 400 g (diskaun) / Nandus 450 g', p:'₹189–259'},
-    {id:'s-keema', n:'Keema ayam', d:'Nandus 500 g. Untuk nugget, burger, begedil', p:'₹249'},
+    {id:'s-kulit', n:'Kulit ayam', d:'Kedai ayam, bukan Instamart. Bajet sebulan', p:'₹300', no:true},
     {id:'s-telur', n:'Telur 30 biji', d:'Fresh Eggs / Dr.Hen, lebih kurang ₹9 sebiji', p:'₹268'},
     {id:'s-roti', n:'Roti putih', d:'English Oven 350 g / Modern 400 g', p:'₹50–60'},
     {id:'s-kentang', n:'Kentang 1 kg', d:'3 kg lagi jimat: ₹99', p:'₹34'},
-    {id:'s-daging', n:'Daging lembu', d:'Tiada di Instamart. Beli di kedai daging', p:'~₹500/kg', no:true}
+    {id:'s-daging', n:'Daging lembu', d:'Kedai daging, bukan Instamart', p:'~₹500/kg', no:true}
   ]},
-  {g:'Barang dapur', items:[
+  {g:'Barang dapur (Instamart)', items:[
+    {id:'s-minyak', n:'Minyak masak 1 L', d:'Untuk dapur induksi. Harga anggaran, semak di Instamart', p:'~₹160'},
     {id:'s-kicap', n:'Kicap pekat', d:"Ching's Dark Soy 210 g", p:'₹49'},
     {id:'s-soscili', n:'Sos cili', d:'Surabhi Hot n Sweet 450 g', p:'₹49'},
     {id:'s-tomato', n:'Sos tomato', d:'Veeba 900 g', p:'₹88'},
@@ -323,8 +402,8 @@ const SHOP = [
   ]}
 ];
 
-/* barang dapur untuk kalkulator bulanan: harga satu pek, berapa pek sebulan (anggaran untuk snek sahaja) */
 const PANTRY = [
+  {id:'minyak', n:'Minyak masak 1 L', v:160, q:.5},
   {id:'kicap', n:'Kicap pekat 210 g', v:49, q:1},
   {id:'soscili', n:'Sos cili 450 g', v:49, q:1},
   {id:'tomato', n:'Sos tomato 900 g', v:88, q:.5},
@@ -332,7 +411,7 @@ const PANTRY = [
   {id:'kunyit', n:'Serbuk kunyit 100 g', v:26, q:.5},
   {id:'cili', n:'Serbuk cili 100 g', v:42, q:.5},
   {id:'lada', n:'Lada hitam 50 g', v:63, q:.5},
-  {id:'bawang', n:'Bawang besar 1 kg', v:72, q:.5},
+  {id:'bawang', n:'Bawang besar 1 kg', v:72, q:1},
   {id:'bputih', n:'Bawang putih 100 g', v:43, q:.5},
   {id:'cilihijau', n:'Cili hijau 100 g', v:14, q:1},
   {id:'lemon', n:'Lemon 200 g', v:40, q:1},
@@ -341,14 +420,14 @@ const PANTRY = [
   {id:'dadih', n:'Dadih 500 g', v:34, q:1}
 ];
 
-/* pelan contoh: 30 snek sebulan, lebih kurang satu sehari */
-const PLAN0 = {'telur-rebus':8, 'ayam-kunyit':6, 'wedges':4, 'kerepek-roti':4, 'roti-telur':4, 'begedil-ayam':2, 'nugget':2};
+/* giliran contoh untuk butang "Isi contoh": murah, cepat, bertukar-tukar antara air fryer dan induksi */
+const SAMPLE = ['telur-rebus','in-roti-telur','kulit-rangup','in-sup-kentang','wedges','in-telur-mata-kicap','kerepek-roti','in-dadar-kulit','kulit-kunyit','in-kentang-tumis','roti-telur','in-kopitiam','kentang-minyak-ayam','in-kulit-berlada'];
 
 /* ---------- lukisan cara potong ---------- */
 const vl = (x,y1,y2,thin) => `<line class="knife${thin?' thin':''}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"/>`;
 const hl = (y,x1,x2) => `<line class="knife" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/>`;
 const ln = (x1,y1,x2,y2) => `<line class="knife" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-const BREAST = '<path class="ay" d="M8 60 C8 34 46 22 86 36 C98 42 97 80 82 88 C52 100 8 90 8 60Z"/>';
+const SKIN = '<path class="ay" d="M8 44 C14 26 34 30 48 26 C64 22 84 24 92 40 C98 54 90 66 94 80 C86 96 62 90 46 94 C30 98 10 94 8 78 C4 66 6 56 8 44Z"/>';
 const POTATO = (rx=40,ry=26) => `<ellipse class="kt" cx="50" cy="60" rx="${rx}" ry="${ry}"/>`;
 const BEEF = '<rect class="dg" x="10" y="32" width="80" height="56" rx="6"/>';
 const GRAIN = [42,52,62,72,82].map(y=>`<line class="grain" x1="16" y1="${y}" x2="84" y2="${y}"/>`).join('');
@@ -369,11 +448,11 @@ function grater(){ let s='<rect class="grater" x="28" y="18" width="44" height="
 const halfPotato = '<path class="kt" d="M8 78 A42 32 0 0 1 92 78 Z"/>';
 
 const CUTS = {
-  kiub:{t:'Kiub ayam', ref:'2 cm ≈ lebar ibu jari', steps:['Letak dada ayam rata atas papan.','Potong memanjang jadi jalur selebar ibu jari.','Pusing papan, potong melintang jadi kiub.'],
-    svg:()=>cutSvg([[BREAST,'Dada ayam'],[BREAST+vl(30,26,94)+vl(50,24,98)+vl(70,28,94)+hl(48,8,98)+hl(70,8,96),'Ikut garis biru'],[rects([10,40,70],[34,64],22,22,'ay'),'Kiub 2 cm']])},
-  jalur:{t:'Jalur ayam', ref:'1.5 cm ≈ lebar jari telunjuk', steps:['Letak dada ayam rata.','Potong memanjang, ikut arah panjang daging.','Setiap jalur selebar jari telunjuk.'],
-    svg:()=>cutSvg([[BREAST,'Dada ayam'],[BREAST+vl(26,28,94)+vl(42,25,97)+vl(58,26,97)+vl(74,30,93),'Potong memanjang'],[rects([10,28,46,64,82],[28],12,62,'ay'),'Jalur 1.5 cm']])},
-  urat:{t:'Hiris nipis melintang urat', ref:'±3 mm ≈ tebal 2 syiling ₹1', steps:['Cari garis halus pada daging. Itu arah urat.','Letak pisau bersilang dengan garis itu, bukan selari.','Hiris nipis. Daging separuh beku (30 minit dalam freezer) lebih senang dihiris.'],
+  kulit:{t:'Kulit ayam segi empat', ref:'4 cm ≈ lebar 2 jari', steps:['Basuh, kemudian lap kering betul-betul dengan tisu. Kulit basah tak akan rangup.','Buang ketulan lemak kuning yang tebal. Simpan untuk dibuat minyak.','Potong segi empat 4 cm. Kulit mengecut separuh bila masak.'],
+    svg:()=>cutSvg([[SKIN,'Kulit, lap kering'],[SKIN+vl(36,24,98)+vl(64,22,96)+hl(60,4,98),'Ikut garis'],[rects([8,38,68],[30,62],26,26,'ay'),'Keping 4 cm']])},
+  lipat:{t:'Jalur kulit untuk sate', ref:'Jalur 2 cm × panjang jari', steps:['Potong kulit jadi jalur panjang selebar ibu jari.','Lipat jalur berombak-ombak macam langsir.','Cucuk lidi menembusi semua lipatan. 3 hingga 4 jalur satu lidi.'],
+    svg:()=>cutSvg([[SKIN+vl(28,26,96)+vl(50,22,96)+vl(72,24,96),'Potong jalur'],['<path class="fold" d="M12 60 Q22 34 32 60 T52 60 T72 60 T92 60"/>','Lipat berombak'],['<path class="fold" d="M14 60 Q22 38 30 60 T46 60 T62 60 T78 60"/><line class="stick" x1="2" y1="60" x2="98" y2="60"/>','Cucuk lidi']])},
+  urat:{t:'Daging hiris melintang urat', ref:'±3 mm ≈ tebal 2 syiling ₹1', steps:['Cari garis halus pada daging. Itu arah urat.','Letak pisau bersilang dengan garis itu, bukan selari.','Hiris nipis. Daging separuh beku (30 minit dalam freezer) lebih senang dihiris.'],
     svg:()=>cutSvg([[BEEF+GRAIN,'Garis = urat'],[BEEF+GRAIN+[22,34,46,58,70,82].map(x=>vl(x,26,94)).join(''),'Pisau bersilang urat'],[rects([16,29,42,55,68,81],[32],7,56,'dg'),'Nipis ±3 mm']])},
   batang:{t:'Batang kentang (fries)', ref:'1 cm ≈ lebar jari kelingking', steps:['Potong sedikit satu sisi supaya kentang tak bergolek.','Hiris jadi keping setebal 1 cm.','Susun keping, potong lagi jadi batang 1 cm.'],
     svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+[30,40,50,60,70].map(x=>vl(x,36,84)).join(''),'Keping 1 cm'],[rects([10,22,34,46,58,70,82],[31],9,58,'kt'),'Batang 1 cm']])},
@@ -381,23 +460,26 @@ const CUTS = {
     svg:()=>cutSvg([[POTATO(42,24),'Kentang'],[POTATO(42,24)+hl(60,4,96),'Belah dua memanjang'],[halfPotato+ln(50,78,79.7,55.4)+ln(50,78,50,46)+ln(50,78,20.3,55.4),'4 baji setiap separuh']])},
   dadu:{t:'Dadu kentang', ref:'1.5 cm ≈ saiz dadu permainan', steps:['Hiris kentang jadi keping 1.5 cm.','Potong keping jadi batang 1.5 cm.','Pusing dan potong lagi jadi dadu.'],
     svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+vl(34,38,82)+vl(50,34,86)+vl(66,38,82)+hl(48,14,86)+hl(60,10,90)+hl(72,14,86),'Potong grid'],[rects([12,32,52,72],[34,54,74],15,15,'kt'),'Dadu 1.5 cm']])},
-  nipis:{t:'Hiris sangat nipis (kerepek)', ref:'1–2 mm ≈ tebal syiling ₹1', steps:['Guna pengupas sayur (peeler) atau pisau paling tajam.','Hiris senipis boleh, sama tebal semuanya.','Terus rendam dalam air sejuk.'],
-    svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+thinLines(),'Banyak hirisan nipis'],[[24,36,48,60,72].map(x=>`<ellipse class="kt" cx="${x}" cy="60" rx="14" ry="20"/>`).join(''),'1–2 mm']])},
+  nipis:{t:'Hiris kentang nipis', ref:'1–2 mm ≈ tebal syiling ₹1', steps:['Guna pengupas sayur (peeler) atau pisau paling tajam.','Hiris senipis boleh, sama tebal semuanya.','Untuk kerepek, terus rendam dalam air sejuk.'],
+    svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+thinLines(),'Banyak hirisan nipis'],[[24,36,48,60,72].map(x=>`<ellipse class="kt" cx="${x}" cy="60" rx="14" ry="20"/>`).join(''),'Nipis']])},
   lubang:{t:'Tebuk lubang roti', ref:'Guna mulut gelas atau penutup botol', steps:['Letak roti rata.','Tekan mulut gelas di tengah dan pusing sedikit.','Angkat bulatan. Telur masuk dalam lubang.'],
     svg:()=>cutSvg([[BREAD,'Sekeping roti'],[BREAD+'<circle class="knife" cx="50" cy="62" r="15"/>','Tekan dengan gelas'],[BREAD+'<circle class="hole" cx="50" cy="62" r="15"/><ellipse cx="50" cy="62" rx="13" ry="12" style="fill:#F4F1EA"/><circle cx="50" cy="62" r="6" style="fill:#F2B51C"/>','Pecahkan telur']])},
-  jalurroti:{t:'Potong roti kecil (kerepek roti)', ref:'2–3 cm ≈ dua ruas jari', steps:['Guna roti lama atau kulit roti.','Potong 3 garis memanjang dan 2 melintang.','Dapat 12 keping kecil.'],
+  jalurroti:{t:'Potong roti kecil', ref:'2–3 cm ≈ dua ruas jari', steps:['Guna roti lama atau kulit roti.','Potong 3 garis memanjang dan 2 melintang.','Dapat 12 keping kecil.'],
     svg:()=>cutSvg([[BREAD,'Roti lama'],[BREAD+vl(35,30,94)+vl(50,28,94)+vl(65,30,94)+hl(50,18,82)+hl(71,18,82),'Potong grid'],[rects([12,33,54,75],[34,55,76],16,16,'rt','style="stroke:var(--s-roti);stroke-width:2"'),'12 keping kecil']])},
-  parut:{t:'Parut dan perah (hash brown)', ref:'Guna lubang besar pada parut', steps:['Kupas kentang kalau nak.','Parut di bahagian lubang besar.','Bungkus dalam kain bersih, perah sampai air tak menitis lagi.'],
+  parut:{t:'Parut dan perah', ref:'Guna lubang besar pada parut', steps:['Kupas kentang kalau nak.','Parut di bahagian lubang besar.','Bungkus dalam kain bersih, perah sampai air tak menitis lagi.'],
     svg:()=>cutSvg([[POTATO(),'Kentang'],[grater(),'Parut lubang besar'],[shreds(),'Perah airnya']])}
 };
 const CUTMAP = {
-  'ayam-kunyit':['kiub'], 'masak-merah':['kiub'], 'sate':['kiub','Lebih nipis, setebal 2 syiling, supaya cepat masak.'], 'popcorn':['kiub','Lebih kecil sedikit, 1.5 cm.'],
-  'ayam-kicap':['jalur'], 'lemon-lada':['jalur'], 'lada-hitam':['urat'],
-  'fries':['batang'], 'kentang-kunyit':['batang'], 'loaded':['batang'], 'wedges':['baji'],
-  'balado':['dadu'], 'frittata':['dadu','Lebih kecil, 1 cm, supaya cepat masak.'], 'kerepek-kentang':['nipis'], 'hashbrown':['parut'],
-  'egg-hole':['lubang'], 'kerepek-roti':['jalurroti']
+  'kulit-rangup':['kulit'], 'kulit-kunyit':['kulit'], 'kulit-kicap':['kulit'], 'kulit-lada-garam':['kulit'], 'kulit-balado':['kulit'],
+  'popcorn-kulit':['kulit','Lebih kecil, 3 cm.'], 'sandwic-kulit':['kulit','Lebih besar, selebar roti.'], 'in-kulit-goreng':['kulit'], 'in-kulit-berlada':['kulit'], 'in-kulit-kicap':['kulit'],
+  'sate-kulit':['lipat'],
+  'lada-hitam':['urat'], 'in-daging-kunyit':['urat'], 'in-daging-kicap':['urat'],
+  'fries':['batang'], 'kentang-kunyit':['batang'], 'loaded':['batang'], 'in-kentang-goreng':['batang'], 'wedges':['baji'],
+  'balado':['dadu'], 'frittata':['dadu','Lebih kecil, 1 cm, supaya cepat masak.'], 'kentang-minyak-ayam':['dadu','Besar sedikit, 2 cm.'], 'in-keema-kentang':['dadu','Lebih kecil, 1 cm.'], 'in-sup-kentang':['dadu'], 'in-telur-bungkus':['dadu','Lebih kecil, 1 cm.'],
+  'kerepek-kentang':['nipis'], 'in-kentang-tumis':['nipis','Tebal sedikit, 3 mm (2 syiling). Tak perlu rendam.'], 'in-omelet-kentang':['nipis','Tebal sedikit, 3 mm. Tak perlu rendam.'],
+  'hashbrown':['parut'], 'egg-hole':['lubang'], 'kerepek-roti':['jalurroti']
 };
-const R = [
+const R_OLD = [
 {id:'ayam-kunyit',n:'Ayam Goreng Kunyit',en:'Ketulan ayam kunyit rangup',t:'m',q:{c:150},x:4,xk:45,xp:0,temp:200,min:11,prep:20,flip:6,
  pantry:['½ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','¼ sudu kecil garam','1 sudu kecil minyak','Daun kari (pilihan)'],
  steps:['Potong dada ayam kecil-kecil, lebih kurang 2 cm.','Gaul dengan kunyit, serbuk cili, garam dan minyak. Perap 15 minit. Lebih lama dalam peti sejuk lagi sedap.','Susun dalam bakul, satu lapis sahaja.','Air fry 200°C selama 11 minit. Goncang bakul pada minit ke-6.','Masukkan daun kari 2 minit terakhir. Daun kari jadi rangup.'],
@@ -559,309 +641,499 @@ const R = [
  steps:['Basuh kentang. Cucuk beberapa lubang dengan garpu. Sapu sedikit minyak dan garam pada kulit.','Air fry 200°C selama 40 minit. Pusingkan pada minit ke-20. Siap bila pisau mudah masuk.','Belah dalam di atas dan tekan tepinya supaya terbuka.','Pecahkan telur ke dalam bukaan. Air fry 180°C selama 8 minit.','Tabur garam, lada, serbuk cili dan letak dadih.'],
  tip:'Lambat, tapi hampir tiada kerja. Masukkan masa tengah belajar.'}
 ];
-/* ---------- state ---------- */
-const KEY = 'bakul-air-fryer-v3';
-let S = {tab:'semua', taste:'all', sort:'value', prices:Object.assign({},DEFAULT_PRICES), bought:{}, plan:Object.assign({},PLAN0), pantryQ:{}, incPantry:true, outPrice:60, outProt:6};
+/* Resepi lama (air fryer) yang dikekalkan, dengan kategori. Resepi dada ayam dibuang. */
+const OLD_CAT = {
+  'begedil':'b','burger':'b','lada-hitam':'b','meatball':'b','scotch':'b','pai-kentang':'b',
+  'loaded':'p','fries':'p','kentang-kunyit':'p','balado':'p','wedges':'p','smashed':'p','hashbrown':'p','kerepek-kentang':'p','jacket':'p',
+  'roti-john':'r','murtabak':'r','roti-telur':'r','puding-roti':'r','garlic-bread':'r','roti-keju':'r','kerepek-roti':'r',
+  'frittata':'e','egg-hole':'e','cucur-jagung':'e','telur-rebus':'e','telur-dadar':'e','sambal-telur':'e'
+};
+const TIP_FIX = {
+  'murtabak':'Tiada daging? Guna telur sahaja, tambah sebiji lagi.',
+  'pai-kentang':'Lenyek kentang masa masih panas supaya gebu.'
+};
+
+const NEW = [
+/* ===== AIR FRYER: kulit ayam ===== */
+{id:'kulit-rangup',m:'af',cat:'k',n:'Kulit Ayam Rangup',en:'Kerepek kulit ayam, tanpa minyak',t:'m',q:{c:120},x:1,xk:0,xp:0,temp:200,min:12,prep:8,flip:6,
+ pantry:['¼ sudu kecil garam','Secubit lada hitam','Tiada minyak. Kulit keluarkan minyaknya sendiri'],
+ steps:['Basuh kulit, lap kering betul-betul dengan tisu. Potong segi empat 4 cm.','Gaul dengan garam dan lada.','Susun satu lapis dalam bakul.','Air fry 200°C selama 12 minit. Goncang pada minit ke-6.','Tuang minyak yang terkumpul di bawah bakul ke dalam balang. Jangan buang, itu minyak masak percuma.','Biar 2 minit atas tisu. Kulit jadi lebih rangup bila sejuk sedikit.'],
+ tip:'Kulit mengecut separuh. 120 g mentah jadi lebih kurang segenggam kerepek.'},
+{id:'kulit-kunyit',m:'af',cat:'k',n:'Kulit Ayam Kunyit',en:'Rangup berempah kunyit dan daun kari',t:'m',q:{c:120},x:3,xk:0,xp:0,temp:200,min:12,prep:15,flip:6,
+ pantry:['½ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','¼ sudu kecil garam','Daun kari'],
+ steps:['Lap kulit sampai kering, potong 4 cm.','Gaul dengan kunyit, serbuk cili dan garam. Perap 10 minit.','Air fry 200°C selama 12 minit. Goncang pada minit ke-6.','Masukkan daun kari 2 minit terakhir.','Toskan atas tisu.'],
+ tip:'Makan dengan timun dan perahan lemon untuk potong rasa berminyak.'},
+{id:'kulit-kicap',m:'af',cat:'k',n:'Kulit Ayam Kicap Pedas',en:'Rangup disalut kicap, cili dan bawang putih',t:'m',q:{c:120},x:6,xk:25,xp:1,temp:200,min:12,prep:8,flip:6,
+ pantry:['1 sudu besar kicap pekat','1 sudu kecil gula','1 sudu kecil sos cili','1 ulas bawang putih, cincang','1 cili hijau, hiris'],
+ steps:['Lap kulit kering, potong 4 cm, tabur secubit garam.','Air fry 200°C selama 12 minit. Goncang pada minit ke-6.','Dalam mangkuk, kacau kicap, gula, sos cili, bawang putih dan cili hijau.','Masukkan kulit panas-panas dan gaul cepat. Makan terus masa masih rangup.'],
+ tip:'Gaul sos pada saat akhir. Kalau dibiar lama, kulit jadi lembik.'},
+{id:'sate-kulit',m:'af',cat:'k',n:'Sate Kulit Ayam',en:'Kulit dicucuk lidi, bakar manis berempah',t:'m',q:{c:120},x:8,xk:60,xp:2,temp:190,min:12,prep:25,flip:6,
+ pantry:['½ sudu kecil serbuk kunyit','1 sudu besar kicap pekat','1 sudu kecil gula','1 ulas bawang putih, parut','Lidi, rendam air dulu','Kuah (pilihan): 1 sudu besar peanut butter, 1 sudu besar sos cili, 3 sudu besar air panas'],
+ steps:['Potong kulit jadi jalur panjang selebar 2 cm.','Perap dengan kunyit, kicap, gula dan bawang putih selama 15 minit.','Lipat jalur berombak-ombak dan cucuk pada lidi, 3 hingga 4 jalur satu lidi.','Air fry 190°C selama 12 minit. Terbalikkan pada minit ke-6.','Makan dengan timun dan bawang. Cicah kuah kacang kalau ada.'],
+ tip:'Tiada lidi? Masak jalur itu terus dalam bakul. Rasa tetap sama.'},
+{id:'kulit-lada-garam',m:'af',cat:'k',n:'Kulit Ayam Lada Garam',en:'Rangup dengan bawang putih, cili dan lada',t:'w',q:{c:120},x:4,xk:10,xp:0,temp:200,min:12,prep:8,flip:6,
+ pantry:['½ sudu kecil lada hitam','¼ sudu kecil garam','2 ulas bawang putih, cincang','1 cili hijau, hiris','Daun ketumbar (pilihan)'],
+ steps:['Lap kulit kering, potong 4 cm, gaul garam.','Air fry 200°C selama 10 minit. Goncang pada minit ke-6.','Tabur bawang putih dan cili ke atas kulit. Air fry 2 minit lagi sampai bawang putih wangi.','Tabur lada hitam dan daun ketumbar.'],
+ tip:'Bawang putih cepat hangus. Masukkan pada 2 minit terakhir sahaja.'},
+{id:'popcorn-kulit',m:'af',cat:'k',n:'Popcorn Kulit Ayam',en:'Bersalut serbuk roti, rangup dua lapis',t:'w',q:{c:100,r:1,e:1},x:3,xk:0,xp:0,temp:200,min:12,prep:15,flip:6,
+ pantry:['Garam dan lada hitam','½ sudu kecil serbuk cili','Sos cili untuk cicah'],
+ steps:['Bakar roti 160°C selama 4 minit, hancurkan jadi serbuk. Campur garam, lada dan serbuk cili.','Potong kulit kecil, lebih kurang 3 cm.','Celup dalam telur yang dipukul, kemudian guling dalam serbuk roti.','Air fry 200°C selama 12 minit. Goncang pada minit ke-6. Tak perlu minyak.','Cicah sos cili.'],
+ tip:'Baki telur jangan buang. Goreng jadi telur dadar kecil.'},
+{id:'kulit-balado',m:'af',cat:'k',n:'Kulit Ayam Balado',en:'Kulit rangup dalam sambal merah',t:'m',q:{c:120},x:6,xk:45,xp:1,temp:200,min:12,prep:10,flip:6,
+ pantry:['1 sudu kecil serbuk cili','1 sudu besar sos tomato','½ biji bawang besar, hiris','1 sudu kecil gula, secubit garam','Perahan lemon'],
+ steps:['Lap kulit kering, potong 4 cm. Air fry 200°C selama 12 minit, goncang pada minit ke-6.','Ambil 1 sudu kecil minyak ayam dari bawah bakul. Campur dengan serbuk cili, sos tomato, bawang, gula, garam dan 1 sudu besar air dalam mangkuk keluli kecil.','Air fry sambal 180°C selama 4 minit.','Gaul kulit dengan sambal. Perah lemon.'],
+ tip:'Sambal guna minyak ayam sendiri, jadi tak perlu minyak masak langsung.'},
+/* air fryer: campuran dengan kulit */
+{id:'sandwic-kulit',m:'af',cat:'r',n:'Sandwic Kulit Rangup',en:'Kulit rangup, timun dan tomato dalam roti bakar',t:'w',q:{r:2,c:60},x:5,xk:15,xp:1,temp:200,min:10,prep:6,flip:5,
+ pantry:['Timun dan tomato, hiris','1 sudu besar dadih + sedikit sos cili','Garam dan lada'],
+ steps:['Lap kulit kering, potong keping besar selebar roti. Tabur garam dan lada.','Air fry 200°C selama 10 minit sampai rangup. Terbalikkan pada minit ke-5.','Bakar roti 180°C selama 2 minit.','Sapu dadih campur sos cili. Susun timun, tomato dan kulit rangup.'],
+ tip:'Kulit rangup beri rasa masin dan garing dalam sandwic, dengan kos yang sangat rendah.'},
+{id:'piza-kulit',m:'af',cat:'r',n:'Piza Roti Kulit Ayam',en:'Piza roti dengan serpihan kulit rangup',t:'w',q:{r:2,c:40},x:20,xk:70,xp:4,temp:180,min:5,prep:14,flip:null,
+ pantry:['1 sudu besar sos tomato + sedikit sos cili','¼ bawang besar dan ½ tomato, hiris','1 keping keju (pilihan)','Secubit serbuk cili'],
+ steps:['Air fry kulit yang dipotong kecil 200°C selama 10 minit sampai rangup.','Sapu sos tomato dan sos cili atas roti.','Tabur bawang, tomato dan kulit rangup. Koyak keju di atas.','Air fry 180°C selama 5 minit sampai roti rangup.'],
+ tip:'Guna baki kulit rangup semalam. Dalam balang bertutup, ia tahan 2 hari.'},
+{id:'kentang-minyak-ayam',m:'af',cat:'p',n:'Kentang Panggang Minyak Ayam',en:'Kentang dimasak dengan titisan minyak kulit ayam',t:'w',q:{p:200,c:50},x:2,xk:0,xp:0,temp:200,min:18,prep:6,flip:9,
+ pantry:['Garam dan lada hitam','1 ulas bawang putih, parut','Secubit serbuk cili (pilihan)'],
+ steps:['Potong kentang dadu 2 cm. Gaul dengan garam, lada dan bawang putih.','Masukkan kentang dalam bakul. Susun kulit ayam di atas kentang.','Air fry 200°C selama 18 minit. Minyak kulit menitis ke kentang dan merangupkannya.','Goncang pada minit ke-9 supaya semua kentang bersalut minyak.','Makan kentang bersama kulit yang sudah rangup.'],
+ tip:'Dua snek dalam satu bakul, dan tiada setitik minyak masak diguna.'},
+{id:'muffin-kulit',m:'af',cat:'e',n:'Muffin Telur Kulit Rangup',en:'Telur bakar dalam mangkuk dengan serpihan kulit',t:'w',q:{e:2,c:30},x:3,xk:10,xp:1,temp:160,min:11,prep:12,flip:null,
+ pantry:['1 sudu besar susu','¼ bawang besar dan ½ tomato, cincang','Garam dan lada','Mangkuk keluli kecil'],
+ steps:['Air fry kulit yang dipotong kecil 200°C selama 8 minit sampai rangup.','Pukul telur dengan susu, garam dan lada.','Sapu mangkuk keluli dengan sedikit minyak ayam. Masukkan bawang, tomato dan separuh kulit. Tuang telur.','Air fry 160°C selama 11 minit. Tabur baki kulit di atas.'],
+ tip:'Tahan 3 hari dalam peti sejuk. Panaskan 160°C selama 3 minit.'},
+
+/* ===== DAPUR INDUKSI ===== */
+{id:'in-kulit-goreng',m:'in',cat:'k',n:'Kulit Ayam Goreng Kuali',en:'Rangup dalam minyaknya sendiri',t:'m',q:{c:120},x:1,xk:0,xp:0,heat:'S',min:14,prep:6,flip:7,
+ pantry:['2 sudu besar air','¼ sudu kecil garam','Tiada minyak'],
+ steps:['Lap kulit kering, potong 4 cm.','Masukkan kulit dan 2 sudu besar air ke dalam kuali yang masih sejuk. Buka api sederhana.','Bila air kering, minyak mula keluar. Kacau sekali-sekala selama 14 minit sampai perang keemasan.','Angkat kulit ke atas tisu. Tabur garam.','Tapis minyak dalam kuali ke dalam balang. Itu minyak ayam untuk masakan lain.'],
+ tip:'Minyak memercik kalau kulit basah. Lap kering dulu, dan guna penutup kalau ada.'},
+{id:'in-kulit-berlada',m:'in',cat:'k',n:'Kulit Ayam Goreng Berlada',en:'Kulit rangup ditumis bawang, cili dan kicap',t:'m',q:{c:120},x:7,xk:30,xp:1,heat:'S',min:16,prep:8,flip:null,
+ pantry:['½ biji bawang besar, hiris','2 cili hijau, hiris','1 ulas bawang putih','1 sudu besar kicap pekat','1 sudu kecil serbuk cili','Secubit gula dan garam'],
+ steps:['Goreng kulit dalam kuali dengan 2 sudu besar air, api sederhana, selama 12 minit sampai rangup. Angkat.','Tinggalkan 1 sudu besar minyak ayam dalam kuali. Simpan selebihnya dalam balang.','Tumis bawang besar, bawang putih dan cili hijau selama 2 minit.','Masukkan serbuk cili, kicap, gula dan garam. Kacau 1 minit.','Masukkan semula kulit, gaul rata dan tutup api.'],
+ tip:'Gaya goreng berlada, guna kulit yang murah. Kos bahan utama tak sampai ₹15.'},
+{id:'in-kulit-kicap',m:'in',cat:'k',n:'Kulit Ayam Masak Kicap',en:'Kulit lembut berkuah kicap pekat',t:'m',q:{c:150},x:9,xk:35,xp:1,heat:'S',min:15,prep:8,flip:null,
+ pantry:['½ biji bawang besar, hiris','2 ulas bawang putih','2 sudu besar kicap pekat','1 sudu kecil sos tiram','1 sudu kecil gula','½ cawan air','1 cili hijau'],
+ steps:['Goreng kulit dalam kuali, api sederhana, selama 8 minit sampai separuh rangup. Tuang lebihan minyak ke dalam balang, tinggal 1 sudu.','Tumis bawang besar dan bawang putih selama 2 minit.','Masukkan kicap, sos tiram, gula dan air. Biar mendidih.','Reneh 5 minit sampai kuah pekat. Masukkan cili hijau.','Makan dengan roti putih, cicah kuahnya.'],
+ tip:'Kuah kicap dengan roti putih: sedap dan sangat mengenyangkan.'},
+{id:'in-daging-kunyit',m:'in',cat:'b',n:'Daging Goreng Kunyit',en:'Hirisan daging kunyit dengan bawang besar',t:'m',q:{b:120},x:6,xk:80,xp:0,heat:'K',min:6,prep:20,flip:null,
+ pantry:['½ sudu kecil serbuk kunyit','¼ sudu kecil garam','½ biji bawang besar, hiris tebal','2 cili hijau, belah','2 sudu kecil minyak (atau minyak ayam)'],
+ steps:['Hiris daging nipis melintang urat. Gaul dengan kunyit dan garam. Perap 15 minit.','Panaskan minyak, api kuat.','Masukkan daging dan ratakan. Biar 1 minit sebelum dikacau supaya perang.','Goreng 4 minit. Masukkan bawang besar dan cili hijau, goreng 2 minit lagi.'],
+ tip:'Api kuat dan kuali panas. Kalau api lemah, daging keluar air dan jadi liat.'},
+{id:'in-daging-kicap',m:'in',cat:'b',n:'Daging Masak Kicap',en:'Daging berkuah kicap',t:'m',q:{b:120},x:9,xk:95,xp:1,heat:'S',min:12,prep:10,flip:null,
+ pantry:['½ biji bawang besar, hiris','2 ulas bawang putih','2 sudu besar kicap pekat','1 sudu kecil gula','½ sudu kecil lada hitam','½ cawan air','2 sudu kecil minyak'],
+ steps:['Hiris daging nipis melintang urat.','Tumis bawang besar dan bawang putih dengan minyak, api sederhana, selama 2 minit.','Masukkan daging. Goreng 3 minit sampai berubah warna.','Masukkan kicap, gula, lada hitam dan air.','Reneh 7 minit sampai kuah pekat dan daging lembut.'],
+ tip:'Tambah kentang potong dadu masa masukkan air. Jadi lebih banyak dan lebih kenyang.'},
+{id:'in-keema-kentang',m:'in',cat:'b',n:'Daging Cincang Kentang',en:'Daging cincang tumis dengan kentang dadu',t:'m',q:{b:80,p:150},x:7,xk:85,xp:0,heat:'S',min:14,prep:8,flip:null,
+ pantry:['½ biji bawang besar, cincang','1 ulas bawang putih','½ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','Garam','2 sudu kecil minyak','¼ cawan air'],
+ steps:['Potong kentang dadu kecil 1 cm.','Tumis bawang besar dan bawang putih, api sederhana, selama 2 minit.','Masukkan daging cincang, kunyit, serbuk cili dan garam. Goreng 3 minit sambil dihancurkan.','Masukkan kentang dan air. Tutup kuali.','Masak 9 minit sampai kentang lembut. Kacau sekali dua.'],
+ tip:'Sapu atas roti bakar, atau makan begitu sahaja.'},
+{id:'in-bebola-sos',m:'in',cat:'b',n:'Bebola Daging Sos Tomato',en:'Bebola daging dalam sos merah',t:'w',q:{b:120,r:.5,e:.5},x:8,xk:100,xp:0,heat:'S',min:12,prep:12,flip:null,
+ pantry:['1 ulas bawang putih','¼ bawang besar, cincang halus','Garam dan lada','2 sudu besar sos tomato','1 sudu kecil sos cili','¼ cawan air','2 sudu kecil minyak'],
+ steps:['Koyak setengah keping roti, lembapkan dengan 1 sudu air. Gaul dengan daging, setengah biji telur, bawang putih, bawang, garam dan lada.','Gentel jadi 6 biji bebola.','Goreng dengan minyak, api sederhana, selama 6 minit. Pusing-pusingkan supaya perang semua sisi.','Masukkan sos tomato, sos cili dan air.','Tutup dan reneh 6 minit.'],
+ tip:'Masukkan dalam roti jadi sandwic bebola.'},
+{id:'in-kentang-goreng',m:'in',cat:'p',n:'Kentang Goreng Kuali',en:'Kentang goreng cara biasa',t:'w',q:{p:200},x:8,xk:150,xp:0,heat:'S',min:10,prep:35,flip:5,
+ pantry:['Minyak setinggi 1 cm dalam kuali','Garam','Serbuk cili (pilihan)'],
+ steps:['Potong kentang jadi batang 1 cm. Rendam 30 minit, kemudian lap kering betul-betul.','Panaskan minyak, api sederhana. Cuba sebatang: kalau terus berbuih, minyak sudah sedia.','Goreng 10 minit. Terbalikkan pada minit ke-5.','Toskan atas tisu. Tabur garam masa panas.'],
+ tip:'Minyak boleh ditapis dan diguna semula 2 hingga 3 kali. Simpan dalam balang bertutup.'},
+{id:'in-kentang-tumis',m:'in',cat:'p',n:'Kentang Tumis Kunyit',en:'Kentang hiris tumis dengan bawang dan daun kari',t:'m',q:{p:200},x:5,xk:85,xp:0,heat:'S',min:12,prep:6,flip:null,
+ pantry:['½ biji bawang besar, hiris','½ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','Daun kari','Garam','2 sudu kecil minyak (atau minyak ayam)','2 sudu besar air'],
+ steps:['Hiris kentang nipis, lebih kurang 3 mm.','Tumis bawang dan daun kari dengan minyak, api sederhana, selama 2 minit.','Masukkan kentang, kunyit, serbuk cili dan garam. Gaul.','Renjis air dan tutup kuali. Masak 10 minit, kacau setiap 3 minit.','Buka tutup pada minit terakhir supaya tepinya garing.'],
+ tip:'Guna minyak ayam. Wanginya lain macam.'},
+{id:'in-kentang-lenyek',m:'in',cat:'p',n:'Kentang Lenyek',en:'Kentang lenyek gebu',t:'w',q:{p:250},x:5,xk:50,xp:1.5,heat:'K',min:15,prep:5,flip:null,
+ pantry:['3 sudu besar susu','1 ulas bawang putih','Garam dan lada hitam','1 sudu kecil minyak ayam atau mentega (pilihan)'],
+ steps:['Potong kentang 4 bahagian. Rebus bersama bawang putih, api kuat, selama 15 minit sampai lembut.','Toskan air.','Lenyek dengan garpu masa masih panas. Masukkan susu, garam, lada dan minyak ayam.','Kacau sampai gebu.'],
+ tip:'Tabur serpihan kulit ayam rangup di atas. Terus naik taraf.'},
+{id:'in-begedil',m:'in',cat:'p',n:'Begedil Kentang',en:'Begedil klasik goreng kuali',t:'m',q:{p:200,e:1},x:7,xk:110,xp:0,heat:'S',min:8,prep:22,flip:4,
+ pantry:['2 biji bawang kecil, hiris dan goreng','Garam dan lada','Daun ketumbar (pilihan)','3 sudu besar minyak'],
+ steps:['Rebus kentang 15 minit sampai lembut. Kupas dan lenyek.','Gaul dengan bawang goreng, garam, lada dan daun ketumbar. Bentukkan 4 biji leper.','Celup dalam telur yang dipukul.','Goreng dengan minyak, api sederhana, selama 8 minit. Terbalikkan pada minit ke-4.'],
+ tip:'Lenyek kentang masa panas, biar sejuk, baru bentukkan. Begedil tak akan pecah.'},
+{id:'in-sup-kentang',m:'in',cat:'p',n:'Sup Kentang Telur',en:'Sup jernih kentang dengan benang telur',t:'m',q:{p:150,e:1},x:4,xk:10,xp:0,heat:'K',min:12,prep:5,flip:null,
+ pantry:['¼ bawang besar, hiris','1 ulas bawang putih, ketuk','½ sudu kecil lada hitam','Garam','2 cawan air','Daun ketumbar (pilihan)'],
+ steps:['Potong kentang dadu 1.5 cm.','Didihkan air dengan kentang, bawang besar, bawang putih, lada dan garam, api kuat.','Rebus 10 minit sampai kentang lembut.','Pukul telur. Tuang perlahan-lahan sambil sup dikacau, supaya telur jadi benang halus.','Tutup api. Tabur daun ketumbar.'],
+ tip:'Antara yang paling murah dan paling kenyang. Sesuai untuk malam hujan.'},
+{id:'in-roti-telur',m:'in',cat:'r',n:'Roti Telur Kuali',en:'Roti celup telur, goreng',t:'m',q:{r:2,e:1},x:5,xk:60,xp:1,heat:'S',min:4,prep:3,flip:2,
+ pantry:['2 sudu besar susu atau air','¼ bawang besar dan 1 cili hijau, cincang','Secubit garam','1 sudu kecil minyak','Kicap untuk cicah'],
+ steps:['Pukul telur dengan susu, bawang, cili dan garam.','Celup roti kedua-dua belah.','Goreng dengan minyak, api sederhana, selama 4 minit. Terbalikkan pada minit ke-2.','Cicah kicap dan cili hijau.'],
+ tip:'Snek paling cepat di sini: 7 minit dari lapar ke kenyang.'},
+{id:'in-french-toast',m:'in',cat:'r',n:'Roti Telur Manis',en:'French toast',t:'w',q:{r:2,e:1},x:6,xk:95,xp:1.5,heat:'S',min:4,prep:3,flip:2,
+ pantry:['3 sudu besar susu','1 sudu kecil gula','1 sudu kecil minyak atau mentega','Sedikit gula untuk tabur'],
+ steps:['Pukul telur dengan susu dan gula.','Rendam roti 10 saat setiap belah.','Goreng api sederhana selama 4 minit. Terbalikkan pada minit ke-2.','Tabur sedikit gula.'],
+ tip:'Snek manis. Sekali-sekala sahaja.'},
+{id:'in-roti-john',m:'in',cat:'r',n:'Roti John Kuali',en:'Telur dan daging digoreng, roti ditekap di atas',t:'m',q:{r:2,e:1,b:50},x:6,xk:60,xp:0,heat:'S',min:6,prep:5,flip:4,
+ pantry:['¼ bawang besar, cincang','1 cili hijau, cincang','Garam dan lada','1 sudu kecil minyak','Sos cili dan sos tomato'],
+ steps:['Pukul telur dengan daging cincang, bawang, cili, garam dan lada.','Panaskan minyak, api sederhana. Tuang adunan dan ratakan nipis.','Terus tekap 2 keping roti di atas telur yang masih basah.','Masak 4 minit, kemudian terbalikkan. Garingkan roti 2 minit.','Picit sos cili dan sos tomato, lipat dua.'],
+ tip:'Ratakan daging nipis-nipis supaya masak sekali dengan telur.'},
+{id:'in-sandwic-telur',m:'in',cat:'r',n:'Sandwic Telur Hancur',en:'Telur hancur lembut dalam roti',t:'w',q:{r:2,e:2},x:4,xk:50,xp:1,heat:'P',min:3,prep:3,flip:null,
+ pantry:['1 sudu besar susu','1 sudu besar dadih','Garam dan lada hitam','1 sudu kecil minyak','Timun, hiris'],
+ steps:['Pukul telur dengan susu, garam dan lada.','Panaskan minyak, api perlahan. Tuang telur.','Kacau perlahan-lahan selama 3 minit sampai berketul lembut. Tutup api masa masih sedikit basah.','Gaul dengan dadih. Isi dalam roti bersama timun.'],
+ tip:'Rahsianya api perlahan. Api kuat buat telur jadi keras dan kering.'},
+{id:'in-roti-keju',m:'in',cat:'r',n:'Roti Keju Panggang',en:'Roti panggang berinti keju cair',t:'w',q:{r:2},x:18,xk:100,xp:4,heat:'P',min:5,prep:2,flip:3,
+ pantry:['1 keping keju','1 sudu kecil minyak atau mentega','Secubit serbuk cili (pilihan)'],
+ steps:['Letak keju antara dua keping roti. Tabur serbuk cili.','Sapu minyak nipis di luar roti.','Panggang atas kuali, api perlahan, selama 5 minit. Terbalikkan pada minit ke-3.','Tekan dengan sudip supaya keju melekat.'],
+ tip:'Tutup kuali seminit supaya keju cair sebelum roti hangus.'},
+{id:'in-telur-mata-kicap',m:'in',cat:'e',n:'Telur Mata Kicap',en:'Telur mata dengan kicap, bawang dan cili',t:'m',q:{e:2},x:5,xk:60,xp:1,heat:'S',min:3,prep:3,flip:null,
+ pantry:['1 sudu kecil minyak','1 sudu besar kicap pekat','¼ bawang besar, hiris','1 cili hijau, hiris','Perahan lemon'],
+ steps:['Panaskan minyak, api sederhana. Pecahkan telur.','Goreng selama 3 minit. Kuning telur ikut suka, cair atau keras.','Angkat. Dalam kuali yang sama, layukan bawang dan cili sekejap.','Tuang kicap dan perahan lemon ke atas telur. Tabur bawang dan cili.'],
+ tip:'Makan dengan roti putih. Cicah kuning telur dan kicap.'},
+{id:'in-telur-hancur',m:'in',cat:'e',n:'Telur Hancur Lembut',en:'Scrambled egg atas roti bakar',t:'w',q:{e:2,r:1},x:3,xk:45,xp:.5,heat:'P',min:3,prep:2,flip:null,
+ pantry:['1 sudu besar susu','Garam dan lada','1 sudu kecil minyak'],
+ steps:['Pukul telur dengan susu, garam dan lada.','Api perlahan. Tuang telur ke dalam kuali berminyak.','Tolak telur dari tepi ke tengah perlahan-lahan selama 3 minit.','Tutup api masa telur masih berkilat. Hidang atas roti bakar.'],
+ tip:'Telur terus masak selepas api ditutup. Angkat awal sedikit.'},
+{id:'in-telur-bungkus',m:'in',cat:'e',n:'Telur Bungkus Kentang',en:'Telur dadar nipis berisi kentang pedas',t:'m',q:{e:2,p:100},x:6,xk:85,xp:0,heat:'S',min:10,prep:6,flip:null,
+ pantry:['¼ bawang besar, cincang','½ sudu kecil serbuk cili','1 sudu besar sos cili','Garam','2 sudu kecil minyak'],
+ steps:['Potong kentang dadu kecil 1 cm. Goreng dengan 1 sudu kecil minyak dan bawang, api sederhana, selama 6 minit sampai lembut.','Masukkan serbuk cili, sos cili dan garam. Angkat.','Pukul telur dengan secubit garam. Tuang ke kuali berminyak dan pusingkan jadi dadar nipis.','Bila hampir masak, letak inti di tengah. Lipat empat sisi jadi bungkusan.','Terbalikkan atas pinggan.'],
+ tip:'Inti boleh tukar dengan daging cincang atau kulit ayam rangup.'},
+{id:'in-dadar-kulit',m:'in',cat:'e',n:'Telur Dadar Kulit Ayam',en:'Telur dadar dengan serpihan kulit rangup',t:'m',q:{e:2,c:40},x:3,xk:0,xp:0,heat:'S',min:9,prep:4,flip:null,
+ pantry:['¼ bawang besar, cincang','1 cili hijau, cincang','Secubit garam'],
+ steps:['Potong kulit kecil-kecil. Goreng dalam kuali, api sederhana, selama 6 minit sampai rangup dan minyaknya keluar.','Pukul telur dengan bawang, cili dan garam.','Tuang telur terus ke atas kulit dan minyaknya.','Masak 2 minit, terbalikkan, 1 minit lagi.'],
+ tip:'Tak perlu minyak masak. Minyak kulit ayam yang menggoreng telur.'},
+{id:'in-telur-masak-kicap',m:'in',cat:'e',n:'Telur Masak Kicap',en:'Telur rebus goreng berkuah kicap',t:'m',q:{e:2},x:7,xk:75,xp:1,heat:'S',min:8,prep:14,flip:null,
+ pantry:['½ bawang besar, hiris','1 ulas bawang putih','2 sudu besar kicap pekat','1 sudu kecil gula','¼ cawan air','1 cili hijau','2 sudu kecil minyak'],
+ steps:['Rebus telur 10 minit, rendam air sejuk, kupas.','Goreng telur dengan minyak, api sederhana, selama 3 minit sampai kulitnya berkedut keemasan. Angkat.','Tumis bawang besar dan bawang putih sekejap.','Masukkan kicap, gula, air dan cili. Biar mendidih.','Masukkan telur, reneh 3 minit sampai kuah pekat.'],
+ tip:'Buat banyak sekali gus. Esok lagi sedap sebab kuah sudah meresap.'},
+{id:'in-telur-rebus',m:'in',cat:'e',n:'Telur Rebus Periuk',en:'Cara paling asas',t:'m',q:{e:2},x:1,xk:0,xp:0,heat:'K',min:10,prep:3,flip:null,
+ pantry:['Air','Kicap dan lada, atau garam'],
+ steps:['Masukkan telur dalam periuk. Isi air sampai telur tenggelam.','Api kuat sampai mendidih, kemudian baru kira masa.','Rebus 10 minit untuk kuning keras. Untuk kuning lembut, 7 minit sahaja.','Rendam air sejuk 5 minit, kupas.'],
+ tip:'Rebus 6 biji sekali. Tanpa dikupas, tahan 5 hari dalam peti sejuk.'},
+{id:'in-omelet-kentang',m:'in',cat:'e',n:'Omelet Kentang',en:'Telur dadar tebal dengan kentang',t:'w',q:{e:2,p:120},x:5,xk:85,xp:0,heat:'S',min:12,prep:5,flip:null,
+ pantry:['¼ bawang besar, hiris','Garam dan lada','2 sudu kecil minyak'],
+ steps:['Hiris kentang nipis 3 mm.','Goreng kentang dan bawang dengan minyak, api sederhana, selama 7 minit sampai lembut. Kacau selalu.','Pukul telur dengan garam dan lada. Tuang ke atas kentang, ratakan.','Tutup kuali selama 3 minit. Terbalikkan guna pinggan, masak 2 minit lagi.'],
+ tip:'Potong macam kek. Sedap panas atau sejuk, boleh buat bekal.'},
+{id:'in-kopitiam',m:'in',cat:'e',n:'Telur Separuh Masak',en:'Gaya kopitiam, dengan roti bakar',t:'m',q:{e:2,r:2},x:3,xk:10,xp:1,heat:'K',min:6,prep:4,flip:null,
+ pantry:['Kicap pekat','Lada hitam','Air'],
+ steps:['Didihkan air dalam periuk, api kuat.','Masukkan telur perlahan-lahan dengan sudu. Rebus tepat 6 minit.','Rendam air sejuk 1 minit. Pecahkan ke dalam mangkuk.','Tambah kicap dan lada. Bakar roti atas kuali kering sampai garing.','Cicah roti ke dalam telur.'],
+ tip:'Telur ini tak masak penuh. Guna telur segar dan basuh kulitnya dulu.'}
+];
+
+/* gabung: resepi lama jadi air fryer + kategori, kemudian yang baru */
+const R = R_OLD.filter(r => OLD_CAT[r.id]).map(r => Object.assign({}, r, {m:'af', cat:OLD_CAT[r.id], tip:TIP_FIX[r.id] || r.tip})).concat(NEW);
+/* ---------- keadaan ---------- */
+const KEY = 'bakul-v4';
+const VIEWS = ['menu','kalendar','belanja','panduan'];
+const now0 = new Date();
+let S = {view:'menu', m:'af', cat:'all', sort:'fast', q:'', prices:Object.assign({},DEFAULT_PRICES), bought:{}, cal:{}, pantryQ:{}, incPantry:true, outPrice:60, outProt:6};
+let calY = now0.getFullYear(), calM = now0.getMonth(), selDay = ymd(now0);
 try{
   const saved = JSON.parse(localStorage.getItem(KEY)||'null');
-  if(saved){ S = Object.assign(S, saved); S.prices = Object.assign({},DEFAULT_PRICES, saved.prices||{}); }
-  else { const old = JSON.parse(localStorage.getItem('bakul-air-fryer-v2')||'null'); if(old){ S.bought = old.bought||{}; if(old.prices && old.prices.INR) S.prices = Object.assign({},DEFAULT_PRICES, old.prices.INR); S.taste = old.taste||'all'; S.sort = old.sort||'value'; } }
+  if(saved){ S = Object.assign(S, saved); S.prices = Object.assign({},DEFAULT_PRICES, saved.prices||{}); S.q=''; }
+  else { const old = JSON.parse(localStorage.getItem('bakul-air-fryer-v3')||'null'); if(old){ S.bought = old.bought||{}; for(const k of ['b','p','r','e']) if(old.prices && old.prices[k]>=0) S.prices[k]=old.prices[k]; } }
 }catch(e){}
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
-/* ---------- kira ---------- */
-function mainCost(q){ const P=S.prices; let c=0; for(const k of ORDER){ const v=q[k]; if(!v) continue; if(k==='e') c+=v*P.e; else if(k==='r') c+=v*P.r/SLICES; else c+=v/1000*P[k]; } return c; }
-function stats(r){
-  let p=r.xp, k=r.xk;
-  for(const key of ORDER){ const q=r.q[key]; if(!q) continue; p+=q*ING[key].p; k+=q*ING[key].k; }
-  const cost = mainCost(r.q) + r.x;
-  return {cost, p, k, total:r.min+r.prep, value:p/cost*10, hp:(p/k*100)>=8};
-}
+/* ---------- bantuan ---------- */
+const $ = id => document.getElementById(id);
+function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fromYmd(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function niceDate(s){ const d=fromYmd(s); return DAYS[d.getDay()]+', '+d.getDate()+' '+MONTHS[d.getMonth()]; }
+const todayStr = () => ymd(new Date());
 const rs = v => '₹'+Math.round(v).toLocaleString('en-IN');
 function frac(n){ const w=Math.floor(n), f=n-w; return ((w?w:'')+(f===.5?'½':'')) || '0'; }
 function qtyText(key,q){ if(key==='e') return frac(q)+' biji'; if(key==='r') return frac(q)+' keping'; return q+' g'; }
 const mmss = s => { s=Math.max(0,Math.ceil(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); };
-const tasteName = t => t==='m' ? 'Melayu' : 'Barat';
-const $ = id => document.getElementById(id);
-function toast(msg){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,1800); }
+const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,1700); }
+const byId = id => R.find(r=>r.id===id);
 
-/* ---------- tabs ---------- */
-function validTab(id){ return TABS.some(t=>t.id===id); }
-function renderTabs(){
-  $('tabs').innerHTML = TABS.map(t=>{
-    if(t.sep) return '<span class="tabsep" aria-hidden="true"></span>';
-    const n = t.k ? R.filter(r=>r.q[t.k]).length : (t.id==='semua' ? R.length : null);
-    return `<button type="button" role="tab" class="tab${t.info?' info':''}" data-tab="${t.id}" aria-selected="${S.tab===t.id}">${t.label}${n!==null?`<span class="n">${n}</span>`:''}</button>`;
-  }).join('');
-  const act = $('tabs').querySelector('[aria-selected="true"]'); if(act) act.scrollIntoView({block:'nearest',inline:'nearest'});
+/* ---------- kira ---------- */
+function price(k){ if(k==='c'){ const kg=S.prices.skinKg>0?S.prices.skinKg:1; return S.prices.skinBudget/kg; } return S.prices[k]; }
+function mainCost(q){ let c=0; for(const k of ORDER){ const v=q[k]; if(!v) continue; if(k==='e') c+=v*price('e'); else if(k==='r') c+=v*price('r')/SLICES; else c+=v/1000*price(k); } return c; }
+function stats(r){
+  let p=r.xp||0, k=r.xk||0;
+  for(const key of ORDER){ const q=r.q[key]; if(!q) continue; p+=q*ING[key].p; k+=q*ING[key].k; }
+  const cost = mainCost(r.q) + r.x;
+  return {cost, p, k, total:r.min+r.prep, hp:(p/k*100)>=8};
 }
-function go(id){ if(!validTab(id)) id='semua'; if(location.hash !== '#'+id){ location.hash = id; return; } show(id); }
-function show(id){ S.tab=id; save(); renderTabs(); renderView(); }
-window.addEventListener('hashchange', ()=>{ const id=location.hash.slice(1); show(validTab(id)?id:'semua'); window.scrollTo({top:0}); });
-$('tabs').addEventListener('click', e=>{ const b=e.target.closest('[data-tab]'); if(b) go(b.dataset.tab); });
-
-/* ---------- views ---------- */
-function renderView(){
-  const t = TABS.find(x=>x.id===S.tab);
-  const m = $('main');
-  if(!t.info) m.innerHTML = viewMenu(t);
-  else if(t.id==='potong') m.innerHTML = viewPotong();
-  else if(t.id==='peringatan') m.innerHTML = viewPeringatan();
-  else if(t.id==='kos') m.innerHTML = viewKos();
-  else if(t.id==='beli') m.innerHTML = viewBeli();
-  else if(t.id==='tips') m.innerHTML = viewTips();
+const how = r => r.m==='af' ? r.temp+'°C' : HEAT[r.heat];
+function dial(r){
+  const c=2*Math.PI*22, f=Math.min(1, r.min/20);
+  return `<span class="dial ${r.m==='in'?'in':''}"><svg viewBox="0 0 56 56" aria-hidden="true"><circle class="tr" cx="28" cy="28" r="22"/><circle class="ar" cx="28" cy="28" r="22" stroke-dasharray="${(c*f).toFixed(1)} ${c.toFixed(1)}"/></svg><span><b>${r.min}</b><small>min</small></span></span>`;
+}
+function totals(ids){
+  const g={c:0,b:0,p:0,r:0,e:0}; let n=0, prot=0, extra=0;
+  for(const id of ids){ const r=byId(id); if(!r) continue; n++; for(const k of ORDER) g[k]+=(r.q[k]||0); prot+=stats(r).p; extra+=r.x; }
+  const kg = v => (v/1000).toFixed(2).replace(/\.?0+$/,'')+' kg';
+  const loaves = Math.ceil(g.r/SLICES), eggs = Math.ceil(g.e);
+  const lines = [
+    {k:'c', qty:kg(g.c), cost:g.c/1000*price('c')},
+    {k:'b', qty:kg(g.b), cost:g.b/1000*price('b')},
+    {k:'p', qty:kg(g.p), cost:g.p/1000*price('p')},
+    {k:'e', qty:eggs+' biji', cost:eggs*price('e')},
+    {k:'r', qty:Math.ceil(g.r)+' keping', cost:g.r/SLICES*price('r'), note:loaves+' buku'}
+  ].filter(l=>g[l.k]>0);
+  return {n, prot, extra, lines, main:lines.reduce((a,l)=>a+l.cost,0)};
 }
 
-function menuList(t){
-  let list = R.filter(r => (!t.k || r.q[t.k]) && (S.taste==='all' || r.t===S.taste)).map(r=>({r,s:stats(r)}));
-  const f = {value:(a,b)=>b.s.value-a.s.value, cheap:(a,b)=>a.s.cost-b.s.cost, protein:(a,b)=>b.s.p-a.s.p, fast:(a,b)=>a.s.total-b.s.total, light:(a,b)=>a.s.k-b.s.k}[S.sort];
+/* ---------- navigasi ---------- */
+function go(v){ if(!VIEWS.includes(v)) v='menu'; if(location.hash!=='#'+v){ location.hash=v; return; } show(v); }
+function show(v){ S.view=v; save(); document.querySelectorAll('#dock button').forEach(b=>{ if(b.dataset.view===v) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); render(); }
+window.addEventListener('hashchange', ()=>{ const v=location.hash.slice(1); show(VIEWS.includes(v)?v:'menu'); window.scrollTo({top:0}); });
+$('dock').addEventListener('click', e=>{ const b=e.target.closest('[data-view]'); if(b) go(b.dataset.view); });
+function render(){ $('main').innerHTML = ({menu:viewMenu, kalendar:viewKalendar, belanja:viewBelanja, panduan:viewPanduan}[S.view])(); }
+
+/* ---------- MENU ---------- */
+function menuList(){
+  const q = S.q.trim().toLowerCase();
+  let list = R.filter(r => r.m===S.m && (S.cat==='all' || r.cat===S.cat) && (!q || r.n.toLowerCase().includes(q) || r.en.toLowerCase().includes(q))).map(r=>({r,s:stats(r)}));
+  const f = {fast:(a,b)=>a.s.total-b.s.total, cheap:(a,b)=>a.s.cost-b.s.cost, protein:(a,b)=>b.s.p-a.s.p, light:(a,b)=>a.s.k-b.s.k}[S.sort] || ((a,b)=>a.s.total-b.s.total);
   return list.sort(f);
 }
-function viewMenu(t){
-  const list = menuList(t);
-  const tb = `<div class="toolbar">
-    <div class="seg" id="taste" role="group" aria-label="Tekak">${[['all','Semua'],['m','Melayu'],['w','Barat']].map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${S.taste===v}">${l}</button>`).join('')}</div>
-    <select id="sort" aria-label="Susun ikut">${[['value','Protein paling berbaloi'],['cheap','Paling murah'],['protein','Protein paling tinggi'],['fast','Paling cepat'],['light','Kalori paling rendah']].map(([v,l])=>`<option value="${v}" ${S.sort===v?'selected':''}>${l}</option>`).join('')}</select>
-    <button type="button" class="shuffle" id="shuffle">Pilihkan untuk saya</button>
+function rowHtml(r,s){
+  return `<button type="button" class="rc" data-id="${r.id}">${dial(r)}<span class="rc-b"><span class="rc-n">${r.n}</span><span class="rc-m">${how(r)} · <span class="num">${rs(s.cost)}</span> · ${Math.round(s.p)} g protein</span></span>${s.hp?'<span class="tag">Protein</span>':''}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
+}
+function todayCard(){
+  const t=todayStr(), ids=(S.cal[t]||[]).filter(byId), tm=(S.cal[ymd(addDays(new Date(),1))]||[]).filter(byId);
+  return `<section class="today"><span class="lbl">Hari ini · ${niceDate(t)}</span>
+    ${ids.length ? `<h2>${ids.length===1?'Menu hari ini':ids.length+' menu hari ini'}</h2><div class="picks">${ids.map(id=>`<button type="button" class="pick" data-open="${id}">${byId(id).n}</button>`).join('')}</div>`
+                 : `<h2>Belum ada rancangan untuk hari ini.</h2><button type="button" class="cta" data-pick="${t}">Pilih menu hari ini</button>`}
+    ${tm.length?`<p class="next">Esok: ${tm.map(id=>byId(id).n).join(', ')}</p>`:''}</section>`;
+}
+function listHtml(){
+  const list = menuList();
+  return list.length ? `<div class="list">${list.map(({r,s})=>rowHtml(r,s)).join('')}</div>` : '<div class="empty">Tiada resepi yang sepadan. Cuba kategori Semua atau kosongkan carian.</div>';
+}
+function viewMenu(){
+  const nAf=R.filter(r=>r.m==='af').length, nIn=R.filter(r=>r.m==='in').length;
+  const inM = R.filter(r=>r.m===S.m);
+  return `${todayCard()}
+  <div class="method" role="group" aria-label="Alat masak">
+    <button type="button" data-m="af" aria-pressed="${S.m==='af'}"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="3" width="18" height="26" rx="5"/><rect x="11" y="7" width="10" height="4" rx="1.5"/><rect x="10" y="15" width="12" height="10" rx="2.5"/><path d="M14 20h4"/></svg><span><b>Air Fryer</b><small>${nAf} resepi</small></span></button>
+    <button type="button" class="in" data-m="in" aria-pressed="${S.m==='in'}"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="26" height="16" rx="4"/><circle cx="16" cy="16" r="5.5"/><circle cx="16" cy="16" r="2.2"/></svg><span><b>Dapur Induksi</b><small>${nIn} resepi</small></span></button>
   </div>
-  <p class="count">${list.length} snek${t.k?` guna ${ING[t.k].ms.toLowerCase()}`:''}</p>`;
-  if(!list.length) return `<div class="view">${tb}<div class="empty">Tiada snek untuk pilihan ini. Tukar tekak ke Semua.</div></div>`;
-  return `<div class="view">${tb}<div class="grid">${list.map(({r,s})=>`<button type="button" class="card" data-id="${r.id}">
-    <span class="row"><span class="chip ${r.t}">${tasteName(r.t)}</span>${s.hp?'<span class="chip hp">Protein tinggi</span>':''}<span class="lcd">${r.temp}°C · ${r.min} min</span></span>
-    <span class="card-name">${r.n}</span>
-    <span class="stats"><span><b>${rs(s.cost)}</b><small>kos</small></span><span><b>${Math.round(s.p)} g</b><small>protein</small></span><span><b>${Math.round(s.k)}</b><small>kcal</small></span></span>
-  </button>`).join('')}</div></div>`;
+  <div class="cats" role="group" aria-label="Kategori">${CATS.map(([k,l])=>`<button type="button" class="cat" data-cat="${k}" aria-pressed="${S.cat===k}">${l}<span class="n">${k==='all'?inM.length:inM.filter(r=>r.cat===k).length}</span></button>`).join('')}</div>
+  <div class="tools"><input class="search" id="q" type="search" placeholder="Cari resepi" value="${esc(S.q)}" aria-label="Cari resepi">
+    <select id="sort" aria-label="Susun ikut">${[['fast','Paling cepat'],['cheap','Paling murah'],['protein','Protein tinggi'],['light','Kalori rendah']].map(([v,l])=>`<option value="${v}" ${S.sort===v?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div id="list-wrap">${listHtml()}</div>`;
 }
 
-function cutBlock(key, note){
-  const c = CUTS[key];
-  return `<h3>${c.t}</h3><span class="ref">${c.ref}</span>${c.svg()}<ol>${c.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${note?`<p class="sub" style="margin:0">Untuk resepi ini: ${note}</p>`:''}`;
-}
-function viewPotong(){
-  const used = k => R.filter(r=>CUTMAP[r.id] && CUTMAP[r.id][0]===k);
-  return `<div class="view">
-    <div class="box"><h2>Ukur guna jari, tak perlu pembaris</h2>
-      <div class="sizes">
-        <div class="size"><b>1–2 mm</b>Tebal syiling ₹1</div>
-        <div class="size"><b>3 mm</b>Tebal 2 syiling ₹1</div>
-        <div class="size"><b>1 cm</b>Lebar jari kelingking</div>
-        <div class="size"><b>1.5 cm</b>Lebar jari telunjuk</div>
-        <div class="size"><b>2 cm</b>Lebar ibu jari</div>
-      </div>
-      <p class="sub" style="margin:10px 0 0">Garis putus-putus biru dalam lukisan ialah tempat pisau. Ikut nombor 1, 2, 3 dari kiri ke kanan.</p>
-    </div>
-    <div class="cutgrid">${Object.keys(CUTS).map(k=>`<div class="cut">${cutBlock(k)}<div class="used">Guna dalam: ${used(k).map(r=>`<button type="button" data-open="${r.id}">${r.n}</button>`).join(', ')}</div></div>`).join('')}</div>
-  </div>`;
-}
-
-function viewPeringatan(){
-  return `<div class="view">
-    <div class="box"><h2>3 peraturan emas</h2>
-      <ol>
-        <li><b>Masak di rumah ialah pilihan biasa.</b> Beli di luar hanya belanja yang dirancang, had ₹300 seminggu.</li>
-        <li><b>Persediaan Ahad, 30 minit.</b> Hari biasa cuma ambil dari peti sejuk dan masuk air fryer.</li>
-        <li><b>Sentiasa ada 3 snek tanpa usaha:</b> telur rebus, kerepek roti, nugget beku. Untuk malam yang terlalu penat.</li>
-      </ol>
-    </div>
-    <div class="cols">
-      <div class="box"><h2>Masak snek atau beli di luar?</h2>
-        <div class="verdict"><b>Keputusan council:</b> masak sendiri, tapi dengan cara "sediakan sekali, makan seminggu". Rumah menang untuk murah dan kenyang. Untuk senang, rumah hanya menang kalau ada persediaan Ahad.</div>
-        <div class="tablewrap"><table>
-          <thead><tr><th></th><th>Beli luar</th><th>Masak rumah</th></tr></thead>
-          <tbody>
-            <tr><td>Snek murah</td><td>Puff / pazham pori <span class="num">₹15–30</span>, protein 3–6 g</td><td class="win">2 telur rebus <span class="num">₹20</span>, protein 13 g</td></tr>
-            <tr><td>Snek ayam</td><td>Shawarma <span class="num">₹100–140</span>, protein ~20 g</td><td class="win">Ayam kunyit <span class="num">~₹87</span>, protein 34 g</td></tr>
-            <tr><td>Swiggy</td><td><span class="num">₹150–250</span> dengan caj</td><td class="win">Tiada caj</td></tr>
-            <tr><td>Masa</td><td class="win">0 minit</td><td>2–15 minit kerja</td></tr>
-            <tr><td>Kenyang</td><td>Goreng tepung, cepat lapar semula</td><td class="win">Protein dan serat, lama kenyang</td></tr>
-          </tbody></table></div>
-        <p class="sub">Poin paling tajam: duit paling banyak bocor di makan luar (mess), bukan di snek. Snek rumah yang mengenyangkan buat awak kurang pesan makanan.</p>
-      </div>
-      <div class="box"><h2>Kentang beku atau kentang sebenar?</h2>
-        <div class="verdict"><b>Keputusan council:</b> buat sendiri, guna wedges (5 minit potong, tak perlu rendam). Kentang beku lebih kurang 8 kali ganda lebih mahal untuk kentang yang sama, dengan lebih banyak minyak. Simpan satu pek kecil untuk minggu exam paling sibuk.</div>
-        <div class="tablewrap"><table>
-          <thead><tr><th>200 g</th><th>Frozen (McCain dll)</th><th>Buat sendiri</th></tr></thead>
-          <tbody>
-            <tr><td>Harga</td><td><span class="num">₹60–70</span></td><td class="win"><span class="num">₹8</span></td></tr>
-            <tr><td>Kerja</td><td class="win">Buka dan tuang</td><td>Wedges 5 minit potong</td></tr>
-            <tr><td>Kalori</td><td>~300 kcal (separa goreng)</td><td class="win">~190 kcal</td></tr>
-            <tr><td>Isi</td><td>Minyak, garam, kadang gula</td><td class="win">Kentang, 1 sudu minyak, garam, kulit (serat)</td></tr>
-          </tbody></table></div>
-        <h3>Buat "kentang beku" sendiri</h3>
-        <ol>
-          <li>Potong 1 kg kentang jadi batang atau baji.</li>
-          <li>Air fry 180°C selama 5 minit, separuh masak.</li>
-          <li>Sejukkan, beku atas pinggan, kemudian masuk plastik.</li>
-          <li>Bila nak makan: terus 200°C selama 15 minit. Senang macam McCain, harga ₹8.</li>
-        </ol>
-        <p class="sub" style="margin-top:10px">Kalau beli frozen: pilih yang ramuannya cuma kentang, minyak dan garam.</p>
-      </div>
-    </div>
-    <p class="sub">Harga snek luar ialah anggaran biasa di Kerala. Harga frozen ialah harga biasa jenama besar. Ini perspektif umum, bukan nasihat kewangan atau pemakanan berlesen.</p>
-  </div>`;
+/* ---------- KALENDAR ---------- */
+function monthIds(y,m){ const out=[]; const pre=y+'-'+String(m+1).padStart(2,'0')+'-'; for(const [d,ids] of Object.entries(S.cal)) if(d.startsWith(pre)) for(const id of ids) if(byId(id)) out.push(id); return out; }
+function viewKalendar(){
+  const first=new Date(calY,calM,1), lead=(first.getDay()+6)%7, nDays=new Date(calY,calM+1,0).getDate(), t=todayStr();
+  let cells='';
+  for(let i=0;i<lead;i++) cells+='<span class="day out"></span>';
+  for(let d=1;d<=nDays;d++){
+    const ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'), ids=(S.cal[ds]||[]).filter(byId);
+    cells+=`<button type="button" class="day${ds===t?' today':''}${ds<t?' past':''}${ds===selDay?' sel':''}" data-day="${ds}" aria-label="${d} ${MONTHS[calM]}, ${ids.length} menu"><span class="d">${d}</span><span class="dots">${ids.slice(0,3).map(id=>`<i class="dot ${byId(id).m==='in'?'in':''}"></i>`).join('')}</span>${ids.length>3?`<span class="more">+${ids.length-3}</span>`:''}</button>`;
+  }
+  const ids=(S.cal[selDay]||[]).filter(byId);
+  const week=[]; for(let i=0;i<7;i++){ const ds=ymd(addDays(new Date(),i)); for(const id of (S.cal[ds]||[])) if(byId(id)) week.push(id); }
+  const wt=totals(week);
+  return `<div class="calhead"><h2>${MONTHS[calM]} ${calY}</h2><button type="button" class="icon-btn" data-cal="-1" aria-label="Bulan sebelum"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="btn" data-cal="0">Hari ini</button><button type="button" class="icon-btn" data-cal="1" aria-label="Bulan depan"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
+  <div class="cal">${DOW.map(d=>`<span class="dow">${d}</span>`).join('')}${cells}</div>
+  <div class="legend"><span><i></i>Air fryer</span><span><i class="in"></i>Dapur induksi</span><span>Tekan tarikh untuk rancang menu</span></div>
+  <section class="box"><h2>${niceDate(selDay)}</h2>
+    ${ids.length ? ids.map((id,i)=>{ const r=byId(id); return `<div class="dayrow"><i class="mdot ${r.m==='in'?'in':''}"></i><button type="button" class="nm" data-open="${id}">${r.n}<small>${r.m==='af'?'Air fryer':'Dapur induksi'} · ${how(r)} · ${r.min} min · ${rs(stats(r).cost)}</small></button><button type="button" class="rm" data-rm="${i}" aria-label="Buang ${r.n}">✕</button></div>`; }).join('') : '<p class="sub">Belum ada menu untuk hari ini.</p>'}
+    <div class="btnrow" style="margin-top:10px"><button type="button" class="btn pri" data-pick="${selDay}">+ Tambah menu</button>${ids.length?`<button type="button" class="btn" data-copy="${selDay}">Salin ke esoknya</button>`:''}</div>
+  </section>
+  <section class="box"><h2>Bahan untuk 7 hari akan datang</h2>
+    ${wt.n ? `<div class="needs">${wt.lines.map(l=>`<div class="need-t"><small>${ING[l.k].ms}</small><b>${l.qty}</b></div>`).join('')}<div class="need-t"><small>Anggaran kos</small><b>${rs(wt.main+wt.extra)}</b></div></div><p class="sub" style="margin:10px 0 0">${wt.n} menu dirancang dari hari ini hingga ${niceDate(ymd(addDays(new Date(),6)))}.</p>` : '<p class="sub">Tiada menu dirancang untuk 7 hari ini. Rancang beberapa hari, dan jumlah bahan yang perlu dibeli akan keluar di sini.</p>'}
+  </section>
+  <section class="box"><h2>Isi cepat</h2><p class="sub">Tak tahu nak mula? Isi hari-hari kosong bulan ini dengan snek murah dan cepat, satu sehari. Awak boleh ubah selepas itu.</p>
+    <div class="btnrow"><button type="button" class="btn" id="fill-sample">Isi contoh bulan ini</button><button type="button" class="btn danger" id="clear-month">Kosongkan bulan ini</button></div></section>`;
 }
 
-function planCalc(){
-  const g={c:0,b:0,p:0,r:0,e:0}; let n=0, prot=0;
-  for(const [id,cnt] of Object.entries(S.plan)){ const r=R.find(x=>x.id===id); if(!r||!cnt) continue; n+=cnt; for(const k of ORDER) g[k]+=(r.q[k]||0)*cnt; prot+=stats(r).p*cnt; }
-  const P=S.prices, loaves=Math.ceil(g.r/SLICES);
-  const lines = [
-    {k:'c', qty:(g.c/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.c/1000*P.c},
-    {k:'b', qty:(g.b/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.b/1000*P.b},
-    {k:'p', qty:(g.p/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.p/1000*P.p},
-    {k:'e', qty:Math.ceil(g.e)+' biji', cost:Math.ceil(g.e)*P.e},
-    {k:'r', qty:loaves+' buku', cost:loaves*P.r}
-  ].filter(l=>g[l.k]>0);
-  const main = lines.reduce((a,l)=>a+l.cost,0);
+/* ---------- BELANJA ---------- */
+function viewBelanja(){
+  const ids=monthIds(calY,calM), t=totals(ids);
   const pantry = S.incPantry ? PANTRY.reduce((a,i)=>a+i.v*(S.pantryQ[i.id] ?? i.q),0) : 0;
-  const total = main+pantry;
-  return {n, prot, lines, main, pantry, total, out:n*S.outPrice, outProt:n*S.outProt};
-}
-function viewKos(){
-  const c = planCalc();
-  const inPlan = Object.entries(S.plan).filter(([id,cnt])=>cnt>0 && R.find(r=>r.id===id));
-  const others = R.filter(r=>!S.plan[r.id]);
-  const max = Math.max(c.total, c.out, 1);
-  return `<div class="view">
-    <div class="box"><h2>Kalau saya buat snek ini sebulan, berapa kos?</h2>
-      <div class="total">
-        <div class="tile big"><small>Jumlah sebulan</small><b>${rs(c.total)}</b></div>
-        <div class="tile"><small>Sehari</small><b>${rs(c.total/30)}</b></div>
-        <div class="tile"><small>Satu snek</small><b>${c.n?rs(c.total/c.n):'–'}</b></div>
-        <div class="tile"><small>Protein sehari</small><b>${Math.round(c.prot/30)} g</b></div>
-      </div>
-      <div class="tablewrap"><table>
-        <thead><tr><th>Beli sebulan</th><th>Jumlah</th><th style="text-align:right">Kos</th></tr></thead>
-        <tbody>
-          ${c.lines.map(l=>`<tr><td>${ING[l.k].ms}${l.k==='b'?' <span class="sub">(kedai daging)</span>':''}</td><td class="num">${l.qty}</td><td class="num" style="text-align:right">${rs(l.cost)}</td></tr>`).join('')}
-          <tr><td>Barang dapur</td><td class="sub">${S.incPantry?'sos, rempah, bawang, timun':'tidak dikira'}</td><td class="num" style="text-align:right">${rs(c.pantry)}</td></tr>
-          <tr><td><b>Jumlah</b></td><td class="num">${c.n} snek</td><td class="num" style="text-align:right"><b>${rs(c.total)}</b></td></tr>
-        </tbody></table></div>
-      <h3>Bandingan dengan beli di luar</h3>
-      <div class="cmp">
-        <div class="bar"><span>Masak rumah</span><span class="track"><span class="fill" style="width:${(c.total/max*100).toFixed(1)}%;display:block"></span></span><span class="num">${rs(c.total)}</span></div>
-        <div class="bar"><span>Beli luar</span><span class="track"><span class="fill out" style="width:${(c.out/max*100).toFixed(1)}%;display:block"></span></span><span class="num">${rs(c.out)}</span></div>
-      </div>
-      <p class="sub" style="margin-top:10px">Beli luar dikira <input class="inline-in" id="out-price" type="number" min="0" value="${S.outPrice}" aria-label="Harga satu snek luar"> rupee sesnek, protein <input class="inline-in" id="out-prot" type="number" min="0" value="${S.outProt}" aria-label="Protein satu snek luar"> g. Protein sebulan: rumah <b>${Math.round(c.prot)} g</b>, luar <b>${Math.round(c.outProt)} g</b>.</p>
-      <p class="sub">${c.total<=c.out ? `Masak rumah jimat <b>${rs(c.out-c.total)}</b> sebulan, dan dapat ${c.outProt?(c.prot/c.outProt).toFixed(1):'–'} kali ganda protein.` : `Bulan ini masak rumah lebih mahal ${rs(c.total-c.out)}, sebab barang dapur dikira penuh. Rempah dan sos tahan lebih dari sebulan, jadi bulan kedua lebih murah.`}</p>
+  const total=t.main+pantry, out=t.n*S.outPrice, max=Math.max(total,out,1), nDays=new Date(calY,calM+1,0).getDate();
+  return `<h2 class="page-h">Belanja</h2>
+  <section class="box"><h2>Kos ${MONTHS[calM]} ${calY}</h2>
+    ${t.n ? `<div class="tiles"><div class="tile big"><small>Jumlah sebulan</small><b>${rs(total)}</b></div><div class="tile"><small>Sehari</small><b>${rs(total/nDays)}</b></div><div class="tile"><small>Satu menu</small><b>${rs(total/t.n)}</b></div><div class="tile"><small>Protein sehari</small><b>${Math.round(t.prot/nDays)} g</b></div></div>
+    <div class="tablewrap"><table><thead><tr><th>Beli bulan ini</th><th>Jumlah</th><th style="text-align:right">Kos</th></tr></thead><tbody>
+      ${t.lines.map(l=>`<tr><td>${ING[l.k].ms}${(l.k==='b'||l.k==='c')?' <span class="sub">(kedai)</span>':''}</td><td class="num">${l.note||l.qty}</td><td class="num" style="text-align:right">${rs(l.cost)}</td></tr>`).join('')}
+      <tr><td>Barang dapur</td><td class="sub">${S.incPantry?'minyak, sos, rempah, bawang':'tidak dikira'}</td><td class="num" style="text-align:right">${rs(pantry)}</td></tr>
+      <tr><td><b>Jumlah</b></td><td class="num">${t.n} menu</td><td class="num" style="text-align:right"><b>${rs(total)}</b></td></tr></tbody></table></div>
+    <h3>Kalau beli di luar</h3>
+    <div class="bar"><span>Masak rumah</span><span class="track"><span class="fill" style="width:${(total/max*100).toFixed(1)}%"></span></span><span class="num">${rs(total)}</span></div>
+    <div class="bar"><span>Beli luar</span><span class="track"><span class="fill out" style="width:${(out/max*100).toFixed(1)}%"></span></span><span class="num">${rs(out)}</span></div>
+    <p class="sub" style="margin-top:10px">Beli luar dikira <input class="inline-in" id="out-price" type="number" min="0" value="${S.outPrice}" aria-label="Harga satu snek luar"> rupee sesnek. ${total<=out?`Masak rumah jimat <b>${rs(out-total)}</b> bulan ini.`:`Bulan ini masak rumah lebih ${rs(total-out)}, sebab barang dapur dikira penuh. Sos dan rempah tahan lebih dari sebulan.`}</p>`
+    : `<p class="sub">Kos dikira daripada menu yang awak rancang dalam Kalendar. Bulan ini belum ada rancangan.</p><div class="btnrow"><button type="button" class="btn pri" data-view-go="kalendar">Buka Kalendar</button><button type="button" class="btn" id="fill-sample">Isi contoh bulan ini</button></div>`}
+  </section>
+  <section class="box shop"><h2>Senarai beli</h2><p class="sub">Harga Instamart dilihat 10 Nov 2026, boleh berubah. Tanda yang sudah dibeli.</p>
+    ${SHOP.map(g=>`<h3>${g.g}</h3><ul>${g.items.map(i=>`<li class="${S.bought[i.id]?'done':''} ${i.no?'no':''}"><label for="${i.id}"><input type="checkbox" id="${i.id}" ${S.bought[i.id]?'checked':''}><span class="nm">${i.n}${i.d?`<small>${i.d}</small>`:''}</span></label><span class="pr">${i.p}</span></li>`).join('')}</ul>`).join('')}
+    <p class="sub" style="margin-top:10px">Garam, gula dan susu dianggap sudah ada di rumah.</p>
+    <button type="button" class="btn" id="shop-clear">Kosongkan semua tanda</button></section>
+  <section class="box"><h2>Harga bahan utama</h2>
+    <div class="price-grid">
+      <label for="pr-skinBudget">Kulit ayam: bajet sebulan (₹)<input id="pr-skinBudget" data-k="skinBudget" type="number" min="0" step="any" inputmode="decimal" value="${S.prices.skinBudget}"></label>
+      <label for="pr-skinKg">Kulit ayam: dapat berapa kg sebulan<input id="pr-skinKg" data-k="skinKg" type="number" min="0.1" step="any" inputmode="decimal" value="${S.prices.skinKg}"></label>
+      <label for="pr-b">Daging lembu, sekilo (₹)<input id="pr-b" data-k="b" type="number" min="0" step="any" inputmode="decimal" value="${S.prices.b}"></label>
+      <label for="pr-p">Kentang, sekilo (₹)<input id="pr-p" data-k="p" type="number" min="0" step="any" inputmode="decimal" value="${S.prices.p}"></label>
+      <label for="pr-r">Roti putih, sebuku ~16 keping (₹)<input id="pr-r" data-k="r" type="number" min="0" step="any" inputmode="decimal" value="${S.prices.r}"></label>
+      <label for="pr-e">Telur, sebiji (₹)<input id="pr-e" data-k="e" type="number" min="0" step="any" inputmode="decimal" value="${S.prices.e}"></label>
     </div>
-
-    <div class="cols">
-      <div class="box"><h2>Pelan snek saya</h2>
-        <p class="sub">Berapa kali sebulan awak buat setiap snek. Contoh asal: 30 snek, lebih kurang satu sehari.</p>
-        <div class="plan">${inPlan.length ? inPlan.map(([id,cnt])=>{ const r=R.find(x=>x.id===id); return `<div class="prow"><span class="pn">${r.n}<small>${rs(stats(r).cost)} sesnek</small></span><span class="step"><button type="button" data-plan="${id}" data-d="-1" aria-label="Kurang">−</button><span>${cnt}</span><button type="button" data-plan="${id}" data-d="1" aria-label="Tambah">+</button></span></div>`; }).join('') : '<p class="sub">Pelan kosong. Tambah snek di bawah.</p>'}</div>
-        <div class="addrow"><select id="plan-add" aria-label="Pilih snek untuk ditambah"><option value="">Tambah snek…</option>${others.map(r=>`<option value="${r.id}">${r.n}</option>`).join('')}</select><button type="button" class="btn pri" id="plan-add-btn">Tambah</button></div>
-        <div class="addrow"><button type="button" class="btn" id="plan-reset">Kembali ke pelan contoh</button></div>
-      </div>
-      <div class="box"><h2>Barang dapur sebulan</h2>
-        <label class="tog" for="inc-pantry"><input type="checkbox" id="inc-pantry" ${S.incPantry?'checked':''}> Kira barang dapur dalam jumlah</label>
-        <p class="sub">Berapa pek sebulan untuk snek sahaja. Ubah ikut guna awak.</p>
-        <div class="plan">${PANTRY.map(i=>{ const q=S.pantryQ[i.id] ?? i.q; return `<div class="prow"><span class="pn">${i.n}<small>${rs(i.v)} sepek · ${rs(i.v*q)} sebulan</small></span><span class="step"><button type="button" data-pq="${i.id}" data-d="-0.5" aria-label="Kurang">−</button><span>${frac(q)}</span><button type="button" data-pq="${i.id}" data-d="0.5" aria-label="Tambah">+</button></span></div>`; }).join('')}</div>
-      </div>
-    </div>
-
-    <div class="box"><h2>Harga bahan utama</h2>
-      <p class="sub">Harga Instamart pada 10 Nov 2026. Daging ikut harga kedai daging awak. Ubah kalau harga berubah.</p>
-      <div class="price-grid">${ORDER.map(k=>`<label for="price-${k}">${PRICE_LABEL[k]} (₹)<input id="price-${k}" type="number" min="0" step="any" inputmode="decimal" value="${S.prices[k]}" data-k="${k}"></label>`).join('')}</div>
-      <button type="button" class="btn" id="reset-prices" style="margin-top:12px">Kembali ke harga asal</button>
-    </div>
-  </div>`;
+    <p class="sub" style="margin:10px 0">Kulit ayam sekarang dikira <b class="num">${rs(price('c'))}</b> sekilo (bajet ÷ kg). Betulkan dua kotak di atas ikut kedai awak.</p>
+    <button type="button" class="btn" id="reset-prices">Kembali ke harga asal</button></section>
+  <section class="box"><h2>Barang dapur sebulan</h2>
+    <label class="tog" for="inc-pantry"><input type="checkbox" id="inc-pantry" ${S.incPantry?'checked':''}> Kira barang dapur dalam jumlah</label>
+    ${PANTRY.map(i=>{ const q=S.pantryQ[i.id] ?? i.q; return `<div class="prow"><span class="pn">${i.n}<small>${rs(i.v)} sepek · ${rs(i.v*q)} sebulan</small></span><span class="step"><button type="button" data-pq="${i.id}" data-d="-0.5" aria-label="Kurang">−</button><span>${frac(q)}</span><button type="button" data-pq="${i.id}" data-d="0.5" aria-label="Tambah">+</button></span></div>`; }).join('')}
+  </section>`;
 }
 
-function viewBeli(){
-  return `<div class="view"><div class="box"><h2>Senarai beli Instamart</h2>
-    <p class="sub">Harga dilihat 10 Nov 2026, boleh berubah. Tanda barang yang sudah dibeli.</p>
-    <div class="shop">${SHOP.map(g=>`<div><h3>${g.g}</h3><ul>${g.items.map(i=>`<li class="${S.bought[i.id]?'done':''} ${i.no?'no':''}"><label for="${i.id}"><input type="checkbox" id="${i.id}" ${S.bought[i.id]?'checked':''}><span class="nm">${i.n}${i.d?`<small>${i.d}</small>`:''}</span></label><span class="pr">${i.p}</span></li>`).join('')}</ul></div>`).join('')}</div>
-    <p class="sub" style="margin-top:12px">Garam, gula, minyak masak dan susu dianggap sudah ada di rumah.</p>
-    <button type="button" class="btn" id="shop-clear" style="margin-top:6px">Kosongkan semua tanda</button>
-  </div></div>`;
-}
-
-function viewTips(){
-  return `<div class="view"><div class="cols">
-    <div class="box"><h2>Asas air fryer</h2><ul>
-      <li>Panaskan dulu 3 minit pada suhu masakan.</li>
-      <li>Satu lapis sahaja. Bakul penuh akan mengukus, bukan merangupkan.</li>
-      <li>Goncang atau terbalikkan pada separuh masa. Pemasa dalam resepi akan ingatkan.</li>
-      <li>1 sudu kecil minyak sudah cukup. Sapu dengan berus atau tisu.</li>
-      <li>Tiada kertas minyak? Sapu minyak pada bakul. Untuk adunan cair, guna mangkuk keluli kecil (katori).</li>
-      <li class="warn">Jangan masukkan kertas minyak seorang diri masa panaskan. Ia terbang ke elemen panas.</li>
-      <li>Roti ringan boleh terbang kena kipas. Tahan dengan cucuk gigi.</li>
-      <li>Suhu dalam selamat: ayam 74°C, daging cincang 71°C. Tiada termometer? Belah ketulan paling besar, pastikan tiada merah jambu.</li>
-      <li>Panaskan semula lauk 160°C selama 3 hingga 4 minit.</li>
-    </ul></div>
-    <div class="box"><h2>Persediaan hari Ahad, 30 minit</h2><ol>
-      <li>Air fry 6 biji telur 130°C selama 15 minit.</li>
-      <li>Masak 300 g ayam kunyit. Guna untuk piza roti, sandwic dan muffin telur.</li>
-      <li>Bakar kulit roti lama 160°C selama 5 minit, hancurkan, simpan dalam balang.</li>
-      <li>Bentukkan nugget atau bebola, bekukan mentah, kemudian masuk plastik.</li>
-      <li>Potong 1 kg kentang, separuh masak 5 minit, bekukan.</li>
-    </ol>
-    <h3>Supaya lebih sihat</h3><ul>
-      <li>Tambah timun atau tomato di sebelah setiap snek.</li>
-      <li>Guna dadih sebagai ganti mayonis.</li>
-      <li>Biarkan kulit kentang, lebih banyak serat.</li>
-      <li>Kurangkan sos tomato dan gula.</li>
-    </ul></div>
-  </div>
-  <p class="sub">Semua nombor ialah anggaran kasar untuk satu hidangan. Protein dan kalori daripada nilai biasa bahan mentah. Setiap air fryer berbeza, jadi semak kumpulan pertama.</p></div>`;
+/* ---------- PANDUAN ---------- */
+function cutBlock(key, note){ const c=CUTS[key]; return `<h4>${c.t}</h4><span class="ref">${c.ref}</span>${c.svg()}<ol>${c.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${note?`<p class="sub" style="margin:0">Untuk resepi ini: ${note}</p>`:''}`; }
+function viewPanduan(){
+  const used = k => R.filter(r=>CUTMAP[r.id] && CUTMAP[r.id][0]===k);
+  return `<h2 class="page-h">Panduan</h2>
+  <details class="acc" open><summary>Cara potong</summary><div class="in">
+    <div class="sizes"><div class="size"><b>1–2 mm</b>Tebal syiling ₹1</div><div class="size"><b>3 mm</b>Tebal 2 syiling</div><div class="size"><b>1 cm</b>Lebar jari kelingking</div><div class="size"><b>2 cm</b>Lebar ibu jari</div><div class="size"><b>4 cm</b>Lebar 2 jari</div></div>
+    <p class="sub">Garis putus-putus ialah tempat pisau. Ikut nombor 1, 2, 3 dari kiri ke kanan.</p>
+    <div class="cutgrid">${Object.keys(CUTS).map(k=>`<div class="cut">${cutBlock(k)}<div class="used">Guna dalam: ${used(k).map(r=>`<button type="button" data-open="${r.id}">${r.n}</button>`).join(', ')}</div></div>`).join('')}</div>
+  </div></details>
+  <details class="acc"><summary>Kulit ayam: yang perlu tahu</summary><div class="in">
+    <div class="verdict"><b>Minyak ayam percuma.</b> Setiap kali masak kulit, minyaknya keluar. Tapis ke dalam balang kaca dan simpan dalam peti sejuk, tahan 2 minggu. Guna untuk tumis, goreng telur dan kentang. Jimat minyak masak, dan lebih wangi.</div>
+    <ul>
+      <li>Lap kering dengan tisu sebelum masak. Ini yang buat kulit rangup dan kurangkan percikan minyak.</li>
+      <li>Kulit mengecut separuh. 120 g mentah jadi lebih kurang segenggam.</li>
+      <li>Bahagikan kulit mentah 120 g sebungkus dan bekukan. Keluarkan satu bungkus setiap kali.</li>
+      <li>Air fryer buang lebih banyak minyak daripada kuali, sebab minyak menitis ke bawah.</li>
+    </ul>
+    <div class="caution"><b>Jujur tentang kulit ayam.</b> Ia murah dan sedap, tapi tinggi lemak dan rendah protein, lebih kurang 13 g protein bagi 100 g, separuh daripada dada ayam. Jadi hadkan sekitar 120 g sehidangan, makan bersama telur untuk protein, dan tambah timun atau tomato. Telur ialah sumber protein utama dalam menu ini.</div>
+  </div></details>
+  <details class="acc"><summary>Asas air fryer</summary><div class="in"><ul>
+    <li>Panaskan dulu 3 minit pada suhu masakan.</li>
+    <li>Satu lapis sahaja. Bakul penuh akan mengukus, bukan merangupkan.</li>
+    <li>Goncang atau terbalikkan pada separuh masa. Pemasa dalam resepi akan ingatkan.</li>
+    <li>Tiada kertas minyak? Sapu sedikit minyak pada bakul. Untuk adunan cair, guna mangkuk keluli kecil.</li>
+    <li>Jangan masukkan kertas minyak seorang diri masa panaskan. Ia terbang ke elemen panas.</li>
+    <li>Buang minyak dari dasar bakul selepas masak kulit ayam, kalau tidak ia berasap pada masakan seterusnya.</li>
+    <li>Suhu dalam selamat: daging cincang 71°C. Tiada termometer? Belah ketulan paling besar, pastikan tiada merah jambu.</li>
+  </ul></div></details>
+  <details class="acc"><summary>Asas dapur induksi</summary><div class="in">
+    <div class="levels"><div class="level"><b>Api perlahan</b><span class="num">± 400–600 W</span><br>Telur hancur, roti keju, reneh kuah.</div><div class="level"><b>Api sederhana</b><span class="num">± 1000–1300 W</span><br>Tumis, goreng telur, kulit ayam, begedil.</div><div class="level"><b>Api kuat</b><span class="num">± 1600–2000 W</span><br>Rebus air, goreng daging cepat.</div></div>
+    <ul>
+      <li>Guna kuali atau periuk dasar rata yang melekat pada magnet. Yang lain tak akan panas.</li>
+      <li>Jangan tinggalkan minyak panas. Kalau minyak mula berasap, turunkan api.</li>
+      <li>Kalau minyak terbakar, tutup dengan penutup kuali dan matikan dapur. Jangan sekali-kali siram air.</li>
+      <li>Kuali sejuk untuk kulit ayam, kuali panas untuk daging dan telur.</li>
+      <li>Minyak gorengan boleh ditapis dan diguna semula 2 hingga 3 kali.</li>
+    </ul></div></details>
+  <details class="acc"><summary>Peringatan: masak atau beli luar?</summary><div class="in">
+    <div class="verdict"><b>Keputusan council:</b> masak sendiri sebagai pilihan biasa, dengan cara "sediakan sekali, makan seminggu". Beli luar hanya belanja yang dirancang, had ₹300 seminggu.</div>
+    <div class="tablewrap"><table><thead><tr><th></th><th>Beli luar</th><th>Masak rumah</th></tr></thead><tbody>
+      <tr><td>Snek murah</td><td>Puff / pazham pori ₹15–30, protein 3–6 g</td><td class="win">2 telur rebus ₹20, protein 13 g</td></tr>
+      <tr><td>Snek berat</td><td>Shawarma ₹100–140</td><td class="win">Kulit ayam berlada + roti, bawah ₹40</td></tr>
+      <tr><td>Masa</td><td class="win">0 minit</td><td>3–15 minit kerja</td></tr>
+      <tr><td>Kenyang</td><td>Goreng tepung, cepat lapar semula</td><td class="win">Telur dan kentang, lama kenyang</td></tr></tbody></table></div>
+    <h3>Kentang beku atau kentang sebenar?</h3>
+    <p>Buat sendiri. Kentang beku lebih kurang 8 kali ganda lebih mahal (₹60–70 berbanding ₹8 untuk 200 g) dan sudah separa digoreng di kilang. Wedges cuma 5 minit potong, tak perlu rendam.</p>
+    <p class="sub">Harga luar ialah anggaran biasa di Kerala. Ini perspektif umum, bukan nasihat kewangan atau pemakanan berlesen.</p>
+  </div></details>
+  <details class="acc"><summary>Persediaan hari Ahad, 30 minit</summary><div class="in"><ol>
+    <li>Rebus 6 biji telur. Snek untuk 5 hari.</li>
+    <li>Lap, potong dan bahagikan kulit ayam 120 g sebungkus. Bekukan.</li>
+    <li>Bakar kulit roti lama 160°C selama 5 minit, hancurkan, simpan dalam balang.</li>
+    <li>Potong 1 kg kentang, air fry 180°C selama 5 minit, bekukan. Bila nak makan: 200°C selama 15 minit.</li>
+    <li>Tapis minyak ayam ke dalam balang.</li>
+    <li>Buka Kalendar dan rancang menu minggu depan.</li>
+  </ol></div></details>
+  <p class="sub">Semua kos, protein dan kalori ialah anggaran kasar untuk satu hidangan. Setiap air fryer dan dapur berbeza, jadi semak masakan pertama.</p>`;
 }
 
 /* ---------- interaksi dalam main ---------- */
 $('main').addEventListener('click', e=>{
-  const card = e.target.closest('.card'); if(card) return openRecipe(card.dataset.id);
-  const op = e.target.closest('[data-open]'); if(op) return openRecipe(op.dataset.open);
-  const ts = e.target.closest('#taste button'); if(ts){ S.taste=ts.dataset.v; save(); return renderView(); }
-  if(e.target.closest('#shuffle')){ const list=menuList(TABS.find(t=>t.id===S.tab)); if(list.length) openRecipe(list[Math.floor(Math.random()*list.length)].r.id); return; }
-  const pl = e.target.closest('[data-plan]'); if(pl){ const id=pl.dataset.plan; S.plan[id]=Math.max(0,(S.plan[id]||0)+Number(pl.dataset.d)); if(!S.plan[id]) delete S.plan[id]; save(); return renderView(); }
-  const pq = e.target.closest('[data-pq]'); if(pq){ const it=PANTRY.find(i=>i.id===pq.dataset.pq); const cur=S.pantryQ[it.id] ?? it.q; S.pantryQ[it.id]=Math.max(0,Math.round((cur+Number(pq.dataset.d))*2)/2); save(); return renderView(); }
-  if(e.target.closest('#plan-add-btn')){ const v=$('plan-add').value; if(v){ S.plan[v]=(S.plan[v]||0)+4; save(); renderView(); } return; }
-  if(e.target.closest('#plan-reset')){ S.plan=Object.assign({},PLAN0); save(); return renderView(); }
-  if(e.target.closest('#reset-prices')){ S.prices=Object.assign({},DEFAULT_PRICES); save(); return renderView(); }
-  if(e.target.closest('#shop-clear')){ S.bought={}; save(); return renderView(); }
+  const g = s => e.target.closest(s);
+  let el;
+  if(el=g('.rc')) return openRecipe(el.dataset.id);
+  if(el=g('[data-open]')) return openRecipe(el.dataset.open);
+  if(el=g('[data-pick]')) return openPicker(el.dataset.pick);
+  if(el=g('[data-m]')){ S.m=el.dataset.m; if(S.cat!=='all' && !R.some(r=>r.m===S.m&&r.cat===S.cat)) S.cat='all'; save(); return render(); }
+  if(el=g('[data-cat]')){ S.cat=el.dataset.cat; save(); return render(); }
+  if(el=g('[data-view-go]')) return go(el.dataset.viewGo);
+  if(el=g('[data-cal]')){ const d=Number(el.dataset.cal); if(d===0){ const n=new Date(); calY=n.getFullYear(); calM=n.getMonth(); selDay=ymd(n); } else { calM+=d; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;} } return render(); }
+  if(el=g('[data-day]')){ selDay=el.dataset.day; return render(); }
+  if(el=g('[data-rm]')){ const a=(S.cal[selDay]||[]).filter(byId); a.splice(Number(el.dataset.rm),1); if(a.length) S.cal[selDay]=a; else delete S.cal[selDay]; save(); return render(); }
+  if(el=g('[data-copy]')){ const nx=ymd(addDays(fromYmd(el.dataset.copy),1)); S.cal[nx]=(S.cal[nx]||[]).concat(S.cal[el.dataset.copy]||[]); save(); selDay=nx; const d=fromYmd(nx); calY=d.getFullYear(); calM=d.getMonth(); toast('Disalin ke '+niceDate(nx)); return render(); }
+  if(g('#fill-sample')){ const nDays=new Date(calY,calM+1,0).getDate(), t=todayStr(); let i=0, n=0; for(let d=1;d<=nDays;d++){ const ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); if(ds<t || (S.cal[ds]&&S.cal[ds].length)) continue; S.cal[ds]=[SAMPLE[i++%SAMPLE.length]]; n++; } save(); toast(n?n+' hari diisi':'Tiada hari kosong'); return render(); }
+  if(el=g('#clear-month')){ if(el.dataset.sure){ const pre=calY+'-'+String(calM+1).padStart(2,'0')+'-'; for(const d of Object.keys(S.cal)) if(d.startsWith(pre)) delete S.cal[d]; save(); toast('Bulan dikosongkan'); return render(); } el.dataset.sure='1'; el.textContent='Tekan sekali lagi untuk sahkan'; return; }
+  if(el=g('[data-pq]')){ const it=PANTRY.find(i=>i.id===el.dataset.pq); const cur=S.pantryQ[it.id] ?? it.q; S.pantryQ[it.id]=Math.max(0,Math.round((cur+Number(el.dataset.d))*2)/2); save(); return render(); }
+  if(g('#reset-prices')){ S.prices=Object.assign({},DEFAULT_PRICES); save(); return render(); }
+  if(g('#shop-clear')){ S.bought={}; save(); return render(); }
 });
+$('main').addEventListener('input', e=>{ if(e.target.id==='q'){ S.q=e.target.value; $('list-wrap').innerHTML=listHtml(); } });
 $('main').addEventListener('change', e=>{
   const t=e.target;
-  if(t.id==='sort'){ S.sort=t.value; save(); return renderView(); }
-  if(t.id==='inc-pantry'){ S.incPantry=t.checked; save(); return renderView(); }
+  if(t.id==='sort'){ S.sort=t.value; save(); return render(); }
+  if(t.id==='inc-pantry'){ S.incPantry=t.checked; save(); return render(); }
   if(t.type==='checkbox' && t.closest('.shop')){ S.bought[t.id]=t.checked; save(); t.closest('li').classList.toggle('done', t.checked); return; }
-  if(t.id==='out-price' || t.id==='out-prot' || t.dataset.k){
-    const v=parseFloat(t.value); if(isNaN(v)||v<0) return;
-    if(t.id==='out-price') S.outPrice=v; else if(t.id==='out-prot') S.outProt=v; else S.prices[t.dataset.k]=v;
-    save(); renderView();
-  }
+  if(t.id==='out-price' || t.dataset.k){ const v=parseFloat(t.value); if(isNaN(v)||v<0) return; if(t.id==='out-price') S.outPrice=v; else S.prices[t.dataset.k]=v; save(); render(); }
 });
 
 /* ---------- helaian resepi ---------- */
-let openId = null;
-function idleMsg(r){ return r.flip ? `Berbunyi pada minit ke-${r.flip} untuk goncang atau terbalikkan, dan bila siap.` : 'Berbunyi bila siap.'; }
+const sheet = $('sheet');
+let openId = null, cookI = -1;
+function idleMsg(r){ return r.flip ? `Berbunyi pada minit ke-${r.flip} untuk ${r.m==='af'?'goncang atau terbalikkan':'kacau atau terbalikkan'}, dan bila siap.` : 'Berbunyi bila siap.'; }
 function openRecipe(id){
-  const r = R.find(x=>x.id===id); if(!r) return; openId = id; const s = stats(r); const cm = CUTMAP[r.id];
-  $('sheet-body').innerHTML = `
-    <div class="sheet-head"><div>
-      <div class="row" style="margin-bottom:8px"><span class="chip ${r.t}">${tasteName(r.t)}</span>${s.hp?'<span class="chip hp">Protein tinggi</span>':''}<span class="lcd">${r.temp}°C · ${r.min} min</span></div>
-      <h3 id="sheet-title">${r.n}</h3><p>${r.en} · lebih kurang ${s.total} minit semua · 1 hidangan</p></div>
-      <button type="button" class="x" id="close" aria-label="Tutup">✕</button></div>
-    <div class="stats"><span><b>${rs(s.cost)}</b><small>kos</small></span><span><b>${Math.round(s.p)} g</b><small>protein</small></span><span><b>${Math.round(s.k)}</b><small>kcal</small></span><span><b>${s.value.toFixed(1)} g</b><small>protein setiap ₹10</small></span></div>
-    ${r.q.b?'<div class="alertbox"><b>Daging lembu tiada di Instamart.</b> Beli di kedai daging (lebih kurang ₹500 sekilo), atau tukar dengan keema ayam Nandus dari Instamart.</div>':''}
-    <div class="need">
-      <div><h4>Bahan utama</h4><ul>${ORDER.filter(k=>r.q[k]).map(k=>`<li>${ING[k].ms} (${ING[k].sub}): ${qtyText(k,r.q[k])}</li>`).join('')}</ul></div>
-      <div><h4>Dari dapur</h4><ul>${r.pantry.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    </div>
+  const r = byId(id); if(!r) return; openId=id; cookI=-1; const s=stats(r), cm=CUTMAP[r.id];
+  const planned = Object.entries(S.cal).filter(([d,ids])=>d>=todayStr() && ids.includes(id)).map(([d])=>d).sort();
+  $('sheet-body').innerHTML = `<div class="sheet">
+    <div class="sh-head">${dial(r)}<div><h3>${r.n}</h3><p>${r.en}</p></div><button type="button" class="x" data-close aria-label="Tutup">✕</button></div>
+    <div class="facts"><div class="fact"><b>${how(r).replace('Api ','')}</b><small>${r.m==='af'?'air fryer':'api induksi'}</small></div><div class="fact"><b>${rs(s.cost)}</b><small>kos</small></div><div class="fact"><b>${Math.round(s.p)} g</b><small>protein</small></div><div class="fact"><b>${Math.round(s.k)}</b><small>kcal</small></div></div>
+    <p class="sub" style="margin:0">Lebih kurang ${s.total} minit semuanya · 1 hidangan · tekak ${r.t==='m'?'Melayu':'Barat'}</p>
+    ${r.q.b?'<div class="caution"><b>Daging lembu tiada di Instamart.</b> Beli di kedai daging, lebih kurang ₹500 sekilo.</div>':''}
+    <div class="actions"><button type="button" class="big-btn" id="cook-go">Mula masak</button><button type="button" class="big-btn ghost" id="plan-toggle">Rancang di kalendar</button></div>
+    <div class="planbox" id="planbox" hidden><div class="btnrow"><button type="button" class="btn pri" data-plan="0">Hari ini</button><button type="button" class="btn" data-plan="1">Esok</button><input type="date" id="plan-date" value="${todayStr()}" aria-label="Pilih tarikh"><button type="button" class="btn" data-plan="d">Tambah tarikh ini</button></div><p class="sub" id="plan-info" style="margin:0">${planned.length?'Sudah dirancang: '+planned.map(niceDate).join('; '):'Belum dirancang.'}</p></div>
+    <div class="two"><div><h4>Bahan utama</h4><ul>${ORDER.filter(k=>r.q[k]).map(k=>`<li>${ING[k].ms}: ${qtyText(k,r.q[k])}</li>`).join('')}</ul></div><div><h4>Dari dapur</h4><ul>${r.pantry.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
     ${cm?`<div class="cutbox"><h4>Cara potong</h4>${cutBlock(cm[0], cm[1])}</div>`:''}
     <div><h4>Cara buat</h4><ol>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ol></div>
     <div class="tip"><b>Tip.</b> ${r.tip}</div>
-    <div class="timer"><span class="lcd" id="t-display">${mmss(r.min*60)}</span><span class="timer-msg" id="t-msg">${idleMsg(r)}</span><button type="button" class="go" id="t-btn">Mula pemasa</button></div>
-    <div class="sheet-foot"><span class="sub">Dalam pelan bulanan: <b id="plan-n">${S.plan[r.id]||0}</b> kali</span><button type="button" class="btn" id="plan-plus">+ Tambah ke pelan bulanan</button></div>`;
-  $('close').onclick = ()=>$('sheet').close();
-  $('t-btn').onclick = ()=>{ if(timer && timer.id===r.id) stopTimer(); else startTimer(r); };
-  $('plan-plus').onclick = ()=>{ S.plan[r.id]=(S.plan[r.id]||0)+1; save(); $('plan-n').textContent=S.plan[r.id]; toast('Ditambah ke pelan bulanan'); if(S.tab==='kos') renderView(); };
-  if(!$('sheet').open) $('sheet').showModal();
-  $('sheet').scrollTop = 0;
-  tick();
+    <div class="timer"><span class="clock" id="t-display">${mmss(r.min*60)}</span><span class="timer-msg" id="t-msg">${idleMsg(r)}</span><button type="button" class="btn pri" id="t-btn">Mula pemasa</button></div>
+  </div>`;
+  if(!sheet.open) sheet.showModal();
+  sheet.scrollTop = 0; tick();
 }
-$('sheet').addEventListener('click', e=>{ if(e.target===$('sheet')) $('sheet').close(); });
-$('sheet').addEventListener('close', ()=>{ openId=null; });
+function stepSecs(text){ const m=text.match(/(\d+)\s*minit/); return m ? Number(m[1])*60 : 0; }
+function renderCook(){
+  const r=byId(openId), n=r.steps.length, text=r.steps[cookI], secs=stepSecs(text);
+  $('sheet-body').innerHTML = `<div class="cook">
+    <div class="cook-top"><button type="button" class="btn" id="cook-back">‹ Resepi</button><span class="ttl">${r.n}</span><button type="button" class="x" data-close aria-label="Tutup">✕</button></div>
+    <div class="cook-prog">${r.steps.map((_,i)=>`<i class="${i<=cookI?'on':''}"></i>`).join('')}</div>
+    <span class="cook-n">Langkah ${cookI+1} / ${n} · ${how(r)}</span>
+    <p class="cook-step">${text}</p>
+    ${secs?`<button type="button" class="big-btn ghost" id="cook-timer" data-secs="${secs}">Mula pemasa ${secs/60} minit</button>`:''}
+    <div class="cook-nav"><button type="button" class="big-btn ghost" id="cook-prev" ${cookI===0?'disabled':''}>Sebelum</button><button type="button" class="big-btn" id="cook-next">${cookI===n-1?'Siap':'Seterusnya'}</button></div>
+  </div>`;
+  sheet.scrollTop = 0;
+}
+/* pemilih menu untuk satu tarikh */
+let pickDay=null, pickM='all', pickQ='';
+function pickRows(){
+  const q=pickQ.trim().toLowerCase(), have=S.cal[pickDay]||[];
+  const list=R.filter(r=>(pickM==='all'||r.m===pickM) && (!q||r.n.toLowerCase().includes(q))).sort((a,b)=>a.n.localeCompare(b.n));
+  return list.length ? list.map(r=>{ const c=have.filter(x=>x===r.id).length; return `<button type="button" class="pick-row${c?' added':''}" data-add="${r.id}"><i class="mdot ${r.m==='in'?'in':''}"></i><span class="nm">${r.n}<small>${r.m==='af'?'Air fryer':'Induksi'} · ${r.min} min · ${rs(stats(r).cost)}</small></span><span class="plus">${c?'✓'+(c>1?c:''):'+'}</span></button>`; }).join('') : '<p class="sub">Tiada resepi yang sepadan.</p>';
+}
+function openPicker(day){
+  pickDay=day; pickQ=''; openId=null;
+  $('sheet-body').innerHTML = `<div class="sheet">
+    <div class="sh-head"><div><h3>Tambah menu</h3><p>${niceDate(day)}</p></div><button type="button" class="x" data-close aria-label="Tutup">✕</button></div>
+    <input class="search" id="pick-q" type="search" placeholder="Cari resepi" aria-label="Cari resepi">
+    <div class="cats">${[['all','Semua'],['af','Air Fryer'],['in','Dapur Induksi']].map(([k,l])=>`<button type="button" class="cat" data-pm="${k}" aria-pressed="${pickM===k}">${l}</button>`).join('')}</div>
+    <div class="pick-list" id="pick-list">${pickRows()}</div>
+    <button type="button" class="big-btn" data-close>Siap</button>
+  </div>`;
+  if(!sheet.open) sheet.showModal();
+  sheet.scrollTop = 0;
+}
+function addToDay(day,id){ S.cal[day]=(S.cal[day]||[]).concat(id); save(); }
+sheet.addEventListener('input', e=>{ if(e.target.id==='pick-q'){ pickQ=e.target.value; $('pick-list').innerHTML=pickRows(); } });
+sheet.addEventListener('click', e=>{
+  if(e.target===sheet) return sheet.close();
+  const g = s => e.target.closest(s); let el;
+  if(g('[data-close]')) return sheet.close();
+  if(el=g('[data-pm]')){ pickM=el.dataset.pm; sheet.querySelectorAll('[data-pm]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pm===pickM)); $('pick-list').innerHTML=pickRows(); return; }
+  if(el=g('[data-add]')){ addToDay(pickDay, el.dataset.add); $('pick-list').innerHTML=pickRows(); toast(byId(el.dataset.add).n+' ditambah'); return; }
+  const r = openId && byId(openId); if(!r) return;
+  if(g('#plan-toggle')){ $('planbox').hidden=!$('planbox').hidden; return; }
+  if(el=g('[data-plan]')){ const v=el.dataset.plan; const day = v==='d' ? $('plan-date').value : ymd(addDays(new Date(), Number(v))); if(!day) return; addToDay(day, r.id); $('plan-info').textContent='Ditambah untuk '+niceDate(day)+'.'; toast('Dirancang: '+niceDate(day)); return; }
+  if(g('#t-btn')){ if(timer && timer.id===r.id) stopTimer(); else startTimer({id:r.id, name:r.n, secs:r.min*60, flip:r.flip?r.flip*60:null}); return; }
+  if(g('#cook-go')){ cookI=0; return renderCook(); }
+  if(g('#cook-back')) return openRecipe(r.id);
+  if(g('#cook-prev')){ if(cookI>0){ cookI--; renderCook(); } return; }
+  if(g('#cook-next')){ if(cookI<r.steps.length-1){ cookI++; renderCook(); } else { sheet.close(); toast('Siap! Selamat makan.'); } return; }
+  if(el=g('#cook-timer')){ startTimer({id:r.id, name:r.n, secs:Number(el.dataset.secs), flip:null}); toast('Pemasa bermula'); return; }
+});
+sheet.addEventListener('close', ()=>{ openId=null; cookI=-1; pickDay=null; if(S.view!=='panduan') render(); });
 
 /* ---------- pemasa ---------- */
 const FLIP_MSG = 'Goncang atau terbalikkan sekarang!';
@@ -875,36 +1147,33 @@ function beep(n){
     o.connect(g).connect(ac.destination); o.start(t); o.stop(t+.3); }
 }
 async function keepAwake(){ try{ if('wakeLock' in navigator) wake = await navigator.wakeLock.request('screen'); }catch(e){} }
-function startTimer(r){ ensureAudio(); keepAwake(); timer = {id:r.id, name:r.n, total:r.min*60, end:Date.now()+r.min*60000, flip:r.flip?r.flip*60:null, flipDone:false, done:false, msg:''}; tick(); }
+function startTimer(o){ ensureAudio(); keepAwake(); timer = {id:o.id, name:o.name, total:o.secs, end:Date.now()+o.secs*1000, flip:o.flip, flipDone:false, done:false, msg:''}; tick(); }
 function stopTimer(){ timer=null; try{ wake && wake.release(); }catch(e){} wake=null; tick(); }
 function tick(){
   const pill = $('pill');
   if(timer){
-    const left = (timer.end-Date.now())/1000, el = timer.total-left;
+    const left=(timer.end-Date.now())/1000, el=timer.total-left;
     if(timer.flip && !timer.flipDone && el>=timer.flip){ timer.flipDone=true; timer.msg=FLIP_MSG; beep(2); setTimeout(()=>{ if(timer && timer.msg===FLIP_MSG) timer.msg=''; }, 20000); }
-    if(left<=0 && !timer.done){ timer.done=true; timer.msg='Siap! Periksa dan makan.'; beep(3); setTimeout(()=>beep(3),2500); }
-    pill.hidden = false;
-    $('pill-open').textContent = timer.msg || timer.name;
-    $('pill-time').textContent = mmss(left);
-    pill.classList.toggle('alert', !!timer.msg);
-  } else pill.hidden = true;
-  if(openId && $('t-display')){
-    const mine = timer && timer.id===openId, r = R.find(x=>x.id===openId);
+    if(left<=0 && !timer.done){ timer.done=true; timer.msg='Siap! Periksa makanan.'; beep(3); setTimeout(()=>beep(3),2500); }
+    pill.hidden=false; $('pill-open').textContent = timer.msg || timer.name; $('pill-time').textContent = mmss(left); pill.classList.toggle('alert', !!timer.msg);
+  } else pill.hidden=true;
+  if(openId && cookI<0 && $('t-display')){
+    const r=byId(openId), mine = timer && timer.id===openId;
     $('t-display').textContent = mine ? mmss((timer.end-Date.now())/1000) : mmss(r.min*60);
     $('t-btn').textContent = mine ? 'Henti pemasa' : 'Mula pemasa';
-    const m = $('t-msg');
-    if(mine && timer.msg){ m.textContent = timer.msg; m.classList.add('alert'); }
-    else { m.classList.remove('alert'); m.textContent = mine ? (r.flip && !timer.flipDone ? `Sedang berjalan. Goncang atau terbalikkan pada minit ke-${r.flip}.` : 'Sedang berjalan. Biarkan halaman ini terbuka.') : idleMsg(r); }
+    const m=$('t-msg');
+    if(mine && timer.msg){ m.textContent=timer.msg; m.classList.add('alert'); }
+    else { m.classList.remove('alert'); m.textContent = mine ? 'Sedang berjalan. Biarkan app ini terbuka.' : idleMsg(r); }
   }
 }
 setInterval(tick, 250);
 $('pill-stop').onclick = stopTimer;
-$('pill-open').onclick = ()=>{ if(timer) openRecipe(timer.id); };
+$('pill-open').onclick = ()=>{ if(timer && byId(timer.id)) openRecipe(timer.id); };
 
 /* ---------- tema Pagi / Malam ---------- */
 function applySkin(s){
   document.documentElement.setAttribute('data-skin', s);
-  const m = document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content', s==='malam' ? '#1C0306' : '#CFE3FF');
+  const m = document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content', s==='malam' ? '#4E0B12' : '#B7D3FF');
 }
 $('skin').addEventListener('click', ()=>{
   const s = document.documentElement.getAttribute('data-skin')==='malam' ? 'pagi' : 'malam';
@@ -914,5 +1183,5 @@ $('skin').addEventListener('click', ()=>{
 applySkin(document.documentElement.getAttribute('data-skin') || 'pagi');
 
 /* ---------- mula ---------- */
-(function init(){ const h=location.hash.slice(1); show(validTab(h)?h:(validTab(S.tab)?S.tab:'semua')); })();
+(function init(){ const h=location.hash.slice(1); show(VIEWS.includes(h)?h:(VIEWS.includes(S.view)?S.view:'menu')); })();
 </script>
