@@ -315,6 +315,30 @@ dialog::backdrop{background:var(--scrim)}
 .pill.alert{background:var(--warn);color:#1A0204}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(148px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;z-index:40;font-size:.88rem;font-weight:600;white-space:nowrap}
 
+/* resepi saya */
+.tag.mine{background:var(--acc-soft);color:var(--acc-ink)}
+.addcard{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;border:1.5px dashed var(--line);border-radius:18px;padding:14px 16px;margin-top:10px;width:100%}
+.addcard:hover,.addcard:focus-visible{border-color:var(--acc)}
+.addcard b{font-family:var(--f-display);font-weight:700;font-size:1.05rem;color:var(--acc-ink)}
+.addcard span{font-size:.82rem;color:var(--muted)}
+.form{display:flex;flex-direction:column;gap:14px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:.82rem;font-weight:600;color:var(--muted);min-width:0}
+.fld[hidden]{display:none!important}
+.fld small{font-weight:400}
+.fld input:not([type="radio"]),.fld select,.fld textarea{width:100%;border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:9px 11px;color:var(--ink);font-weight:500;font-size:.95rem;max-width:none}
+.fld textarea{resize:vertical;line-height:1.45;font-family:var(--f-body)}
+.unit{display:flex;align-items:center;border:1px solid var(--line);background:var(--card2);border-radius:12px;overflow:hidden}
+.unit input{border:0!important;border-radius:0!important;background:transparent!important;min-width:0}
+.unit i{font-style:normal;font-family:var(--f-mono);font-size:.78rem;color:var(--muted);padding:0 10px;white-space:nowrap}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg2 label{cursor:pointer}
+.seg2 input{position:absolute;opacity:0;pointer-events:none}
+.seg2 span{display:block;text-align:center;border:1.5px solid var(--line);border-radius:12px;padding:9px;font-weight:700;color:var(--ink);background:var(--card2)}
+.seg2 input:checked + span{border-color:var(--acc);background:var(--acc-soft);color:var(--acc-ink)}
+.seg2 input:focus-visible + span{outline:3px solid var(--acc);outline-offset:2px}
+.ferr{margin:0;background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:10px 12px;font-weight:600;font-size:.9rem}
+
 @media (max-width:560px){
   .two{grid-template-columns:1fr}
   .facts{grid-template-columns:repeat(2,1fr)}
@@ -363,7 +387,7 @@ const ING = {
 const ORDER = ['c','b','p','r','e'];
 const DEFAULT_PRICES = {skinBudget:300, skinKg:3, b:500, p:34, r:60, e:9};
 const SLICES = 16;
-const CATS = [['all','Semua'],['k','Kulit Ayam'],['b','Daging'],['p','Kentang'],['r','Roti'],['e','Telur']];
+const CATS = [['all','Semua'],['mine','Resepi Saya'],['k','Kulit Ayam'],['b','Daging'],['p','Kentang'],['r','Roti'],['e','Telur']];
 const HEAT = {P:'Api perlahan', S:'Api sederhana', K:'Api kuat'};
 const MONTHS = ['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'];
 const DAYS = ['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'];
@@ -832,7 +856,7 @@ function qtyText(key,q){ if(key==='e') return frac(q)+' biji'; if(key==='r') ret
 const mmss = s => { s=Math.max(0,Math.ceil(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); };
 const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,1700); }
-const byId = id => R.find(r=>r.id===id);
+const byId = id => RX.find(r=>r.id===id);
 
 /* ---------- kira ---------- */
 function price(k){ if(k==='c'){ const kg=S.prices.skinKg>0?S.prices.skinKg:1; return S.prices.skinBudget/kg; } return S.prices[k]; }
@@ -873,12 +897,12 @@ function render(){ $('main').innerHTML = ({menu:viewMenu, kalendar:viewKalendar,
 /* ---------- MENU ---------- */
 function menuList(){
   const q = S.q.trim().toLowerCase();
-  let list = R.filter(r => r.m===S.m && (S.cat==='all' || r.cat===S.cat) && (!q || r.n.toLowerCase().includes(q) || r.en.toLowerCase().includes(q))).map(r=>({r,s:stats(r)}));
+  let list = RX.filter(r => r.m===S.m && (S.cat==='all' || (S.cat==='mine' ? r.mine : r.cat===S.cat)) && (!q || r.n.toLowerCase().includes(q) || r.en.toLowerCase().includes(q))).map(r=>({r,s:stats(r)}));
   const f = {fast:(a,b)=>a.s.total-b.s.total, cheap:(a,b)=>a.s.cost-b.s.cost, protein:(a,b)=>b.s.p-a.s.p, light:(a,b)=>a.s.k-b.s.k}[S.sort] || ((a,b)=>a.s.total-b.s.total);
   return list.sort(f);
 }
 function rowHtml(r,s){
-  return `<button type="button" class="rc" data-id="${r.id}">${dial(r)}<span class="rc-b"><span class="rc-n">${r.n}</span><span class="rc-m">${how(r)} · <span class="num">${rs(s.cost)}</span> · ${Math.round(s.p)} g protein</span></span>${s.hp?'<span class="tag">Protein</span>':''}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
+  return `<button type="button" class="rc" data-id="${r.id}">${dial(r)}<span class="rc-b"><span class="rc-n">${r.n}</span><span class="rc-m">${how(r)} · <span class="num">${rs(s.cost)}</span> · ${Math.round(s.p)} g protein</span></span>${r.mine?'<span class="tag mine">Saya</span>':s.hp?'<span class="tag">Protein</span>':''}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
 }
 function todayCard(){
   const t=todayStr(), ids=(S.cal[t]||[]).filter(byId), tm=(S.cal[ymd(addDays(new Date(),1))]||[]).filter(byId);
@@ -889,17 +913,20 @@ function todayCard(){
 }
 function listHtml(){
   const list = menuList();
-  return list.length ? `<div class="list">${list.map(({r,s})=>rowHtml(r,s)).join('')}</div>` : '<div class="empty">Tiada resepi yang sepadan. Cuba kategori Semua atau kosongkan carian.</div>';
+  const add = '<button type="button" class="addcard" data-new><b>＋ Tambah resepi saya</b><span>Cipta menu sendiri, atau buka mana-mana resepi dan tekan "Ubah suai".</span></button>';
+  if(list.length) return `<div class="list">${list.map(({r,s})=>rowHtml(r,s)).join('')}</div>${add}`;
+  if(S.cat==='mine') return `<div class="empty">Belum ada resepi saya untuk ${S.m==='af'?'air fryer':'dapur induksi'}.</div>${add}`;
+  return '<div class="empty">Tiada resepi yang sepadan. Cuba kategori Semua atau kosongkan carian.</div>'+add;
 }
 function viewMenu(){
-  const nAf=R.filter(r=>r.m==='af').length, nIn=R.filter(r=>r.m==='in').length;
-  const inM = R.filter(r=>r.m===S.m);
+  const nAf=RX.filter(r=>r.m==='af').length, nIn=RX.filter(r=>r.m==='in').length;
+  const inM = RX.filter(r=>r.m===S.m);
   return `${todayCard()}
   <div class="method" role="group" aria-label="Alat masak">
     <button type="button" data-m="af" aria-pressed="${S.m==='af'}"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="3" width="18" height="26" rx="5"/><rect x="11" y="7" width="10" height="4" rx="1.5"/><rect x="10" y="15" width="12" height="10" rx="2.5"/><path d="M14 20h4"/></svg><span><b>Air Fryer</b><small>${nAf} resepi</small></span></button>
     <button type="button" class="in" data-m="in" aria-pressed="${S.m==='in'}"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="26" height="16" rx="4"/><circle cx="16" cy="16" r="5.5"/><circle cx="16" cy="16" r="2.2"/></svg><span><b>Dapur Induksi</b><small>${nIn} resepi</small></span></button>
   </div>
-  <div class="cats" role="group" aria-label="Kategori">${CATS.map(([k,l])=>`<button type="button" class="cat" data-cat="${k}" aria-pressed="${S.cat===k}">${l}<span class="n">${k==='all'?inM.length:inM.filter(r=>r.cat===k).length}</span></button>`).join('')}</div>
+  <div class="cats" role="group" aria-label="Kategori">${CATS.map(([k,l])=>`<button type="button" class="cat" data-cat="${k}" aria-pressed="${S.cat===k}">${l}<span class="n">${k==='all'?inM.length:k==='mine'?inM.filter(r=>r.mine).length:inM.filter(r=>r.cat===k).length}</span></button>`).join('')}</div>
   <div class="tools"><input class="search" id="q" type="search" placeholder="Cari resepi" value="${esc(S.q)}" aria-label="Cari resepi">
     <select id="sort" aria-label="Susun ikut">${[['fast','Paling cepat'],['cheap','Paling murah'],['protein','Protein tinggi'],['light','Kalori rendah']].map(([v,l])=>`<option value="${v}" ${S.sort===v?'selected':''}>${l}</option>`).join('')}</select></div>
   <div id="list-wrap">${listHtml()}</div>`;
@@ -974,8 +1001,51 @@ function viewBelanja(){
 /* ---------- PANDUAN ---------- */
 function cutBlock(key, note){ const c=CUTS[key]; return `<h4>${c.t}</h4><span class="ref">${c.ref}</span>${c.svg()}<ol>${c.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${note?`<p class="sub" style="margin:0">Untuk resepi ini: ${note}</p>`:''}`; }
 function viewPanduan(){
-  const used = k => R.filter(r=>CUTMAP[r.id] && CUTMAP[r.id][0]===k);
+  const used = k => RX.filter(r=>CUTMAP[r.id] && CUTMAP[r.id][0]===k);
   return `<h2 class="page-h">Panduan</h2>
+  <details class="acc"><summary>Rasa terlalu banyak? Mula di sini</summary><div class="in">
+    <div class="verdict"><b>Awak tak perlu ikut semua.</b> App ini ialah menu untuk dipilih, bukan peraturan untuk dipatuhi. Mula kecil. Tambah sedikit demi sedikit bila sudah jadi kebiasaan.</div>
+    <h3>Mula dengan pelan paling kecil</h3>
+    <ol>
+      <li>Pilih 3 resepi andalan sahaja: satu air fryer, satu dapur induksi, satu tanpa usaha. Contoh: Kulit Ayam Rangup, Roti Telur Kuali, Telur Rebus. Lupakan yang lain dulu.</li>
+      <li>Masak 2 hari seminggu sahaja untuk 2 minggu pertama. Tandakan 2 hari itu dalam Kalendar.</li>
+      <li>Rancang 3 hari ke depan sahaja, bukan sebulan.</li>
+      <li>Beli barang untuk seminggu sahaja. Tak perlu beli semua barang dapur sekali gus. Mula dengan garam, kicap, serbuk cili dan bawang.</li>
+    </ol>
+    <h3>Anggap 2 minggu pertama sebagai percubaan</h3>
+    <p>Ini ujian, bukan janji seumur hidup. Selepas 2 minggu, jawab 3 soalan ini:</p>
+    <ul>
+      <li>Berapa kali saya betul-betul masak?</li>
+      <li>Resepi mana yang saya suka dan senang?</li>
+      <li>Apa yang buat saya tak jadi masak?</li>
+    </ul>
+    <p>Kemudian ubah pelan. Buang yang menyusahkan, ulang yang menjadi. Kalau 2 hari seminggu senang, naikkan ke 3.</p>
+    <h3>Bila terlepas</h3>
+    <ul>
+      <li>Terlepas sehari itu biasa. Peraturannya cuma satu: jangan terlepas dua kali berturut-turut.</li>
+      <li>Penat sangat? Itu gunanya snek tanpa usaha: telur rebus, kerepek roti, nugget beku. Masak 2 minit pun kira.</li>
+      <li>Beli di luar sekali-sekala bukan gagal. Ini bukan semua atau tiada. Masak separuh masa pun sudah jimat dan lebih sihat.</li>
+    </ul>
+    <h3>Masa exam atau minggu sibuk</h3>
+    <ul>
+      <li>Tukar ke pelan minimum: rebus 6 biji telur hari Ahad, beli roti. Itu sahaja.</li>
+      <li>Jangan cuba resepi baru masa exam. Ulang yang sudah biasa.</li>
+      <li>Selepas exam, sambung semula dengan 2 hari seminggu.</li>
+    </ul>
+    <h3>Tanda pelan awak terlalu berat</h3>
+    <ul>
+      <li>Rasa bersalah atau malas bila buka app ini.</li>
+      <li>Barang rosak dalam peti sebab tak sempat masak.</li>
+      <li>Kalendar penuh, tapi kebanyakannya tak jadi.</li>
+    </ul>
+    <p>Kalau nampak tanda ini, kurangkan separuh. Pelan kecil yang berjalan lebih baik daripada pelan besar yang berhenti. Dalam Kalendar ada butang "Kosongkan bulan ini" untuk mula semula.</p>
+    <h3>Supaya senang diteruskan</h3>
+    <ul>
+      <li>Masak pada masa yang sama, contohnya terus selepas balik kelas.</li>
+      <li>Letak air fryer di tempat yang nampak, bukan dalam almari.</li>
+      <li>Simpan resepi yang awak suka sebagai Resepi Saya, ubah ikut tekak sendiri. Resepi sendiri lebih mudah diulang.</li>
+    </ul>
+  </div></details>
   <details class="acc" open><summary>Cara potong</summary><div class="in">
     <div class="sizes"><div class="size"><b>1–2 mm</b>Tebal syiling ₹1</div><div class="size"><b>3 mm</b>Tebal 2 syiling</div><div class="size"><b>1 cm</b>Lebar jari kelingking</div><div class="size"><b>2 cm</b>Lebar ibu jari</div><div class="size"><b>4 cm</b>Lebar 2 jari</div></div>
     <p class="sub">Garis putus-putus ialah tempat pisau. Ikut nombor 1, 2, 3 dari kiri ke kanan.</p>
@@ -1061,7 +1131,7 @@ $('main').addEventListener('click', e=>{
   if(el=g('.rc')) return openRecipe(el.dataset.id);
   if(el=g('[data-open]')) return openRecipe(el.dataset.open);
   if(el=g('[data-pick]')) return openPicker(el.dataset.pick);
-  if(el=g('[data-m]')){ S.m=el.dataset.m; if(S.cat!=='all' && !R.some(r=>r.m===S.m&&r.cat===S.cat)) S.cat='all'; save(); return render(); }
+  if(el=g('[data-m]')){ S.m=el.dataset.m; if(S.cat!=='all' && S.cat!=='mine' && !RX.some(r=>r.m===S.m&&r.cat===S.cat)) S.cat='all'; save(); return render(); }
   if(el=g('[data-cat]')){ S.cat=el.dataset.cat; save(); return render(); }
   if(el=g('[data-view-go]')) return go(el.dataset.viewGo);
   if(el=g('[data-cal]')){ const d=Number(el.dataset.cal); if(d===0){ const n=new Date(); calY=n.getFullYear(); calM=n.getMonth(); selDay=ymd(n); } else { calM+=d; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;} } return render(); }
@@ -1100,7 +1170,8 @@ function openRecipe(id){
     <div class="two"><div><h4>Bahan utama</h4><ul>${ORDER.filter(k=>r.q[k]).map(k=>`<li>${ING[k].ms}: ${qtyText(k,r.q[k])}</li>`).join('')}</ul></div><div><h4>Dari dapur</h4><ul>${r.pantry.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
     ${cm?`<div class="cutbox"><h4>Cara potong</h4>${cutBlock(cm[0], cm[1])}</div>`:''}
     <div><h4>Cara buat</h4><ol>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ol></div>
-    <div class="tip"><b>Tip.</b> ${r.tip}</div>
+    ${r.tip?`<div class="tip"><b>Tip.</b> ${r.tip}</div>`:''}
+    <div class="btnrow">${r.mine?`<button type="button" class="btn" data-edit="${r.id}">Edit resepi saya</button>`:`<button type="button" class="btn" data-remix="${r.id}">Ubah suai jadi resepi saya</button>`}</div>
     <div class="timer"><span class="clock" id="t-display">${mmss(r.min*60)}</span><span class="timer-msg" id="t-msg">${idleMsg(r)}</span><button type="button" class="btn pri" id="t-btn">Mula pemasa</button></div>
   </div>`;
   if(!sheet.open) sheet.showModal();
@@ -1123,7 +1194,7 @@ function renderCook(){
 let pickDay=null, pickM='all', pickQ='';
 function pickRows(){
   const q=pickQ.trim().toLowerCase(), have=S.cal[pickDay]||[];
-  const list=R.filter(r=>(pickM==='all'||r.m===pickM) && (!q||r.n.toLowerCase().includes(q))).sort((a,b)=>a.n.localeCompare(b.n));
+  const list=RX.filter(r=>(pickM==='all'||r.m===pickM) && (!q||r.n.toLowerCase().includes(q))).sort((a,b)=>a.n.localeCompare(b.n));
   return list.length ? list.map(r=>{ const c=have.filter(x=>x===r.id).length; return `<button type="button" class="pick-row${c?' added':''}" data-add="${r.id}"><i class="mdot ${r.m==='in'?'in':''}"></i><span class="nm">${r.n}<small>${r.m==='af'?'Air fryer':'Induksi'} · ${r.min} min · ${rs(stats(r).cost)}</small></span><span class="plus">${c?'✓'+(c>1?c:''):'+'}</span></button>`; }).join('') : '<p class="sub">Tiada resepi yang sepadan.</p>';
 }
 function openPicker(day){
@@ -1205,6 +1276,89 @@ $('skin').addEventListener('click', ()=>{
 });
 applySkin(document.documentElement.getAttribute('data-skin') || 'pagi');
 
+/* ---------- Resepi Saya: resepi buatan pengguna, disimpan dalam S.mine ---------- */
+let RX = R.slice();
+const lines = s => String(s||'').split('\n').map(x=>x.trim()).filter(Boolean);
+function cleanQ(q){ const o={}; for(const k of ORDER){ const v=Number(q&&q[k]); if(v>0) o[k]=Math.round(v*2)/2; } return o; }
+function toRun(m){
+  return {id:m.id, mine:true, m:m.m==='in'?'in':'af', cat:CATS.some(c=>c[0]===m.cat)?m.cat:'e', t:m.t==='w'?'w':'m',
+    n:esc(m.n), en:esc(m.en||'Resepi saya'), q:cleanQ(m.q), x:Math.max(0,Number(m.x)||0), xk:0, xp:0,
+    temp:Number(m.temp)||180, heat:HEAT[m.heat]?m.heat:'S', min:Math.max(1,Number(m.min)||1), prep:Math.max(0,Number(m.prep)||0), flip:Number(m.flip)>0?Number(m.flip):null,
+    pantry:lines(m.pantry).map(esc), steps:lines(m.steps).map(esc), tip:esc(m.tip||'')};
+}
+function rebuildRX(){ RX = R.concat(Object.values(S.mine||{}).map(toRun)); }
+
+/* data mentah untuk borang: daripada resepi saya, atau salinan resepi sedia ada */
+function draftFrom(id, copy){
+  if(!copy && S.mine && S.mine[id]) return Object.assign({}, S.mine[id]);
+  const r = R.find(x=>x.id===id);
+  if(!r) return {m:S.m, cat:S.cat==='all'||S.cat==='mine'?'e':S.cat, t:'m', n:'', en:'', q:{}, x:0, temp:180, heat:'S', min:10, prep:5, flip:'', pantry:'', steps:'', tip:''};
+  return {m:r.m, cat:r.cat, t:r.t, n:r.n+' (versi saya)', en:r.en, q:Object.assign({},r.q), x:r.x, temp:r.temp||180, heat:r.heat||'S', min:r.min, prep:r.prep, flip:r.flip||'', pantry:r.pantry.join('\n'), steps:r.steps.join('\n'), tip:r.tip};
+}
+let editId = null;
+function openEditor(id, copy){
+  const d = draftFrom(id, copy); editId = (!copy && S.mine && S.mine[id]) ? id : null; openId = null;
+  const num = (k,label,unit) => `<label class="fld" for="ed-q-${k}">${label}<span class="unit"><input id="ed-q-${k}" type="number" min="0" step="any" inputmode="decimal" value="${d.q[k]||''}" placeholder="0"><i>${unit}</i></span></label>`;
+  $('sheet-body').innerHTML = `<div class="sheet">
+    <div class="sh-head"><div><h3>${editId?'Edit resepi saya':copy?'Ubah suai jadi resepi saya':'Resepi baru'}</h3><p>${copy?'Ini salinan. Resepi asal tak berubah.':'Tulis ikut cara awak sendiri. Hanya nama, masa dan langkah yang wajib.'}</p></div><button type="button" class="x" data-close aria-label="Tutup">✕</button></div>
+    <form class="form" id="ed" novalidate>
+      <label class="fld" for="ed-n">Nama resepi *<input id="ed-n" maxlength="60" value="${esc(d.n)}" placeholder="Contoh: Kulit Ayam Madu Cili" required></label>
+      <label class="fld" for="ed-en">Penerangan ringkas<input id="ed-en" maxlength="80" value="${esc(d.en)}" placeholder="Contoh: Rangup, manis pedas"></label>
+      <div class="fld"><span>Alat masak</span><div class="seg2" role="radiogroup" aria-label="Alat masak">
+        <label><input type="radio" name="ed-m" value="af" ${d.m!=='in'?'checked':''}><span>Air Fryer</span></label>
+        <label><input type="radio" name="ed-m" value="in" ${d.m==='in'?'checked':''}><span>Dapur Induksi</span></label></div></div>
+      <div class="frow">
+        <label class="fld" for="ed-temp" id="f-temp" ${d.m==='in'?'hidden':''}>Suhu<span class="unit"><input id="ed-temp" type="number" min="60" max="230" value="${d.temp}"><i>°C</i></span></label>
+        <label class="fld" for="ed-heat" id="f-heat" ${d.m!=='in'?'hidden':''}>Api<select id="ed-heat">${Object.entries(HEAT).map(([k,l])=>`<option value="${k}" ${d.heat===k?'selected':''}>${l}</option>`).join('')}</select></label>
+        <label class="fld" for="ed-min">Masa masak *<span class="unit"><input id="ed-min" type="number" min="1" max="240" value="${d.min}"><i>min</i></span></label>
+        <label class="fld" for="ed-prep">Masa sedia<span class="unit"><input id="ed-prep" type="number" min="0" max="600" value="${d.prep}"><i>min</i></span></label>
+        <label class="fld" for="ed-flip">Goncang / terbalik<span class="unit"><input id="ed-flip" type="number" min="0" max="240" value="${d.flip||''}" placeholder="–"><i>min ke-</i></span></label>
+      </div>
+      <div class="frow">
+        <label class="fld" for="ed-cat">Kategori<select id="ed-cat">${CATS.filter(c=>c[0]!=='all'&&c[0]!=='mine').map(([k,l])=>`<option value="${k}" ${d.cat===k?'selected':''}>${l}</option>`).join('')}</select></label>
+        <label class="fld" for="ed-t">Tekak<select id="ed-t"><option value="m" ${d.t!=='w'?'selected':''}>Melayu</option><option value="w" ${d.t==='w'?'selected':''}>Barat</option></select></label>
+        <label class="fld" for="ed-x">Kos sos & rempah<span class="unit"><input id="ed-x" type="number" min="0" step="any" value="${d.x||0}"><i>₹</i></span></label>
+      </div>
+      <div class="fld"><span>Bahan utama (kosongkan yang tak guna)</span><div class="frow">${num('c','Kulit ayam','g')}${num('b','Daging','g')}${num('p','Kentang','g')}${num('r','Roti','keping')}${num('e','Telur','biji')}</div></div>
+      <label class="fld" for="ed-pantry">Dari dapur <small>satu baris, satu bahan</small><textarea id="ed-pantry" rows="4" placeholder="1 sudu kecil madu&#10;1 sudu kecil serbuk cili">${esc(d.pantry)}</textarea></label>
+      <label class="fld" for="ed-steps">Cara buat * <small>satu baris, satu langkah. Tulis "8 minit" dalam langkah, mod masak akan beri butang pemasa.</small><textarea id="ed-steps" rows="6" placeholder="Lap kulit kering, potong 4 cm.&#10;Air fry 200°C selama 12 minit.&#10;Gaul dengan madu dan cili.">${esc(d.steps)}</textarea></label>
+      <label class="fld" for="ed-tip">Tip (pilihan)<textarea id="ed-tip" rows="2">${esc(d.tip)}</textarea></label>
+      <p class="ferr" id="ed-err" hidden></p>
+      <div class="actions"><button type="submit" class="big-btn">Simpan</button><button type="button" class="big-btn ghost" data-close>Batal</button></div>
+      ${editId?'<button type="button" class="btn danger" id="ed-del">Padam resepi ini</button>':''}
+    </form></div>`;
+  if(!sheet.open) sheet.showModal();
+  sheet.scrollTop = 0;
+}
+sheet.addEventListener('change', e=>{ if(e.target.name==='ed-m'){ const inM=e.target.value==='in'; $('f-temp').hidden=inM; $('f-heat').hidden=!inM; } });
+sheet.addEventListener('submit', e=>{
+  if(e.target.id!=='ed') return; e.preventDefault();
+  const v = id => $(id).value, err = $('ed-err');
+  const n=v('ed-n').trim(), steps=lines(v('ed-steps')), min=Number(v('ed-min'));
+  const miss = !n ? 'Tulis nama resepi.' : !(min>0) ? 'Isi masa masak, sekurang-kurangnya 1 minit.' : !steps.length ? 'Tulis sekurang-kurangnya satu langkah dalam Cara buat.' : '';
+  if(miss){ err.textContent=miss; err.hidden=false; err.scrollIntoView({block:'center'}); return; }
+  const q={}; for(const k of ORDER) q[k]=Number(v('ed-q-'+k))||0;
+  const id = editId || ('my-'+Date.now().toString(36));
+  const m = sheet.querySelector('input[name="ed-m"]:checked').value;
+  S.mine = S.mine || {};
+  S.mine[id] = {id, m, cat:v('ed-cat'), t:v('ed-t'), n, en:v('ed-en').trim(), q, x:Number(v('ed-x'))||0, temp:Number(v('ed-temp'))||180, heat:v('ed-heat'), min, prep:Number(v('ed-prep'))||0, flip:Number(v('ed-flip'))||'', pantry:v('ed-pantry'), steps:v('ed-steps'), tip:v('ed-tip').trim()};
+  save(); rebuildRX(); render(); toast(editId?'Resepi dikemas kini':'Resepi disimpan');
+  openRecipe(id);
+});
+sheet.addEventListener('click', e=>{
+  const g = s => e.target.closest(s); let el;
+  if(el=g('[data-edit]')) return openEditor(el.dataset.edit, false);
+  if(el=g('[data-remix]')) return openEditor(el.dataset.remix, true);
+  if(el=g('#ed-del')){
+    if(!el.dataset.sure){ el.dataset.sure='1'; el.textContent='Tekan sekali lagi untuk padam'; return; }
+    delete S.mine[editId];
+    for(const d of Object.keys(S.cal)){ S.cal[d]=S.cal[d].filter(x=>x!==editId); if(!S.cal[d].length) delete S.cal[d]; }
+    save(); rebuildRX(); editId=null; sheet.close(); toast('Resepi dipadam');
+  }
+});
+$('main').addEventListener('click', e=>{ if(e.target.closest('[data-new]')) openEditor(null, false); });
+
 /* ---------- mula ---------- */
+rebuildRX();
 (function init(){ const h=location.hash.slice(1); show(VIEWS.includes(h)?h:(VIEWS.includes(S.view)?S.view:'menu')); })();
 </script>
