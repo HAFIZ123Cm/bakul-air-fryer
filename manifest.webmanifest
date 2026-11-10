@@ -1,0 +1,16 @@
+{
+  "name": "Bakul Air Fryer",
+  "short_name": "Bakul",
+  "description": "40 snek air fryer yang murah, sihat dan senang, daripada ayam, daging, kentang, roti dan telur.",
+  "lang": "ms",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#040507",
+  "theme_color": "#040507",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

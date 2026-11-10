@@ -1,0 +1,873 @@
+<title>Bakul Air Fryer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Susun atur: tajuk ringkas, bar tab melekat (makanan | maklumat), satu paparan pada satu masa. Tema tunggal: hitam + biru. */
+:root{
+  color-scheme:dark;
+  --bg:#040507; --surface:#0D1015; --surface2:#141922; --ink:#EEF2F8; --muted:#8F9BAE; --line:#212936;
+  --blue:#3D8BFF; --blue-hi:#8CC0FF; --blue-btn:#2563EB; --blue-tint:#0C1D3A;
+  --cyan:#6FD3EE; --cyan-tint:#0A2630;
+  --green:#66D693; --green-tint:#0D2818;
+  --warn:#FF8A7A; --warn-tint:#2A1210;
+  --lcd:#000000; --lcd-text:#6CB6FF;
+  --scrim:rgba(0,0,0,.78);
+  --f-ayam:#E8C4AE; --s-ayam:#B98C74; --f-daging:#A8483F; --s-daging:#6E2A24;
+  --f-kentang:#D9B868; --s-kentang:#9C7D30; --f-roti:#EAD3A2; --s-roti:#B07E3C;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+.head{padding-block:24px 14px;display:flex;flex-direction:column;gap:6px}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:900;font-stretch:125%;line-height:.95;letter-spacing:-.02em}
+h1 .dot{color:var(--blue)}
+.lead{color:var(--muted);margin:0;max-width:60ch}
+
+/* tab bar */
+.tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap;font-weight:700;font-size:.92rem}
+.tab[aria-selected="true"]{background:var(--blue-btn);border-color:var(--blue-btn);color:#fff}
+.tab .n{font-family:var(--f-mono);font-size:.75rem;opacity:.7;margin-left:5px}
+.tabsep{flex:none;width:1px;background:var(--line);margin:4px 4px}
+.tab.info{background:transparent}
+.tab.info[aria-selected="true"]{background:var(--blue-btn)}
+
+main{padding-block:18px 80px}
+.view{display:flex;flex-direction:column;gap:16px}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:7px 12px;cursor:pointer}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--surface2);color:var(--blue-hi);font-weight:700}
+select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 10px}
+.shuffle{margin-left:auto;border:0;border-radius:10px;padding:8px 14px;background:var(--blue-btn);color:#fff;font-weight:700;cursor:pointer}
+.count{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);margin:0}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s;min-width:0}
+.card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.card:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lcd{font-family:var(--f-mono);font-weight:700;font-size:.78rem;background:var(--lcd);color:var(--lcd-text);border:1px solid #1B2A44;padding:4px 8px;border-radius:6px;font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 0 8px rgba(108,182,255,.45)}
+.card .lcd{margin-left:auto}
+.chip{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.03em}
+.chip.m{background:var(--blue-tint);color:var(--blue-hi)}
+.chip.w{background:var(--cyan-tint);color:var(--cyan)}
+.chip.hp{background:var(--green-tint);color:var(--green)}
+.card-name{font-family:var(--f-display);font-weight:800;font-stretch:108%;font-size:1.15rem;line-height:1.15}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto}
+.stats span{display:flex;flex-direction:column}
+.stats b{font-family:var(--f-mono);font-size:1rem;font-variant-numeric:tabular-nums}
+.stats small{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
+
+/* boxes */
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.box h2{font-size:1.2rem;font-weight:800;font-stretch:112%;margin-bottom:10px}
+.box h3{font-size:1rem;font-weight:800;font-stretch:110%;margin:14px 0 6px}
+.box p{margin:0 0 10px}
+.box ul,.box ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.box li::marker{color:var(--blue);font-weight:700}
+.sub{color:var(--muted);font-size:.9rem}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.warn{color:var(--warn);font-weight:700}
+.verdict{background:var(--blue-tint);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.verdict b{color:var(--blue-hi)}
+.tablewrap{overflow-x:auto;margin:6px 0 12px}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+td.win{color:var(--green);font-weight:700}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* cutting diagrams */
+.cutgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.cut{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.cut h3{font-size:1.1rem;font-weight:800;font-stretch:110%;margin:0}
+.cut .ref{font-family:var(--f-mono);font-size:.8rem;color:var(--blue-hi)}
+.cut ol{margin:0;padding-left:1.2em;font-size:.92rem;display:flex;flex-direction:column;gap:3px}
+.cut ol li::marker{color:var(--blue);font-family:var(--f-mono);font-weight:700}
+.cut .used{font-size:.82rem;color:var(--muted)}
+.cut .used button{all:unset;cursor:pointer;color:var(--blue-hi);text-decoration:underline;text-underline-offset:2px}
+svg.cv{width:100%;height:auto;max-width:100%;display:block;background:var(--surface2);border-radius:10px}
+svg.cv text{fill:var(--muted);font:600 10px var(--f-body)}
+svg.cv .stepn{fill:var(--blue-hi);font:700 10px var(--f-mono)}
+svg.cv .ay{fill:var(--f-ayam);stroke:var(--s-ayam);stroke-width:1.5}
+svg.cv .dg{fill:var(--f-daging);stroke:var(--s-daging);stroke-width:1.5}
+svg.cv .kt{fill:var(--f-kentang);stroke:var(--s-kentang);stroke-width:1.5}
+svg.cv .rt{fill:var(--f-roti)}
+svg.cv .rtc{fill:var(--s-roti)}
+svg.cv .hole{fill:var(--surface2);stroke:var(--s-roti);stroke-width:1.5}
+svg.cv .grain{stroke:var(--s-daging);stroke-width:1.2;fill:none;opacity:.9}
+svg.cv .knife{stroke:var(--blue);stroke-width:2;stroke-dasharray:4 3;fill:none}
+svg.cv .knife.thin{stroke-width:1.2;stroke-dasharray:3 2}
+svg.cv .arr{fill:var(--blue)}
+svg.cv .grater{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+svg.cv .slot{stroke:var(--muted);stroke-width:2}
+svg.cv .shred{stroke:var(--f-kentang);stroke-width:2.5;fill:none;stroke-linecap:round}
+svg.cv .drop{fill:var(--blue-hi)}
+.sizes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.size{background:var(--surface2);border-radius:10px;padding:10px 12px}
+.size b{font-family:var(--f-mono);color:var(--blue-hi);display:block}
+
+/* cost */
+.plan{display:flex;flex-direction:column}
+.prow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.prow .pn{flex:1;min-width:0}
+.prow .pn small{display:block;color:var(--muted);font-size:.78rem}
+.step{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.step button{border:0;background:var(--surface2);width:34px;height:34px;cursor:pointer;font-weight:700;font-size:1.05rem}
+.step span{min-width:34px;text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.addrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.addrow select{flex:1;min-width:200px}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:7px 12px;cursor:pointer}
+.btn.pri{background:var(--blue-btn);border-color:var(--blue-btn);color:#fff;font-weight:700}
+.total{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.tile{background:var(--surface2);border-radius:12px;padding:12px}
+.tile small{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tile b{font-family:var(--f-mono);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.tile.big{background:var(--blue-tint)}
+.tile.big b{color:var(--blue-hi);font-size:1.9rem}
+.cmp{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.bar{display:grid;grid-template-columns:110px 1fr 90px;gap:10px;align-items:center;font-size:.9rem}
+.bar .track{background:var(--surface2);border-radius:6px;height:14px;overflow:hidden}
+.bar .fill{height:100%;background:var(--blue);border-radius:6px}
+.bar .fill.out{background:var(--warn)}
+.inline-in{width:80px;border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:5px 8px;font-family:var(--f-mono)}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:8px}
+.price-grid label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
+.price-grid input{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:8px 10px;font-family:var(--f-mono)}
+label.tog{display:flex;gap:8px;align-items:center;cursor:pointer;margin:8px 0}
+label.tog input{accent-color:var(--blue)}
+
+/* shop */
+.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.shop h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue-hi);margin:0 0 6px;font-stretch:110%}
+.shop ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+.shop li{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.shop li label{display:flex;gap:10px;align-items:baseline;flex:1;min-width:0;cursor:pointer}
+.shop li input{accent-color:var(--blue);transform:translateY(2px)}
+.shop li .nm{flex:1;min-width:0}
+.shop li .nm small{display:block;color:var(--muted);font-size:.78rem}
+.shop li .pr{font-family:var(--f-mono);white-space:nowrap}
+.shop li.done .nm{text-decoration:line-through;color:var(--muted)}
+.shop li.no .pr{color:var(--warn)}
+
+/* dialog */
+dialog{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--ink);border-radius:18px;width:min(660px,calc(100% - 24px));max-height:88dvh;overflow:auto}
+dialog::backdrop{background:var(--scrim)}
+.sheet{padding:20px;display:flex;flex-direction:column;gap:16px}
+.sheet-head{display:flex;gap:12px;align-items:flex-start}
+.sheet-head h3{font-size:1.6rem;font-weight:900;font-stretch:115%;line-height:1.05}
+.sheet-head p{margin:4px 0 0;color:var(--muted)}
+.x{margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);cursor:pointer;font-size:1.1rem;line-height:1}
+.sheet .stats{grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;padding:10px}
+.sheet h4{font-family:var(--f-display);font-stretch:110%;font-size:.95rem;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-hi)}
+.sheet ul,.sheet ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:6px}
+.sheet ol li::marker{font-family:var(--f-mono);font-weight:700;color:var(--blue)}
+.need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tip{background:var(--blue-tint);border-radius:12px;padding:12px 14px}
+.tip b{color:var(--blue-hi)}
+.alertbox{background:var(--warn-tint);border-radius:12px;padding:10px 14px;font-size:.9rem}
+.alertbox b{color:var(--warn)}
+.cutbox{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.timer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px}
+.timer .lcd{font-size:1.6rem;padding:6px 12px}
+.timer-msg{flex:1;min-width:140px;font-size:.9rem;color:var(--muted)}
+.timer-msg.alert{color:var(--warn);font-weight:700}
+.go{border:0;border-radius:10px;padding:10px 16px;background:var(--blue-btn);color:#fff;font-weight:700;cursor:pointer}
+.sheet-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sheet-foot .sub{flex:1}
+
+.pill{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--lcd);color:var(--lcd-text);border:1px solid var(--blue);border-radius:999px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 28px rgba(61,139,255,.25);z-index:20;max-width:calc(100% - 32px)}
+.pill button{border:0;background:transparent;color:inherit;cursor:pointer;font-family:var(--f-mono);font-weight:700;padding:4px}
+.pill .pname{font-family:var(--f-body);font-size:.8rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+.pill .pt{font-size:1rem;font-variant-numeric:tabular-nums}
+.pill .px{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1)}
+.pill.alert{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--surface2);border:1px solid var(--blue);padding:8px 14px;border-radius:10px;z-index:30;font-size:.9rem}
+
+@media (max-width:620px){
+  .shuffle{margin-left:0}
+  .need{grid-template-columns:1fr}
+  .sheet .stats{grid-template-columns:repeat(2,1fr);row-gap:8px}
+  .cutgrid{grid-template-columns:1fr}
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:18px 18px 0 0;max-height:92dvh}
+  .sheet{padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+  .bar{grid-template-columns:80px 1fr 80px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap head">
+  <h1>Bakul Air Fryer<span class="dot">.</span></h1>
+  <p class="lead">40 snek air fryer yang murah, sihat dan senang, daripada ayam, daging, kentang, roti dan telur.</p>
+</div>
+<nav class="tabbar" aria-label="Bahagian"><div class="wrap"><div class="tabs" id="tabs" role="tablist"></div></div></nav>
+<main class="wrap" id="main"></main>
+
+<dialog id="sheet" aria-labelledby="sheet-title"><div class="sheet" id="sheet-body"></div></dialog>
+<div class="pill" id="pill" hidden>
+  <button type="button" class="pname" id="pill-open"></button>
+  <span class="pt" id="pill-time">00:00</span>
+  <button type="button" class="px" id="pill-stop" aria-label="Henti pemasa">✕</button>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script>
+const ING = {
+  c:{ms:'Ayam', sub:'dada / keema', p:.23, k:1.2},
+  b:{ms:'Daging', sub:'daging lembu', p:.21, k:1.7},
+  p:{ms:'Kentang', sub:'kentang', p:.02, k:.77},
+  r:{ms:'Roti', sub:'roti putih', p:2.3, k:66},
+  e:{ms:'Telur', sub:'telur ayam', p:6.3, k:72}
+};
+const ORDER = ['c','b','p','r','e'];
+const DEFAULT_PRICES = {c:550, b:500, p:34, r:60, e:9};
+const SLICES = 16;
+const PRICE_LABEL = {c:'Dada ayam, sekilo', b:'Daging lembu, sekilo (kedai daging)', p:'Kentang, sekilo', r:'Roti putih, sebuku (~16 keping)', e:'Telur, sebiji'};
+
+const TABS = [
+  {id:'semua', label:'Semua'},
+  {id:'ayam', label:'Ayam', k:'c'},
+  {id:'daging', label:'Daging', k:'b'},
+  {id:'kentang', label:'Kentang', k:'p'},
+  {id:'roti', label:'Roti', k:'r'},
+  {id:'telur', label:'Telur', k:'e'},
+  {sep:true},
+  {id:'potong', label:'Cara Potong', info:true},
+  {id:'peringatan', label:'Peringatan', info:true},
+  {id:'kos', label:'Kos Sebulan', info:true},
+  {id:'beli', label:'Senarai Beli', info:true},
+  {id:'tips', label:'Tips', info:true}
+];
+
+const SHOP = [
+  {g:'Bahan utama', items:[
+    {id:'s-ayam', n:'Dada ayam', d:'Meat Window 400 g (diskaun) / Nandus 450 g', p:'₹189–259'},
+    {id:'s-keema', n:'Keema ayam', d:'Nandus 500 g. Untuk nugget, burger, begedil', p:'₹249'},
+    {id:'s-telur', n:'Telur 30 biji', d:'Fresh Eggs / Dr.Hen, lebih kurang ₹9 sebiji', p:'₹268'},
+    {id:'s-roti', n:'Roti putih', d:'English Oven 350 g / Modern 400 g', p:'₹50–60'},
+    {id:'s-kentang', n:'Kentang 1 kg', d:'3 kg lagi jimat: ₹99', p:'₹34'},
+    {id:'s-daging', n:'Daging lembu', d:'Tiada di Instamart. Beli di kedai daging', p:'~₹500/kg', no:true}
+  ]},
+  {g:'Barang dapur', items:[
+    {id:'s-kicap', n:'Kicap pekat', d:"Ching's Dark Soy 210 g", p:'₹49'},
+    {id:'s-soscili', n:'Sos cili', d:'Surabhi Hot n Sweet 450 g', p:'₹49'},
+    {id:'s-tomato', n:'Sos tomato', d:'Veeba 900 g', p:'₹88'},
+    {id:'s-tiram', n:'Sos tiram', d:'MasterChow 220 g (kadang habis stok)', p:'₹138'},
+    {id:'s-kunyit', n:'Serbuk kunyit', d:'Aashirvaad 100 g', p:'₹26'},
+    {id:'s-cili', n:'Serbuk cili', d:'MTR 100 g', p:'₹42'},
+    {id:'s-lada', n:'Serbuk lada hitam', d:'Aachi 50 g', p:'₹63'},
+    {id:'s-bawang', n:'Bawang besar 1 kg', d:'Ada combo bawang + kentang + tomato ₹142', p:'₹72'},
+    {id:'s-bputih', n:'Bawang putih 100 g', d:'', p:'₹43'},
+    {id:'s-cilihijau', n:'Cili hijau 100 g', d:'', p:'₹14'},
+    {id:'s-lemon', n:'Lemon 200 g', d:'', p:'₹40'},
+    {id:'s-daunkari', n:'Daun kari 1 ikat', d:'', p:'₹11'},
+    {id:'s-timun', n:'Timun 2 biji', d:'', p:'₹22'},
+    {id:'s-dadih', n:'Dadih (curd)', d:'Nandini 500 g. Ganti mayonis', p:'₹34'}
+  ]},
+  {g:'Pilihan, kalau ada bajet lebih', items:[
+    {id:'s-keju', n:'Keju keping', d:'Amul 100 g (5 keping)', p:'₹81'},
+    {id:'s-pb', n:'Peanut butter', d:'Amul 300 g. Untuk kuah sate', p:'₹100'},
+    {id:'s-jagung', n:'Jagung manis beku', d:'Farmland 500 g', p:'₹87'},
+    {id:'s-kertas', n:'Kertas minyak', d:'Rush 25 m. Boleh ganti dengan sapu minyak', p:'₹144'}
+  ]}
+];
+
+/* barang dapur untuk kalkulator bulanan: harga satu pek, berapa pek sebulan (anggaran untuk snek sahaja) */
+const PANTRY = [
+  {id:'kicap', n:'Kicap pekat 210 g', v:49, q:1},
+  {id:'soscili', n:'Sos cili 450 g', v:49, q:1},
+  {id:'tomato', n:'Sos tomato 900 g', v:88, q:.5},
+  {id:'tiram', n:'Sos tiram 220 g', v:138, q:.5},
+  {id:'kunyit', n:'Serbuk kunyit 100 g', v:26, q:.5},
+  {id:'cili', n:'Serbuk cili 100 g', v:42, q:.5},
+  {id:'lada', n:'Lada hitam 50 g', v:63, q:.5},
+  {id:'bawang', n:'Bawang besar 1 kg', v:72, q:.5},
+  {id:'bputih', n:'Bawang putih 100 g', v:43, q:.5},
+  {id:'cilihijau', n:'Cili hijau 100 g', v:14, q:1},
+  {id:'lemon', n:'Lemon 200 g', v:40, q:1},
+  {id:'daunkari', n:'Daun kari 1 ikat', v:11, q:1},
+  {id:'timun', n:'Timun 2 biji', v:22, q:2},
+  {id:'dadih', n:'Dadih 500 g', v:34, q:1}
+];
+
+/* pelan contoh: 30 snek sebulan, lebih kurang satu sehari */
+const PLAN0 = {'telur-rebus':8, 'ayam-kunyit':6, 'wedges':4, 'kerepek-roti':4, 'roti-telur':4, 'begedil-ayam':2, 'nugget':2};
+
+/* ---------- lukisan cara potong ---------- */
+const vl = (x,y1,y2,thin) => `<line class="knife${thin?' thin':''}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"/>`;
+const hl = (y,x1,x2) => `<line class="knife" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/>`;
+const ln = (x1,y1,x2,y2) => `<line class="knife" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+const BREAST = '<path class="ay" d="M8 60 C8 34 46 22 86 36 C98 42 97 80 82 88 C52 100 8 90 8 60Z"/>';
+const POTATO = (rx=40,ry=26) => `<ellipse class="kt" cx="50" cy="60" rx="${rx}" ry="${ry}"/>`;
+const BEEF = '<rect class="dg" x="10" y="32" width="80" height="56" rx="6"/>';
+const GRAIN = [42,52,62,72,82].map(y=>`<line class="grain" x1="16" y1="${y}" x2="84" y2="${y}"/>`).join('');
+const BREAD = '<path class="rtc" d="M14 46 C14 24 30 20 50 22 C70 20 86 24 86 46 L86 98 L14 98 Z"/><path class="rt" d="M19 47 C19 30 33 27 50 28 C67 27 81 30 81 47 L81 93 L19 93 Z"/>';
+function rects(xs, ys, w, h, cls, extra=''){ let s=''; for(const y of ys) for(const x of xs) s+=`<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="3" ${extra}/>`; return s; }
+function cutSvg(panels){
+  let s = '<svg class="cv" viewBox="0 0 336 128" role="img" aria-hidden="true">';
+  panels.forEach(([inner,cap],i)=>{
+    const x = 8+i*112;
+    s += `<g transform="translate(${x},4)"><text class="stepn" x="2" y="12">${i+1}</text>${inner}<text x="50" y="116" text-anchor="middle">${cap}</text></g>`;
+    if(i<panels.length-1) s += `<path class="arr" d="M${x+102} 59 l8 5 l-8 5z"/>`;
+  });
+  return s + '</svg>';
+}
+function thinLines(){ let s=''; for(let x=14;x<=86;x+=5){ const h=26*Math.sqrt(Math.max(0,1-((x-50)/40)**2)); s+=vl(x,(60-h).toFixed(1),(60+h).toFixed(1),true); } return s; }
+function shreds(){ let s=''; for(let i=0;i<10;i++){ const x=12+i*8; s+=`<path class="shred" d="M${x} ${34+(i%3)*4} q 7 14 0 28 q -6 12 2 24"/>`; } return s+[22,44,66,82].map(x=>`<circle class="drop" cx="${x}" cy="100" r="2.2"/>`).join(''); }
+function grater(){ let s='<rect class="grater" x="28" y="18" width="44" height="80" rx="5"/>'; for(let y=28;y<=88;y+=10) s+=`<line class="slot" x1="36" y1="${y}" x2="44" y2="${y}"/><line class="slot" x1="56" y1="${y}" x2="64" y2="${y}"/>`; return s; }
+const halfPotato = '<path class="kt" d="M8 78 A42 32 0 0 1 92 78 Z"/>';
+
+const CUTS = {
+  kiub:{t:'Kiub ayam', ref:'2 cm ≈ lebar ibu jari', steps:['Letak dada ayam rata atas papan.','Potong memanjang jadi jalur selebar ibu jari.','Pusing papan, potong melintang jadi kiub.'],
+    svg:()=>cutSvg([[BREAST,'Dada ayam'],[BREAST+vl(30,26,94)+vl(50,24,98)+vl(70,28,94)+hl(48,8,98)+hl(70,8,96),'Ikut garis biru'],[rects([10,40,70],[34,64],22,22,'ay'),'Kiub 2 cm']])},
+  jalur:{t:'Jalur ayam', ref:'1.5 cm ≈ lebar jari telunjuk', steps:['Letak dada ayam rata.','Potong memanjang, ikut arah panjang daging.','Setiap jalur selebar jari telunjuk.'],
+    svg:()=>cutSvg([[BREAST,'Dada ayam'],[BREAST+vl(26,28,94)+vl(42,25,97)+vl(58,26,97)+vl(74,30,93),'Potong memanjang'],[rects([10,28,46,64,82],[28],12,62,'ay'),'Jalur 1.5 cm']])},
+  urat:{t:'Hiris nipis melintang urat', ref:'±3 mm ≈ tebal 2 syiling ₹1', steps:['Cari garis halus pada daging. Itu arah urat.','Letak pisau bersilang dengan garis itu, bukan selari.','Hiris nipis. Daging separuh beku (30 minit dalam freezer) lebih senang dihiris.'],
+    svg:()=>cutSvg([[BEEF+GRAIN,'Garis = urat'],[BEEF+GRAIN+[22,34,46,58,70,82].map(x=>vl(x,26,94)).join(''),'Pisau bersilang urat'],[rects([16,29,42,55,68,81],[32],7,56,'dg'),'Nipis ±3 mm']])},
+  batang:{t:'Batang kentang (fries)', ref:'1 cm ≈ lebar jari kelingking', steps:['Potong sedikit satu sisi supaya kentang tak bergolek.','Hiris jadi keping setebal 1 cm.','Susun keping, potong lagi jadi batang 1 cm.'],
+    svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+[30,40,50,60,70].map(x=>vl(x,36,84)).join(''),'Keping 1 cm'],[rects([10,22,34,46,58,70,82],[31],9,58,'kt'),'Batang 1 cm']])},
+  baji:{t:'Baji kentang (wedges)', ref:'8 baji dari sebiji kentang', steps:['Belah dua kentang memanjang.','Letak bahagian rata di bawah.','Potong setiap separuh jadi 4 baji, dari tengah ke luar macam potong kek.'],
+    svg:()=>cutSvg([[POTATO(42,24),'Kentang'],[POTATO(42,24)+hl(60,4,96),'Belah dua memanjang'],[halfPotato+ln(50,78,79.7,55.4)+ln(50,78,50,46)+ln(50,78,20.3,55.4),'4 baji setiap separuh']])},
+  dadu:{t:'Dadu kentang', ref:'1.5 cm ≈ saiz dadu permainan', steps:['Hiris kentang jadi keping 1.5 cm.','Potong keping jadi batang 1.5 cm.','Pusing dan potong lagi jadi dadu.'],
+    svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+vl(34,38,82)+vl(50,34,86)+vl(66,38,82)+hl(48,14,86)+hl(60,10,90)+hl(72,14,86),'Potong grid'],[rects([12,32,52,72],[34,54,74],15,15,'kt'),'Dadu 1.5 cm']])},
+  nipis:{t:'Hiris sangat nipis (kerepek)', ref:'1–2 mm ≈ tebal syiling ₹1', steps:['Guna pengupas sayur (peeler) atau pisau paling tajam.','Hiris senipis boleh, sama tebal semuanya.','Terus rendam dalam air sejuk.'],
+    svg:()=>cutSvg([[POTATO(),'Kentang'],[POTATO()+thinLines(),'Banyak hirisan nipis'],[[24,36,48,60,72].map(x=>`<ellipse class="kt" cx="${x}" cy="60" rx="14" ry="20"/>`).join(''),'1–2 mm']])},
+  lubang:{t:'Tebuk lubang roti', ref:'Guna mulut gelas atau penutup botol', steps:['Letak roti rata.','Tekan mulut gelas di tengah dan pusing sedikit.','Angkat bulatan. Telur masuk dalam lubang.'],
+    svg:()=>cutSvg([[BREAD,'Sekeping roti'],[BREAD+'<circle class="knife" cx="50" cy="62" r="15"/>','Tekan dengan gelas'],[BREAD+'<circle class="hole" cx="50" cy="62" r="15"/><ellipse cx="50" cy="62" rx="13" ry="12" style="fill:#F4F1EA"/><circle cx="50" cy="62" r="6" style="fill:#F2B51C"/>','Pecahkan telur']])},
+  jalurroti:{t:'Potong roti kecil (kerepek roti)', ref:'2–3 cm ≈ dua ruas jari', steps:['Guna roti lama atau kulit roti.','Potong 3 garis memanjang dan 2 melintang.','Dapat 12 keping kecil.'],
+    svg:()=>cutSvg([[BREAD,'Roti lama'],[BREAD+vl(35,30,94)+vl(50,28,94)+vl(65,30,94)+hl(50,18,82)+hl(71,18,82),'Potong grid'],[rects([12,33,54,75],[34,55,76],16,16,'rt','style="stroke:var(--s-roti);stroke-width:2"'),'12 keping kecil']])},
+  parut:{t:'Parut dan perah (hash brown)', ref:'Guna lubang besar pada parut', steps:['Kupas kentang kalau nak.','Parut di bahagian lubang besar.','Bungkus dalam kain bersih, perah sampai air tak menitis lagi.'],
+    svg:()=>cutSvg([[POTATO(),'Kentang'],[grater(),'Parut lubang besar'],[shreds(),'Perah airnya']])}
+};
+const CUTMAP = {
+  'ayam-kunyit':['kiub'], 'masak-merah':['kiub'], 'sate':['kiub','Lebih nipis, setebal 2 syiling, supaya cepat masak.'], 'popcorn':['kiub','Lebih kecil sedikit, 1.5 cm.'],
+  'ayam-kicap':['jalur'], 'lemon-lada':['jalur'], 'lada-hitam':['urat'],
+  'fries':['batang'], 'kentang-kunyit':['batang'], 'loaded':['batang'], 'wedges':['baji'],
+  'balado':['dadu'], 'frittata':['dadu','Lebih kecil, 1 cm, supaya cepat masak.'], 'kerepek-kentang':['nipis'], 'hashbrown':['parut'],
+  'egg-hole':['lubang'], 'kerepek-roti':['jalurroti']
+};
+const R = [
+{id:'ayam-kunyit',n:'Ayam Goreng Kunyit',en:'Ketulan ayam kunyit rangup',t:'m',q:{c:150},x:4,xk:45,xp:0,temp:200,min:11,prep:20,flip:6,
+ pantry:['½ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','¼ sudu kecil garam','1 sudu kecil minyak','Daun kari (pilihan)'],
+ steps:['Potong dada ayam kecil-kecil, lebih kurang 2 cm.','Gaul dengan kunyit, serbuk cili, garam dan minyak. Perap 15 minit. Lebih lama dalam peti sejuk lagi sedap.','Susun dalam bakul, satu lapis sahaja.','Air fry 200°C selama 11 minit. Goncang bakul pada minit ke-6.','Masukkan daun kari 2 minit terakhir. Daun kari jadi rangup.'],
+ tip:'Belah ketulan paling besar. Dalamnya mesti putih, tiada merah jambu.'},
+{id:'ayam-kicap',n:'Ayam Bakar Kicap',en:'Ayam bakar kicap manis',t:'m',q:{c:150},x:6,xk:35,xp:1,temp:190,min:12,prep:20,flip:6,
+ pantry:['1 sudu besar kicap pekat','1 sudu kecil gula','1 ulas bawang putih, parut','½ sudu kecil lada hitam','Sedikit perahan lemon'],
+ steps:['Potong ayam jadi jalur atau kiub.','Campur kicap, gula, bawang putih, lada hitam dan lemon. Asingkan 1 sudu sos.','Perap ayam dalam baki sos 15 minit.','Sapu minyak pada bakul, gula mudah melekat. Air fry 190°C selama 12 minit.','Pada minit ke-6, terbalikkan ayam dan sapu sos yang diasingkan tadi.','Makan dengan timun dan cili hijau.'],
+ tip:"Kicap manis Malaysia susah dicari di sini. Kicap pekat Ching's campur 1 sudu kecil gula pun jadi."},
+{id:'sate',n:'Sate Ayam Kuah Kacang',en:'Sate ayam dengan kuah peanut butter',t:'m',q:{c:150},x:12,xk:150,xp:4,temp:200,min:10,prep:25,flip:5,nw:1,
+ pantry:['½ sudu kecil serbuk kunyit','1 sudu kecil gula','1 sudu besar kicap pekat','1 sudu kecil minyak','Kuah: 1 sudu besar peanut butter, 1 sudu besar sos cili, 1 sudu kecil gula, 3 sudu besar air panas','Lidi (pilihan)'],
+ steps:['Potong ayam jadi ketulan kecil yang nipis.','Perap dengan kunyit, gula, kicap dan minyak selama 20 minit.','Cucuk pada lidi kalau ada. Rendam lidi kayu dalam air dulu supaya tak hangus. Tiada lidi pun tak apa.','Air fry 200°C selama 10 minit. Terbalikkan pada minit ke-5.','Kuah: kacau peanut butter, sos cili, gula dan air panas sampai likat. Tambah sedikit lemon.','Cicah sate dalam kuah. Makan dengan timun dan bawang.'],
+ tip:'Peanut butter Amul ₹100 tahan lama. Boleh buat kuah sate berkali-kali.'},
+{id:'masak-merah',n:'Ayam Masak Merah Kering',en:'Ayam bersalut sos merah pedas manis',t:'m',q:{c:150},x:7,xk:75,xp:1,temp:200,min:11,prep:15,flip:6,nw:1,
+ pantry:['½ sudu kecil kunyit dan secubit garam','2 sudu besar sos tomato','1 sudu kecil serbuk cili','1 sudu kecil gula','½ biji bawang besar, hiris','1 sudu kecil minyak'],
+ steps:['Potong ayam kecil. Perap dengan kunyit dan garam 10 minit.','Air fry 200°C selama 11 minit. Goncang pada minit ke-6.','Campur sos tomato, serbuk cili, gula, bawang, minyak dan 1 sudu besar air dalam mangkuk keluli kecil.','Air fry sos 180°C selama 4 minit.','Gaul ayam dengan sos sampai rata.'],
+ tip:'Sos tomato banyak gula. Kalau jaga kalori, guna 1 sudu sahaja.'},
+{id:'popcorn',n:'Popcorn Ayam',en:'Ayam rangup bersalut serbuk roti',t:'w',q:{c:150,r:1,e:1},x:3,xk:40,xp:0,temp:200,min:10,prep:15,flip:5,
+ pantry:['Garam dan lada hitam','½ sudu kecil serbuk cili','Minyak'],
+ steps:['Bakar roti dalam air fryer 160°C selama 4 minit sampai kering dan keras.','Hancurkan jadi serbuk. Guna blender, atau masukkan dalam plastik dan gelek dengan botol. Campur garam, lada dan serbuk cili.','Potong ayam kecil-kecil, macam popcorn besar.','Pukul telur. Celup ayam dalam telur, kemudian guling dalam serbuk roti.','Sapu sedikit minyak di atas supaya jadi keemasan.','Air fry 200°C selama 10 minit. Goncang pada minit ke-5.'],
+ tip:'Roti yang sudah 2 atau 3 hari paling bagus untuk serbuk. Buat sebalang pada hujung minggu.'},
+{id:'nugget',n:'Nugget Ayam',en:'Nugget buatan sendiri, boleh dibekukan',t:'w',q:{c:150,r:1,e:1},x:4,xk:40,xp:0,temp:190,min:12,prep:20,flip:6,
+ pantry:['1 ulas bawang putih','¼ biji bawang besar','Garam dan lada','Minyak'],
+ steps:['Bakar roti 160°C selama 4 minit, kemudian hancurkan jadi serbuk.','Guna keema ayam, atau kisar dada ayam dengan bawang putih, bawang, garam dan lada.','Masukkan separuh telur yang dipukul. Bentukkan nugget leper dengan tangan basah.','Celup setiap nugget dalam baki telur, kemudian dalam serbuk roti.','Sapu minyak. Air fry 190°C selama 12 minit. Terbalikkan pada minit ke-6.'],
+ tip:'Buat 20 sekali gus. Bekukan mentah atas pinggan, kemudian masuk plastik. Masak terus dari beku 190°C selama 15 minit.'},
+{id:'lemon-lada',n:'Ayam Lemon Lada Hitam',en:'Jalur ayam lemon dan lada',t:'w',q:{c:150},x:5,xk:40,xp:0,temp:200,min:10,prep:15,flip:5,nw:1,
+ pantry:['Parutan kulit dan jus ½ biji lemon','½ sudu kecil lada hitam','1 ulas bawang putih, parut','Garam','1 sudu kecil minyak'],
+ steps:['Potong ayam jadi jalur panjang.','Gaul dengan lemon, lada hitam, bawang putih, garam dan minyak. Perap 10 minit.','Air fry 200°C selama 10 minit. Terbalikkan pada minit ke-5.','Perah sedikit lemon lagi sebelum makan.'],
+ tip:'Protein tinggi, kalori rendah. Paling sesuai untuk diet.'},
+{id:'burger-ayam',n:'Burger Ayam',en:'Burger keema ayam dengan sos dadih',t:'w',q:{c:100,r:2},x:6,xk:30,xp:1,temp:200,min:10,prep:10,flip:5,nw:1,
+ pantry:['Keema ayam (atau dada ayam dikisar)','Garam, lada hitam, ½ ulas bawang putih','Timun, tomato dan bawang, hiris','Sos: 1 sudu besar dadih + sedikit sos cili'],
+ steps:['Gaul keema dengan garam, lada dan bawang putih. Bentukkan patty leper dengan tangan basah.','Air fry 200°C selama 10 minit. Terbalikkan pada minit ke-5.','Bakar roti 180°C selama 2 minit.','Campur dadih dengan sos cili.','Susun roti, sos, patty, timun, tomato dan bawang.'],
+ tip:'Keema ayam lembik. Basahkan tangan masa membentuk, dan sapu sedikit minyak pada bakul.'},
+{id:'begedil',n:'Begedil Daging',en:'Begedil kentang dengan daging cincang',t:'m',q:{p:200,b:60,e:1},x:4,xk:45,xp:0,temp:200,min:12,prep:25,flip:6,
+ pantry:['2 biji bawang kecil (sambar onion), hiris halus','Garam dan lada','Daun ketumbar (pilihan)','Minyak'],
+ steps:['Rebus atau microwave kentang sampai sangat lembut. Kupas dan lenyek.','Masak daging cincang dalam mangkuk keluli kecil, 200°C selama 7 minit, kemudian hancurkan.','Gaul kentang, daging, bawang, garam, lada dan daun ketumbar. Bentukkan 4 biji leper.','Celup setiap begedil dalam telur yang dipukul.','Sapu minyak. Air fry 200°C selama 12 minit. Terbalikkan perlahan-lahan pada minit ke-6.'],
+ tip:'Begedil lembut. Biar 2 minit sebelum diangkat, nanti tak pecah.'},
+{id:'begedil-ayam',n:'Begedil Ayam',en:'Begedil kentang dengan keema ayam',t:'m',q:{p:200,c:60,e:1},x:4,xk:45,xp:0,temp:200,min:12,prep:25,flip:6,nw:1,
+ pantry:['2 biji bawang kecil, hiris halus','Garam dan lada','Daun ketumbar (pilihan)','Minyak'],
+ steps:['Rebus atau microwave kentang sampai sangat lembut. Kupas dan lenyek.','Masak keema ayam dalam mangkuk keluli kecil, 200°C selama 6 minit, kemudian hancurkan.','Gaul kentang, ayam, bawang, garam, lada dan daun ketumbar. Bentukkan 4 biji leper.','Celup setiap begedil dalam telur yang dipukul.','Sapu minyak. Air fry 200°C selama 12 minit. Terbalikkan perlahan-lahan pada minit ke-6.'],
+ tip:'Lebih senang dapat dari begedil daging. Keema ayam Nandus ada di Instamart.'},
+{id:'burger',n:'Burger Special',en:'Burger abang tepi jalan, balut telur',t:'m',q:{b:100,r:2,e:1},x:7,xk:50,xp:1,temp:200,min:10,prep:12,flip:5,
+ pantry:['Garam, lada hitam, sedikit kicap','Timun dan bawang, hiris','Sos cili dan sos tomato','Minyak'],
+ steps:['Gaul daging cincang dengan garam, lada dan kicap. Leperkan jadi patty nipis, besar sedikit dari roti. Nanti ia mengecut.','Air fry patty 200°C selama 10 minit. Terbalikkan pada minit ke-5.','Pukul telur dengan secubit garam. Tuang dalam mangkuk keluli kecil yang disapu minyak. Air fry 180°C selama 5 minit sampai masak.','Bakar roti 180°C selama 2 minit.','Balut patty dengan telur nipis macam abang burger. Letak atas roti dengan timun, bawang, sos cili dan sos tomato.'],
+ tip:'Nak rasa macam gerai? Campur secubit lada hitam dan sedikit kicap ke dalam sos cili.'},
+{id:'lada-hitam',n:'Daging Lada Hitam',en:'Hirisan daging lada hitam',t:'m',q:{b:120},x:9,xk:35,xp:1,temp:200,min:8,prep:25,flip:4,
+ pantry:['1 sudu kecil lada hitam','1 sudu besar kicap pekat','1 sudu kecil sos tiram','1 ulas bawang putih','½ biji bawang besar, potong baji','1 sudu kecil minyak'],
+ steps:['Hiris daging nipis-nipis, melintang urat daging. Ini buat daging lembut.','Gaul dengan lada hitam, kicap, sos tiram, bawang putih dan minyak. Perap 20 minit.','Masukkan bawang besar.','Air fry 200°C selama 8 minit. Goncang pada minit ke-4.','Rasa sepotong. Nak lebih masak, tambah 2 minit.'],
+ tip:'Daging lembu boleh jadi liat. Perap semalaman dalam peti sejuk supaya lebih lembut.'},
+{id:'roti-john',n:'Roti John',en:'Roti bertopping telur dan daging',t:'m',q:{r:2,e:1,b:50},x:5,xk:30,xp:0,temp:180,min:9,prep:10,flip:null,
+ pantry:['¼ biji bawang besar, cincang','1 cili hijau, cincang','Garam dan lada','Sos tomato dan sos cili'],
+ steps:['Gaul telur, daging cincang mentah, bawang, cili, garam dan lada dalam mangkuk.','Sapu adunan atas satu belah setiap keping roti, setebal lebih kurang setengah cm supaya masak sampai dalam.','Sapu minyak pada bakul. Masukkan roti, belah topping di atas.','Air fry 180°C selama 9 minit, sampai atasnya masak dan daging perang, tiada merah jambu.','Picit sos tomato dan sos cili di atas.'],
+ tip:'Nak nampak macam pasar malam? Picit sos cili bersilang-silang di atas.'},
+{id:'murtabak',n:'Murtabak Roti',en:'Murtabak guna roti putih',t:'m',q:{r:2,e:1,b:50},x:5,xk:45,xp:0,temp:180,min:10,prep:12,flip:5,nw:1,
+ pantry:['¼ biji bawang besar, cincang','1 cili hijau, cincang','Secubit kunyit dan garam','1 sudu kecil minyak','Timun dan sos tomato untuk cicah'],
+ steps:['Masak daging cincang dulu dalam mangkuk keluli kecil, 200°C selama 6 minit, kemudian hancurkan.','Gaul daging dengan telur, bawang, cili, kunyit dan garam.','Leperkan roti dengan botol. Buang kulit roti dan simpan untuk kerepek roti.','Letak inti atas satu keping roti, tutup dengan keping kedua. Tekan tepi dengan garpu sampai rapat.','Sapu minyak kedua-dua belah. Air fry 180°C selama 10 minit. Terbalikkan perlahan pada minit ke-5.'],
+ tip:'Tiada daging? Guna keema ayam, atau telur sahaja.'},
+{id:'meatball',n:'Bebola Daging',en:'Bebola daging cara Barat',t:'w',q:{b:120,r:.5,e:.5},x:4,xk:10,xp:0,temp:190,min:11,prep:15,flip:6,
+ pantry:['1 sudu besar susu atau air','1 ulas bawang putih, parut','¼ biji bawang besar, cincang halus','Garam dan lada'],
+ steps:['Koyakkan setengah keping roti kecil-kecil. Rendam dalam susu 2 minit dan lenyek.','Masukkan daging, setengah biji telur yang dipukul, bawang putih, bawang, garam dan lada. Gaul dengan tangan.','Gentel jadi bebola, kecil sedikit dari bola ping pong.','Air fry 190°C selama 11 minit. Goncang pada minit ke-6.','Makan dengan sos cili, atau masukkan dalam roti jadi sandwic bebola.'],
+ tip:'Separuh telur lagi guna untuk muffin telur atau roti telur esok.'},
+{id:'scotch',n:'Telur Scotch',en:'Telur rebus dibalut daging',t:'w',q:{e:1,b:80,r:1},x:3,xk:30,xp:1,temp:190,min:13,prep:25,flip:7,
+ pantry:['Garam dan lada','1 sudu besar susu atau air untuk disapu','Minyak'],
+ steps:['Masak telur dalam air fryer 130°C selama 12 minit. Rendam air sejuk 5 minit, kemudian kupas.','Bakar roti 160°C selama 4 minit dan hancurkan jadi serbuk.','Perasakan daging cincang. Leperkan atas tapak tangan, balut seluruh telur.','Sapu susu, guling dalam serbuk roti, sapu minyak.','Air fry 190°C selama 13 minit. Pusingkan pada minit ke-7.'],
+ tip:'12 minit pertama beri kuning telur lembut selepas dimasak kali kedua. Nak keras, rebus 15 minit dulu.'},
+{id:'pai-kentang',n:'Pai Kentang Daging',en:'Ala shepherd\'s pie dalam mangkuk kecil',t:'w',q:{b:80,p:200},x:8,xk:60,xp:2,temp:190,min:12,prep:25,flip:null,nw:1,
+ pantry:['¼ bawang besar dan ½ tomato, cincang','1 sudu kecil kicap, garam dan lada','2 sudu besar susu untuk kentang lenyek','2 sudu besar jagung manis (pilihan)'],
+ steps:['Rebus atau microwave kentang sampai lembut. Lenyek dengan susu, garam dan lada.','Masak daging cincang dengan bawang dan tomato dalam mangkuk keluli kecil, 200°C selama 8 minit. Kacau sekali.','Masukkan kicap dan jagung ke dalam daging. Ratakan kentang lenyek di atasnya.','Air fry 190°C selama 12 minit sampai atasnya keemasan.'],
+ tip:'Tiada daging? Guna keema ayam. Rasa sama sedap.'},
+{id:'loaded',n:'Kentang Loaded Daging',en:'Kentang goreng bertabur daging dan keju',t:'w',q:{p:200,b:50},x:20,xk:100,xp:4,temp:200,min:17,prep:35,flip:8,nw:1,
+ pantry:['1 sudu kecil minyak dan garam','1 keping keju (pilihan)','Sos cili','Bawang, cincang'],
+ steps:['Potong kentang jadi batang, rendam 30 minit, keringkan, gaul minyak dan garam.','Air fry 200°C selama 17 minit. Goncang setiap 5 minit.','Pada masa yang sama, masak daging cincang dengan garam dan lada dalam mangkuk keluli kecil, 200°C selama 7 minit.','Tabur daging dan keju atas kentang. Air fry lagi 2 minit sampai keju cair.','Tabur bawang dan picit sos cili.'],
+ tip:'Snek hujung minggu. Sedap dikongsi berdua.'},
+{id:'fries',n:'Kentang Goreng',en:'Kentang goreng air fryer',t:'w',q:{p:200},x:2,xk:40,xp:0,temp:200,min:17,prep:35,flip:8,
+ pantry:['1 sudu kecil minyak','Garam','Serbuk cili atau lada hitam (pilihan)'],
+ steps:['Potong kentang jadi batang setebal 1 cm. Biar kulit, lebih banyak serat.','Rendam dalam air sejuk 30 minit. Ini buang kanji dan buat kentang rangup.','Keringkan betul-betul dengan kain bersih. Kentang basah jadi lembik.','Gaul dengan minyak dan garam.','Air fry 200°C selama 17 minit. Goncang setiap 5 minit.','Tabur serbuk cili masa masih panas.'],
+ tip:'Satu lapis sahaja. Kalau banyak, masak dua kali. Bakul penuh jadi kukus, bukan goreng.'},
+{id:'kentang-kunyit',n:'Kentang Goreng Kunyit',en:'Kentang goreng gaya mamak dengan daun kari',t:'m',q:{p:200},x:3,xk:40,xp:0,temp:200,min:17,prep:35,flip:8,nw:1,
+ pantry:['1 sudu kecil minyak','¼ sudu kecil serbuk kunyit','½ sudu kecil serbuk cili','Garam','Daun kari'],
+ steps:['Potong kentang jadi batang. Rendam dalam air sejuk 30 minit, kemudian keringkan betul-betul.','Gaul dengan minyak, kunyit, serbuk cili dan garam.','Air fry 200°C selama 17 minit. Goncang setiap 5 minit.','Masukkan daun kari 2 minit terakhir.'],
+ tip:'Rasa macam kentang goreng di gerai mamak.'},
+{id:'balado',n:'Kentang Balado',en:'Kentang pedas manis',t:'m',q:{p:200},x:6,xk:70,xp:1,temp:200,min:15,prep:15,flip:7,
+ pantry:['1 sudu kecil minyak','Garam','1 sudu kecil serbuk cili','1 sudu besar sos tomato','½ biji bawang besar, hiris nipis','1 sudu kecil gula','Sedikit perahan lemon'],
+ steps:['Potong kentang dadu kecil, lebih kurang 1.5 cm. Gaul dengan minyak dan garam.','Air fry 200°C selama 15 minit. Goncang pada minit ke-7.','Sementara menunggu, campur serbuk cili, sos tomato, bawang, gula, secubit garam dan 1 sudu besar air dalam mangkuk keluli kecil.','Bila kentang siap, air fry sos 180°C selama 4 minit.','Gaul kentang dengan sos. Perah lemon. Rasa, tambah garam atau gula.'],
+ tip:'Tambah 2 biji telur rebus air fryer, jadi lauk penuh.'},
+{id:'wedges',n:'Wedges Lada Hitam',en:'Kentang baji bawang putih dan lada',t:'w',q:{p:200},x:3,xk:40,xp:0,temp:200,min:20,prep:5,flip:10,
+ pantry:['1 sudu kecil minyak','1 ulas bawang putih, parut','½ sudu kecil lada hitam','Garam'],
+ steps:['Basuh kentang betul-betul. Biar kulit. Potong setiap biji jadi 8 baji.','Gaul dengan minyak, bawang putih, lada hitam dan garam.','Air fry 200°C selama 20 minit. Goncang pada minit ke-10.','Siap bila garpu mudah masuk dan tepinya perang.'],
+ tip:'Tak perlu rendam. Snek kentang paling senang dalam senarai ini.'},
+{id:'smashed',n:'Kentang Penyek',en:'Kentang dipenyek, tepi rangup',t:'w',q:{p:200},x:4,xk:40,xp:0,temp:200,min:15,prep:20,flip:null,
+ pantry:['1 sudu kecil minyak','Garam dan lada','1 ulas bawang putih, parut','Secubit serbuk cili (pilihan)'],
+ steps:['Rebus kentang kecil berkulit 15 minit sampai lembut, atau microwave 5 hingga 6 minit.','Letak atas bakul yang disapu minyak. Penyekkan setiap biji dengan dasar gelas.','Sapu minyak dan bawang putih. Tabur garam dan lada.','Air fry 200°C selama 15 minit sampai tepinya rangup. Tak perlu terbalikkan.'],
+ tip:'Kentang besar? Belah dua sebelum direbus.'},
+{id:'hashbrown',n:'Hash Brown',en:'Kentang parut leper',t:'w',q:{p:200,e:.5},x:2,xk:40,xp:0,temp:200,min:15,prep:15,flip:8,
+ pantry:['Garam dan lada','1 sudu kecil minyak','Sedikit bawang cincang (pilihan)'],
+ steps:['Parut kentang. Bungkus dalam kain bersih dan perah airnya sebanyak boleh. Ini langkah paling penting.','Gaul dengan setengah biji telur yang dipukul, garam, lada dan bawang.','Bentukkan 2 keping leper setebal 1 cm.','Sapu minyak pada bakul dan atas hash brown. Air fry 200°C selama 15 minit. Terbalikkan pada minit ke-8.'],
+ tip:'Makan dengan sebiji telur rebus, jadi sarapan penuh.'},
+{id:'frittata',n:'Frittata Kentang',en:'Telur dadar tebal dengan kentang',t:'w',q:{p:100,e:2},x:4,xk:40,xp:0,temp:170,min:12,prep:18,flip:null,nw:1,
+ pantry:['¼ bawang besar dan ½ tomato, cincang','Garam dan lada','1 sudu kecil minyak','Mangkuk keluli kecil'],
+ steps:['Potong kentang dadu kecil. Air fry 200°C selama 8 minit dengan sedikit minyak.','Pukul telur dengan bawang, tomato, garam dan lada.','Masukkan kentang ke dalam mangkuk keluli yang disapu minyak. Tuang telur.','Air fry 170°C selama 12 minit sampai tengahnya masak.'],
+ tip:'Potong macam kek. Boleh bawa ke kelas sebagai bekal.'},
+{id:'kerepek-kentang',n:'Kerepek Kentang Pedas',en:'Kerepek kentang nipis',t:'m',q:{p:150},x:2,xk:20,xp:0,temp:180,min:14,prep:35,flip:4,
+ pantry:['½ sudu kecil minyak','Garam','Serbuk cili','Secubit gula (pilihan)'],
+ steps:['Hiris kentang nipis-nipis, 1 hingga 2 mm. Pengupas sayur pun boleh.','Rendam dalam air sejuk 30 minit, kemudian keringkan setiap keping betul-betul.','Gaul dengan sedikit minyak dan garam.','Air fry 180°C selama 14 minit. Goncang setiap 4 minit. Perhati 3 minit terakhir, yang nipis cepat hangus.','Tabur serbuk cili dan gula masa panas. Kerepek jadi lebih rangup bila sejuk.'],
+ tip:'Angkat keping yang sudah keemasan dulu, biar yang lain masak sedikit lagi.'},
+{id:'roti-telur',n:'Roti Telur Kicap',en:'Roti celup telur gaya Melayu',t:'m',q:{r:2,e:1},x:4,xk:25,xp:1,temp:180,min:7,prep:5,flip:4,
+ pantry:['2 sudu besar susu atau air','Secubit garam','¼ bawang besar dan 1 cili hijau, cincang','Kicap dan cili hijau untuk cicah'],
+ steps:['Pukul telur dengan susu, garam, bawang dan cili.','Celup kedua-dua belah roti dalam telur.','Sapu minyak pada bakul. Letak roti, tuang baki telur di atas.','Air fry 180°C selama 7 minit. Terbalikkan pada minit ke-4.','Cicah dengan kicap dan cili hijau.'],
+ tip:'Nak manis? Tak payah bawang dan cili, tambah sedikit gula.'},
+{id:'puding-roti',n:'Puding Roti',en:'Puding roti manis, snek pencuci mulut',t:'m',q:{r:2,e:1},x:7,xk:110,xp:3,temp:160,min:18,prep:15,flip:null,nw:1,
+ pantry:['100 ml susu','1 sudu besar gula','Secubit garam','Sedikit minyak untuk sapu mangkuk'],
+ steps:['Koyakkan roti kecil-kecil, masukkan dalam mangkuk keluli yang disapu minyak.','Pukul telur, susu, gula dan garam.','Tuang atas roti. Tekan sedikit supaya roti menyerap. Biar 10 minit.','Air fry 160°C selama 18 minit sampai tengahnya masak dan atasnya keemasan.','Makan panas, atau sejuk dari peti.'],
+ tip:'Ini snek manis. Makan sekali-sekala, bukan setiap hari.'},
+{id:'garlic-bread',n:'Roti Bawang Putih',en:'Garlic bread',t:'w',q:{r:2},x:4,xk:40,xp:0,temp:180,min:4,prep:3,flip:null,
+ pantry:['1 sudu kecil minyak (atau mentega kalau ada)','1 ulas bawang putih, parut','Daun ketumbar, cincang','Secubit garam'],
+ steps:['Campur minyak dengan bawang putih, daun ketumbar dan garam.','Sapu nipis atas roti.','Air fry 180°C selama 4 minit sampai tepinya keemasan.'],
+ tip:'Roti ringan boleh terbang kena kipas. Tahan dengan cucuk gigi.'},
+{id:'pizza-roti',n:'Piza Roti',en:'Piza guna roti putih dan ayam',t:'w',q:{r:2,c:50},x:20,xk:75,xp:4,temp:180,min:5,prep:10,flip:null,
+ pantry:['1 sudu besar sos tomato + sedikit sos cili','¼ bawang besar dan ½ tomato, hiris','1 keping keju (pilihan)','Secubit serbuk cili'],
+ steps:['Guna ayam masak yang ada, atau air fry 50 g ayam 200°C selama 8 minit dan potong kecil.','Sapu sos tomato dan sos cili atas roti.','Letak ayam, bawang dan tomato. Koyak keju di atas.','Air fry 180°C selama 5 minit sampai keju cair dan roti rangup.'],
+ tip:'Ayam kunyit atau ayam bakar kicap semalam jadi topping piza gaya Melayu.'},
+{id:'egg-hole',n:'Telur dalam Roti',en:'Telur di tengah roti',t:'w',q:{r:1,e:1},x:1,xk:10,xp:0,temp:180,min:7,prep:3,flip:null,
+ pantry:['Sedikit minyak','Garam dan lada','Secubit serbuk cili (pilihan)'],
+ steps:['Tebuk lubang di tengah roti dengan gelas.','Sapu minyak pada bakul. Letak roti dan tekan rata. Pecahkan telur ke dalam lubang.','Letak bulatan roti yang ditebuk di sebelah.','Air fry 180°C. 6 minit untuk kuning lembut, 8 minit untuk kuning keras.','Tabur garam, lada dan serbuk cili. Cicah bulatan roti dalam kuning telur.'],
+ tip:'Kalau telur mengalir ke bawah roti, tekan roti lebih kuat sebelum pecahkan telur.'},
+{id:'roti-keju',n:'Roti Telur Keju',en:'Sandwic telur dan keju panas',t:'w',q:{r:2,e:1},x:18,xk:60,xp:4,temp:180,min:7,prep:3,flip:null,nw:1,
+ pantry:['1 keping keju Amul','Lada hitam','Sedikit minyak'],
+ steps:['Tekan tengah satu keping roti dengan sudu sampai jadi lekuk.','Pecahkan telur ke dalam lekuk. Tabur lada.','Air fry 180°C selama 5 minit.','Letak keju atas roti kedua, masukkan sekali untuk 2 minit terakhir.','Tutup jadi sandwic.'],
+ tip:'Satu keping keju Amul lebih kurang ₹16. Snek ini paling sedap pagi-pagi.'},
+{id:'kerepek-roti',n:'Kerepek Roti Pedas',en:'Kerepek daripada roti lama',t:'m',q:{r:2},x:2,xk:20,xp:0,temp:160,min:7,prep:3,flip:3,
+ pantry:['Sedikit minyak','Serbuk cili','Secubit garam','Secubit gula'],
+ steps:['Potong roti lama atau kulit roti jadi jalur atau segi empat.','Sapu minyak dan gaul dengan serbuk cili, garam dan gula.','Air fry 160°C selama 7 minit. Goncang pada minit ke-3.','Biar sejuk. Nanti jadi rangup.'],
+ tip:'Snek paling murah di sini. Tahan seminggu dalam balang tertutup.'},
+{id:'cucur-jagung',n:'Cucur Jagung',en:'Cucur jagung manis dan telur',t:'m',q:{e:1,r:1},x:10,xk:85,xp:1.5,temp:190,min:10,prep:10,flip:5,nw:1,
+ pantry:['3 sudu besar jagung manis beku','¼ bawang besar dan 1 cili hijau, cincang','Secubit garam, kunyit dan lada','Minyak'],
+ steps:['Bakar roti 160°C selama 4 minit, hancurkan jadi serbuk.','Gaul jagung, telur, serbuk roti, bawang, cili, garam, kunyit dan lada.','Sudukan atas bakul yang disapu minyak, leperkan jadi 4 biji.','Sapu minyak di atas. Air fry 190°C selama 10 minit. Terbalikkan pada minit ke-5.'],
+ tip:'Adunan terlalu cair? Tambah serbuk roti. Bakul berlubang besar? Guna mangkuk keluli.'},
+{id:'telur-rebus',n:'Telur Rebus Kicap Cili',en:'Telur rebus air fryer',t:'m',q:{e:2},x:2,xk:10,xp:1,temp:130,min:15,prep:7,flip:null,
+ pantry:['Kicap pekat','Cili hijau, hiris','Atau garam dan lada sahaja'],
+ steps:['Masukkan telur terus ke dalam bakul. Tak perlu air.','Air fry 130°C. 12 minit untuk kuning separuh masak, 15 minit untuk kuning keras.','Rendam dalam air sejuk 5 minit. Kupas.','Belah dua. Tuang kicap dan cili hijau di atas.'],
+ tip:'Buat 6 biji sekali untuk seminggu. Tanpa dikupas, tahan 5 hari dalam peti sejuk. Air fryer berbeza, cuba sebiji dulu.'},
+{id:'telur-dadar',n:'Telur Dadar Cili Hijau',en:'Telur dadar air fryer',t:'m',q:{e:2},x:3,xk:45,xp:0,temp:160,min:8,prep:3,flip:null,nw:1,
+ pantry:['¼ bawang besar, cincang','1 cili hijau, cincang','Secubit garam dan kunyit','1 sudu kecil minyak','Mangkuk keluli kecil'],
+ steps:['Pukul telur dengan bawang, cili, garam dan kunyit.','Sapu minyak dalam mangkuk keluli kecil. Tuang telur.','Air fry 160°C selama 8 minit sampai tengahnya masak.','Makan dengan roti atau kicap cili.'],
+ tip:'Suhu rendah (160°C) supaya telur tak keras dan atasnya tak hangus.'},
+{id:'sambal-telur',n:'Sambal Telur',en:'Telur dalam sambal cepat',t:'m',q:{e:2},x:6,xk:70,xp:1,temp:200,min:5,prep:28,flip:null,
+ pantry:['1 sudu kecil serbuk cili','½ biji bawang besar, kisar atau cincang halus','1 sudu besar sos tomato','1 sudu kecil gula, secubit garam','1 sudu kecil minyak','Sedikit perahan lemon'],
+ steps:['Buat telur rebus dulu: air fry 130°C selama 15 minit, rendam air sejuk, kupas.','Air fry telur yang sudah dikupas 200°C selama 5 minit sampai kulitnya keemasan dan sedikit berkedut.','Campur serbuk cili, bawang, sos tomato, gula, garam, minyak dan 2 sudu besar air dalam mangkuk keluli kecil. Air fry 180°C selama 6 minit, kacau sekali.','Gaul telur dalam sambal. Perah lemon.'],
+ tip:'Terlalu pedas? Tambah sos tomato dan bawang. Makan dengan roti putih.'},
+{id:'egg-muffin',n:'Muffin Telur',en:'Muffin telur untuk bekal',t:'w',q:{e:2,c:40},x:4,xk:10,xp:1,temp:160,min:11,prep:10,flip:null,
+ pantry:['1 sudu besar susu','¼ bawang besar dan ½ tomato, cincang','2 sudu besar jagung manis (pilihan)','Garam dan lada','Mangkuk keluli kecil atau cawan kertas'],
+ steps:['Guna ayam yang sudah dimasak, potong sangat kecil.','Pukul telur dengan susu, garam dan lada.','Masukkan ayam dan sayur ke dalam 2 atau 3 mangkuk kecil yang disapu minyak. Tuang telur sampai ¾ penuh.','Air fry 160°C selama 11 minit. Cucuk gigi di tengah mesti keluar bersih.'],
+ tip:'Tahan 3 hari dalam peti sejuk. Panaskan 160°C selama 3 minit.'},
+{id:'sandwich',n:'Sandwic Ayam Panggang',en:'Sandwic ayam dengan dadih',t:'w',q:{r:2,c:70},x:5,xk:25,xp:2,temp:180,min:6,prep:15,flip:3,
+ pantry:['2 sudu besar dadih pekat (ganti mayonis)','Garam dan lada hitam','¼ bawang besar, cincang','Timun, hiris','Sedikit minyak'],
+ steps:['Guna ayam yang sudah dimasak, atau air fry 70 g ayam 200°C selama 10 minit. Carik dengan dua garpu.','Gaul ayam dengan dadih, garam, lada dan bawang.','Isi dalam roti. Sapu sedikit minyak di luar.','Cucuk dengan cucuk gigi supaya roti atas tak terbang. Air fry 180°C selama 6 minit. Terbalikkan pada minit ke-3.','Buka dan masukkan timun selepas dibakar supaya kekal segar.'],
+ tip:'Dadih ganti mayonis jimat lebih kurang 80 kcal dan tambah protein.'},
+{id:'jacket',n:'Kentang Bakar Telur',en:'Kentang bakar berisi telur',t:'w',q:{p:220,e:1},x:3,xk:20,xp:0,temp:200,min:40,prep:13,flip:20,
+ pantry:['Garam dan lada','Sedikit minyak','Secubit serbuk cili','1 sudu besar dadih (pilihan)'],
+ steps:['Basuh kentang. Cucuk beberapa lubang dengan garpu. Sapu sedikit minyak dan garam pada kulit.','Air fry 200°C selama 40 minit. Pusingkan pada minit ke-20. Siap bila pisau mudah masuk.','Belah dalam di atas dan tekan tepinya supaya terbuka.','Pecahkan telur ke dalam bukaan. Air fry 180°C selama 8 minit.','Tabur garam, lada, serbuk cili dan letak dadih.'],
+ tip:'Lambat, tapi hampir tiada kerja. Masukkan masa tengah belajar.'}
+];
+/* ---------- state ---------- */
+const KEY = 'bakul-air-fryer-v3';
+let S = {tab:'semua', taste:'all', sort:'value', prices:Object.assign({},DEFAULT_PRICES), bought:{}, plan:Object.assign({},PLAN0), pantryQ:{}, incPantry:true, outPrice:60, outProt:6};
+try{
+  const saved = JSON.parse(localStorage.getItem(KEY)||'null');
+  if(saved){ S = Object.assign(S, saved); S.prices = Object.assign({},DEFAULT_PRICES, saved.prices||{}); }
+  else { const old = JSON.parse(localStorage.getItem('bakul-air-fryer-v2')||'null'); if(old){ S.bought = old.bought||{}; if(old.prices && old.prices.INR) S.prices = Object.assign({},DEFAULT_PRICES, old.prices.INR); S.taste = old.taste||'all'; S.sort = old.sort||'value'; } }
+}catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+/* ---------- kira ---------- */
+function mainCost(q){ const P=S.prices; let c=0; for(const k of ORDER){ const v=q[k]; if(!v) continue; if(k==='e') c+=v*P.e; else if(k==='r') c+=v*P.r/SLICES; else c+=v/1000*P[k]; } return c; }
+function stats(r){
+  let p=r.xp, k=r.xk;
+  for(const key of ORDER){ const q=r.q[key]; if(!q) continue; p+=q*ING[key].p; k+=q*ING[key].k; }
+  const cost = mainCost(r.q) + r.x;
+  return {cost, p, k, total:r.min+r.prep, value:p/cost*10, hp:(p/k*100)>=8};
+}
+const rs = v => '₹'+Math.round(v).toLocaleString('en-IN');
+function frac(n){ const w=Math.floor(n), f=n-w; return ((w?w:'')+(f===.5?'½':'')) || '0'; }
+function qtyText(key,q){ if(key==='e') return frac(q)+' biji'; if(key==='r') return frac(q)+' keping'; return q+' g'; }
+const mmss = s => { s=Math.max(0,Math.ceil(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); };
+const tasteName = t => t==='m' ? 'Melayu' : 'Barat';
+const $ = id => document.getElementById(id);
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,1800); }
+
+/* ---------- tabs ---------- */
+function validTab(id){ return TABS.some(t=>t.id===id); }
+function renderTabs(){
+  $('tabs').innerHTML = TABS.map(t=>{
+    if(t.sep) return '<span class="tabsep" aria-hidden="true"></span>';
+    const n = t.k ? R.filter(r=>r.q[t.k]).length : (t.id==='semua' ? R.length : null);
+    return `<button type="button" role="tab" class="tab${t.info?' info':''}" data-tab="${t.id}" aria-selected="${S.tab===t.id}">${t.label}${n!==null?`<span class="n">${n}</span>`:''}</button>`;
+  }).join('');
+  const act = $('tabs').querySelector('[aria-selected="true"]'); if(act) act.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+function go(id){ if(!validTab(id)) id='semua'; if(location.hash !== '#'+id){ location.hash = id; return; } show(id); }
+function show(id){ S.tab=id; save(); renderTabs(); renderView(); }
+window.addEventListener('hashchange', ()=>{ const id=location.hash.slice(1); show(validTab(id)?id:'semua'); window.scrollTo({top:0}); });
+$('tabs').addEventListener('click', e=>{ const b=e.target.closest('[data-tab]'); if(b) go(b.dataset.tab); });
+
+/* ---------- views ---------- */
+function renderView(){
+  const t = TABS.find(x=>x.id===S.tab);
+  const m = $('main');
+  if(!t.info) m.innerHTML = viewMenu(t);
+  else if(t.id==='potong') m.innerHTML = viewPotong();
+  else if(t.id==='peringatan') m.innerHTML = viewPeringatan();
+  else if(t.id==='kos') m.innerHTML = viewKos();
+  else if(t.id==='beli') m.innerHTML = viewBeli();
+  else if(t.id==='tips') m.innerHTML = viewTips();
+}
+
+function menuList(t){
+  let list = R.filter(r => (!t.k || r.q[t.k]) && (S.taste==='all' || r.t===S.taste)).map(r=>({r,s:stats(r)}));
+  const f = {value:(a,b)=>b.s.value-a.s.value, cheap:(a,b)=>a.s.cost-b.s.cost, protein:(a,b)=>b.s.p-a.s.p, fast:(a,b)=>a.s.total-b.s.total, light:(a,b)=>a.s.k-b.s.k}[S.sort];
+  return list.sort(f);
+}
+function viewMenu(t){
+  const list = menuList(t);
+  const tb = `<div class="toolbar">
+    <div class="seg" id="taste" role="group" aria-label="Tekak">${[['all','Semua'],['m','Melayu'],['w','Barat']].map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${S.taste===v}">${l}</button>`).join('')}</div>
+    <select id="sort" aria-label="Susun ikut">${[['value','Protein paling berbaloi'],['cheap','Paling murah'],['protein','Protein paling tinggi'],['fast','Paling cepat'],['light','Kalori paling rendah']].map(([v,l])=>`<option value="${v}" ${S.sort===v?'selected':''}>${l}</option>`).join('')}</select>
+    <button type="button" class="shuffle" id="shuffle">Pilihkan untuk saya</button>
+  </div>
+  <p class="count">${list.length} snek${t.k?` guna ${ING[t.k].ms.toLowerCase()}`:''}</p>`;
+  if(!list.length) return `<div class="view">${tb}<div class="empty">Tiada snek untuk pilihan ini. Tukar tekak ke Semua.</div></div>`;
+  return `<div class="view">${tb}<div class="grid">${list.map(({r,s})=>`<button type="button" class="card" data-id="${r.id}">
+    <span class="row"><span class="chip ${r.t}">${tasteName(r.t)}</span>${s.hp?'<span class="chip hp">Protein tinggi</span>':''}<span class="lcd">${r.temp}°C · ${r.min} min</span></span>
+    <span class="card-name">${r.n}</span>
+    <span class="stats"><span><b>${rs(s.cost)}</b><small>kos</small></span><span><b>${Math.round(s.p)} g</b><small>protein</small></span><span><b>${Math.round(s.k)}</b><small>kcal</small></span></span>
+  </button>`).join('')}</div></div>`;
+}
+
+function cutBlock(key, note){
+  const c = CUTS[key];
+  return `<h3>${c.t}</h3><span class="ref">${c.ref}</span>${c.svg()}<ol>${c.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${note?`<p class="sub" style="margin:0">Untuk resepi ini: ${note}</p>`:''}`;
+}
+function viewPotong(){
+  const used = k => R.filter(r=>CUTMAP[r.id] && CUTMAP[r.id][0]===k);
+  return `<div class="view">
+    <div class="box"><h2>Ukur guna jari, tak perlu pembaris</h2>
+      <div class="sizes">
+        <div class="size"><b>1–2 mm</b>Tebal syiling ₹1</div>
+        <div class="size"><b>3 mm</b>Tebal 2 syiling ₹1</div>
+        <div class="size"><b>1 cm</b>Lebar jari kelingking</div>
+        <div class="size"><b>1.5 cm</b>Lebar jari telunjuk</div>
+        <div class="size"><b>2 cm</b>Lebar ibu jari</div>
+      </div>
+      <p class="sub" style="margin:10px 0 0">Garis putus-putus biru dalam lukisan ialah tempat pisau. Ikut nombor 1, 2, 3 dari kiri ke kanan.</p>
+    </div>
+    <div class="cutgrid">${Object.keys(CUTS).map(k=>`<div class="cut">${cutBlock(k)}<div class="used">Guna dalam: ${used(k).map(r=>`<button type="button" data-open="${r.id}">${r.n}</button>`).join(', ')}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+function viewPeringatan(){
+  return `<div class="view">
+    <div class="box"><h2>3 peraturan emas</h2>
+      <ol>
+        <li><b>Masak di rumah ialah pilihan biasa.</b> Beli di luar hanya belanja yang dirancang, had ₹300 seminggu.</li>
+        <li><b>Persediaan Ahad, 30 minit.</b> Hari biasa cuma ambil dari peti sejuk dan masuk air fryer.</li>
+        <li><b>Sentiasa ada 3 snek tanpa usaha:</b> telur rebus, kerepek roti, nugget beku. Untuk malam yang terlalu penat.</li>
+      </ol>
+    </div>
+    <div class="cols">
+      <div class="box"><h2>Masak snek atau beli di luar?</h2>
+        <div class="verdict"><b>Keputusan council:</b> masak sendiri, tapi dengan cara "sediakan sekali, makan seminggu". Rumah menang untuk murah dan kenyang. Untuk senang, rumah hanya menang kalau ada persediaan Ahad.</div>
+        <div class="tablewrap"><table>
+          <thead><tr><th></th><th>Beli luar</th><th>Masak rumah</th></tr></thead>
+          <tbody>
+            <tr><td>Snek murah</td><td>Puff / pazham pori <span class="num">₹15–30</span>, protein 3–6 g</td><td class="win">2 telur rebus <span class="num">₹20</span>, protein 13 g</td></tr>
+            <tr><td>Snek ayam</td><td>Shawarma <span class="num">₹100–140</span>, protein ~20 g</td><td class="win">Ayam kunyit <span class="num">~₹87</span>, protein 34 g</td></tr>
+            <tr><td>Swiggy</td><td><span class="num">₹150–250</span> dengan caj</td><td class="win">Tiada caj</td></tr>
+            <tr><td>Masa</td><td class="win">0 minit</td><td>2–15 minit kerja</td></tr>
+            <tr><td>Kenyang</td><td>Goreng tepung, cepat lapar semula</td><td class="win">Protein dan serat, lama kenyang</td></tr>
+          </tbody></table></div>
+        <p class="sub">Poin paling tajam: duit paling banyak bocor di makan luar (mess), bukan di snek. Snek rumah yang mengenyangkan buat awak kurang pesan makanan.</p>
+      </div>
+      <div class="box"><h2>Kentang beku atau kentang sebenar?</h2>
+        <div class="verdict"><b>Keputusan council:</b> buat sendiri, guna wedges (5 minit potong, tak perlu rendam). Kentang beku lebih kurang 8 kali ganda lebih mahal untuk kentang yang sama, dengan lebih banyak minyak. Simpan satu pek kecil untuk minggu exam paling sibuk.</div>
+        <div class="tablewrap"><table>
+          <thead><tr><th>200 g</th><th>Frozen (McCain dll)</th><th>Buat sendiri</th></tr></thead>
+          <tbody>
+            <tr><td>Harga</td><td><span class="num">₹60–70</span></td><td class="win"><span class="num">₹8</span></td></tr>
+            <tr><td>Kerja</td><td class="win">Buka dan tuang</td><td>Wedges 5 minit potong</td></tr>
+            <tr><td>Kalori</td><td>~300 kcal (separa goreng)</td><td class="win">~190 kcal</td></tr>
+            <tr><td>Isi</td><td>Minyak, garam, kadang gula</td><td class="win">Kentang, 1 sudu minyak, garam, kulit (serat)</td></tr>
+          </tbody></table></div>
+        <h3>Buat "kentang beku" sendiri</h3>
+        <ol>
+          <li>Potong 1 kg kentang jadi batang atau baji.</li>
+          <li>Air fry 180°C selama 5 minit, separuh masak.</li>
+          <li>Sejukkan, beku atas pinggan, kemudian masuk plastik.</li>
+          <li>Bila nak makan: terus 200°C selama 15 minit. Senang macam McCain, harga ₹8.</li>
+        </ol>
+        <p class="sub" style="margin-top:10px">Kalau beli frozen: pilih yang ramuannya cuma kentang, minyak dan garam.</p>
+      </div>
+    </div>
+    <p class="sub">Harga snek luar ialah anggaran biasa di Kerala. Harga frozen ialah harga biasa jenama besar. Ini perspektif umum, bukan nasihat kewangan atau pemakanan berlesen.</p>
+  </div>`;
+}
+
+function planCalc(){
+  const g={c:0,b:0,p:0,r:0,e:0}; let n=0, prot=0;
+  for(const [id,cnt] of Object.entries(S.plan)){ const r=R.find(x=>x.id===id); if(!r||!cnt) continue; n+=cnt; for(const k of ORDER) g[k]+=(r.q[k]||0)*cnt; prot+=stats(r).p*cnt; }
+  const P=S.prices, loaves=Math.ceil(g.r/SLICES);
+  const lines = [
+    {k:'c', qty:(g.c/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.c/1000*P.c},
+    {k:'b', qty:(g.b/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.b/1000*P.b},
+    {k:'p', qty:(g.p/1000).toFixed(2).replace(/\.?0+$/,'')+' kg', cost:g.p/1000*P.p},
+    {k:'e', qty:Math.ceil(g.e)+' biji', cost:Math.ceil(g.e)*P.e},
+    {k:'r', qty:loaves+' buku', cost:loaves*P.r}
+  ].filter(l=>g[l.k]>0);
+  const main = lines.reduce((a,l)=>a+l.cost,0);
+  const pantry = S.incPantry ? PANTRY.reduce((a,i)=>a+i.v*(S.pantryQ[i.id] ?? i.q),0) : 0;
+  const total = main+pantry;
+  return {n, prot, lines, main, pantry, total, out:n*S.outPrice, outProt:n*S.outProt};
+}
+function viewKos(){
+  const c = planCalc();
+  const inPlan = Object.entries(S.plan).filter(([id,cnt])=>cnt>0 && R.find(r=>r.id===id));
+  const others = R.filter(r=>!S.plan[r.id]);
+  const max = Math.max(c.total, c.out, 1);
+  return `<div class="view">
+    <div class="box"><h2>Kalau saya buat snek ini sebulan, berapa kos?</h2>
+      <div class="total">
+        <div class="tile big"><small>Jumlah sebulan</small><b>${rs(c.total)}</b></div>
+        <div class="tile"><small>Sehari</small><b>${rs(c.total/30)}</b></div>
+        <div class="tile"><small>Satu snek</small><b>${c.n?rs(c.total/c.n):'–'}</b></div>
+        <div class="tile"><small>Protein sehari</small><b>${Math.round(c.prot/30)} g</b></div>
+      </div>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Beli sebulan</th><th>Jumlah</th><th style="text-align:right">Kos</th></tr></thead>
+        <tbody>
+          ${c.lines.map(l=>`<tr><td>${ING[l.k].ms}${l.k==='b'?' <span class="sub">(kedai daging)</span>':''}</td><td class="num">${l.qty}</td><td class="num" style="text-align:right">${rs(l.cost)}</td></tr>`).join('')}
+          <tr><td>Barang dapur</td><td class="sub">${S.incPantry?'sos, rempah, bawang, timun':'tidak dikira'}</td><td class="num" style="text-align:right">${rs(c.pantry)}</td></tr>
+          <tr><td><b>Jumlah</b></td><td class="num">${c.n} snek</td><td class="num" style="text-align:right"><b>${rs(c.total)}</b></td></tr>
+        </tbody></table></div>
+      <h3>Bandingan dengan beli di luar</h3>
+      <div class="cmp">
+        <div class="bar"><span>Masak rumah</span><span class="track"><span class="fill" style="width:${(c.total/max*100).toFixed(1)}%;display:block"></span></span><span class="num">${rs(c.total)}</span></div>
+        <div class="bar"><span>Beli luar</span><span class="track"><span class="fill out" style="width:${(c.out/max*100).toFixed(1)}%;display:block"></span></span><span class="num">${rs(c.out)}</span></div>
+      </div>
+      <p class="sub" style="margin-top:10px">Beli luar dikira <input class="inline-in" id="out-price" type="number" min="0" value="${S.outPrice}" aria-label="Harga satu snek luar"> rupee sesnek, protein <input class="inline-in" id="out-prot" type="number" min="0" value="${S.outProt}" aria-label="Protein satu snek luar"> g. Protein sebulan: rumah <b>${Math.round(c.prot)} g</b>, luar <b>${Math.round(c.outProt)} g</b>.</p>
+      <p class="sub">${c.total<=c.out ? `Masak rumah jimat <b>${rs(c.out-c.total)}</b> sebulan, dan dapat ${c.outProt?(c.prot/c.outProt).toFixed(1):'–'} kali ganda protein.` : `Bulan ini masak rumah lebih mahal ${rs(c.total-c.out)}, sebab barang dapur dikira penuh. Rempah dan sos tahan lebih dari sebulan, jadi bulan kedua lebih murah.`}</p>
+    </div>
+
+    <div class="cols">
+      <div class="box"><h2>Pelan snek saya</h2>
+        <p class="sub">Berapa kali sebulan awak buat setiap snek. Contoh asal: 30 snek, lebih kurang satu sehari.</p>
+        <div class="plan">${inPlan.length ? inPlan.map(([id,cnt])=>{ const r=R.find(x=>x.id===id); return `<div class="prow"><span class="pn">${r.n}<small>${rs(stats(r).cost)} sesnek</small></span><span class="step"><button type="button" data-plan="${id}" data-d="-1" aria-label="Kurang">−</button><span>${cnt}</span><button type="button" data-plan="${id}" data-d="1" aria-label="Tambah">+</button></span></div>`; }).join('') : '<p class="sub">Pelan kosong. Tambah snek di bawah.</p>'}</div>
+        <div class="addrow"><select id="plan-add" aria-label="Pilih snek untuk ditambah"><option value="">Tambah snek…</option>${others.map(r=>`<option value="${r.id}">${r.n}</option>`).join('')}</select><button type="button" class="btn pri" id="plan-add-btn">Tambah</button></div>
+        <div class="addrow"><button type="button" class="btn" id="plan-reset">Kembali ke pelan contoh</button></div>
+      </div>
+      <div class="box"><h2>Barang dapur sebulan</h2>
+        <label class="tog" for="inc-pantry"><input type="checkbox" id="inc-pantry" ${S.incPantry?'checked':''}> Kira barang dapur dalam jumlah</label>
+        <p class="sub">Berapa pek sebulan untuk snek sahaja. Ubah ikut guna awak.</p>
+        <div class="plan">${PANTRY.map(i=>{ const q=S.pantryQ[i.id] ?? i.q; return `<div class="prow"><span class="pn">${i.n}<small>${rs(i.v)} sepek · ${rs(i.v*q)} sebulan</small></span><span class="step"><button type="button" data-pq="${i.id}" data-d="-0.5" aria-label="Kurang">−</button><span>${frac(q)}</span><button type="button" data-pq="${i.id}" data-d="0.5" aria-label="Tambah">+</button></span></div>`; }).join('')}</div>
+      </div>
+    </div>
+
+    <div class="box"><h2>Harga bahan utama</h2>
+      <p class="sub">Harga Instamart pada 10 Nov 2026. Daging ikut harga kedai daging awak. Ubah kalau harga berubah.</p>
+      <div class="price-grid">${ORDER.map(k=>`<label for="price-${k}">${PRICE_LABEL[k]} (₹)<input id="price-${k}" type="number" min="0" step="any" inputmode="decimal" value="${S.prices[k]}" data-k="${k}"></label>`).join('')}</div>
+      <button type="button" class="btn" id="reset-prices" style="margin-top:12px">Kembali ke harga asal</button>
+    </div>
+  </div>`;
+}
+
+function viewBeli(){
+  return `<div class="view"><div class="box"><h2>Senarai beli Instamart</h2>
+    <p class="sub">Harga dilihat 10 Nov 2026, boleh berubah. Tanda barang yang sudah dibeli.</p>
+    <div class="shop">${SHOP.map(g=>`<div><h3>${g.g}</h3><ul>${g.items.map(i=>`<li class="${S.bought[i.id]?'done':''} ${i.no?'no':''}"><label for="${i.id}"><input type="checkbox" id="${i.id}" ${S.bought[i.id]?'checked':''}><span class="nm">${i.n}${i.d?`<small>${i.d}</small>`:''}</span></label><span class="pr">${i.p}</span></li>`).join('')}</ul></div>`).join('')}</div>
+    <p class="sub" style="margin-top:12px">Garam, gula, minyak masak dan susu dianggap sudah ada di rumah.</p>
+    <button type="button" class="btn" id="shop-clear" style="margin-top:6px">Kosongkan semua tanda</button>
+  </div></div>`;
+}
+
+function viewTips(){
+  return `<div class="view"><div class="cols">
+    <div class="box"><h2>Asas air fryer</h2><ul>
+      <li>Panaskan dulu 3 minit pada suhu masakan.</li>
+      <li>Satu lapis sahaja. Bakul penuh akan mengukus, bukan merangupkan.</li>
+      <li>Goncang atau terbalikkan pada separuh masa. Pemasa dalam resepi akan ingatkan.</li>
+      <li>1 sudu kecil minyak sudah cukup. Sapu dengan berus atau tisu.</li>
+      <li>Tiada kertas minyak? Sapu minyak pada bakul. Untuk adunan cair, guna mangkuk keluli kecil (katori).</li>
+      <li class="warn">Jangan masukkan kertas minyak seorang diri masa panaskan. Ia terbang ke elemen panas.</li>
+      <li>Roti ringan boleh terbang kena kipas. Tahan dengan cucuk gigi.</li>
+      <li>Suhu dalam selamat: ayam 74°C, daging cincang 71°C. Tiada termometer? Belah ketulan paling besar, pastikan tiada merah jambu.</li>
+      <li>Panaskan semula lauk 160°C selama 3 hingga 4 minit.</li>
+    </ul></div>
+    <div class="box"><h2>Persediaan hari Ahad, 30 minit</h2><ol>
+      <li>Air fry 6 biji telur 130°C selama 15 minit.</li>
+      <li>Masak 300 g ayam kunyit. Guna untuk piza roti, sandwic dan muffin telur.</li>
+      <li>Bakar kulit roti lama 160°C selama 5 minit, hancurkan, simpan dalam balang.</li>
+      <li>Bentukkan nugget atau bebola, bekukan mentah, kemudian masuk plastik.</li>
+      <li>Potong 1 kg kentang, separuh masak 5 minit, bekukan.</li>
+    </ol>
+    <h3>Supaya lebih sihat</h3><ul>
+      <li>Tambah timun atau tomato di sebelah setiap snek.</li>
+      <li>Guna dadih sebagai ganti mayonis.</li>
+      <li>Biarkan kulit kentang, lebih banyak serat.</li>
+      <li>Kurangkan sos tomato dan gula.</li>
+    </ul></div>
+  </div>
+  <p class="sub">Semua nombor ialah anggaran kasar untuk satu hidangan. Protein dan kalori daripada nilai biasa bahan mentah. Setiap air fryer berbeza, jadi semak kumpulan pertama.</p></div>`;
+}
+
+/* ---------- interaksi dalam main ---------- */
+$('main').addEventListener('click', e=>{
+  const card = e.target.closest('.card'); if(card) return openRecipe(card.dataset.id);
+  const op = e.target.closest('[data-open]'); if(op) return openRecipe(op.dataset.open);
+  const ts = e.target.closest('#taste button'); if(ts){ S.taste=ts.dataset.v; save(); return renderView(); }
+  if(e.target.closest('#shuffle')){ const list=menuList(TABS.find(t=>t.id===S.tab)); if(list.length) openRecipe(list[Math.floor(Math.random()*list.length)].r.id); return; }
+  const pl = e.target.closest('[data-plan]'); if(pl){ const id=pl.dataset.plan; S.plan[id]=Math.max(0,(S.plan[id]||0)+Number(pl.dataset.d)); if(!S.plan[id]) delete S.plan[id]; save(); return renderView(); }
+  const pq = e.target.closest('[data-pq]'); if(pq){ const it=PANTRY.find(i=>i.id===pq.dataset.pq); const cur=S.pantryQ[it.id] ?? it.q; S.pantryQ[it.id]=Math.max(0,Math.round((cur+Number(pq.dataset.d))*2)/2); save(); return renderView(); }
+  if(e.target.closest('#plan-add-btn')){ const v=$('plan-add').value; if(v){ S.plan[v]=(S.plan[v]||0)+4; save(); renderView(); } return; }
+  if(e.target.closest('#plan-reset')){ S.plan=Object.assign({},PLAN0); save(); return renderView(); }
+  if(e.target.closest('#reset-prices')){ S.prices=Object.assign({},DEFAULT_PRICES); save(); return renderView(); }
+  if(e.target.closest('#shop-clear')){ S.bought={}; save(); return renderView(); }
+});
+$('main').addEventListener('change', e=>{
+  const t=e.target;
+  if(t.id==='sort'){ S.sort=t.value; save(); return renderView(); }
+  if(t.id==='inc-pantry'){ S.incPantry=t.checked; save(); return renderView(); }
+  if(t.type==='checkbox' && t.closest('.shop')){ S.bought[t.id]=t.checked; save(); t.closest('li').classList.toggle('done', t.checked); return; }
+  if(t.id==='out-price' || t.id==='out-prot' || t.dataset.k){
+    const v=parseFloat(t.value); if(isNaN(v)||v<0) return;
+    if(t.id==='out-price') S.outPrice=v; else if(t.id==='out-prot') S.outProt=v; else S.prices[t.dataset.k]=v;
+    save(); renderView();
+  }
+});
+
+/* ---------- helaian resepi ---------- */
+let openId = null;
+function idleMsg(r){ return r.flip ? `Berbunyi pada minit ke-${r.flip} untuk goncang atau terbalikkan, dan bila siap.` : 'Berbunyi bila siap.'; }
+function openRecipe(id){
+  const r = R.find(x=>x.id===id); if(!r) return; openId = id; const s = stats(r); const cm = CUTMAP[r.id];
+  $('sheet-body').innerHTML = `
+    <div class="sheet-head"><div>
+      <div class="row" style="margin-bottom:8px"><span class="chip ${r.t}">${tasteName(r.t)}</span>${s.hp?'<span class="chip hp">Protein tinggi</span>':''}<span class="lcd">${r.temp}°C · ${r.min} min</span></div>
+      <h3 id="sheet-title">${r.n}</h3><p>${r.en} · lebih kurang ${s.total} minit semua · 1 hidangan</p></div>
+      <button type="button" class="x" id="close" aria-label="Tutup">✕</button></div>
+    <div class="stats"><span><b>${rs(s.cost)}</b><small>kos</small></span><span><b>${Math.round(s.p)} g</b><small>protein</small></span><span><b>${Math.round(s.k)}</b><small>kcal</small></span><span><b>${s.value.toFixed(1)} g</b><small>protein setiap ₹10</small></span></div>
+    ${r.q.b?'<div class="alertbox"><b>Daging lembu tiada di Instamart.</b> Beli di kedai daging (lebih kurang ₹500 sekilo), atau tukar dengan keema ayam Nandus dari Instamart.</div>':''}
+    <div class="need">
+      <div><h4>Bahan utama</h4><ul>${ORDER.filter(k=>r.q[k]).map(k=>`<li>${ING[k].ms} (${ING[k].sub}): ${qtyText(k,r.q[k])}</li>`).join('')}</ul></div>
+      <div><h4>Dari dapur</h4><ul>${r.pantry.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    </div>
+    ${cm?`<div class="cutbox"><h4>Cara potong</h4>${cutBlock(cm[0], cm[1])}</div>`:''}
+    <div><h4>Cara buat</h4><ol>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ol></div>
+    <div class="tip"><b>Tip.</b> ${r.tip}</div>
+    <div class="timer"><span class="lcd" id="t-display">${mmss(r.min*60)}</span><span class="timer-msg" id="t-msg">${idleMsg(r)}</span><button type="button" class="go" id="t-btn">Mula pemasa</button></div>
+    <div class="sheet-foot"><span class="sub">Dalam pelan bulanan: <b id="plan-n">${S.plan[r.id]||0}</b> kali</span><button type="button" class="btn" id="plan-plus">+ Tambah ke pelan bulanan</button></div>`;
+  $('close').onclick = ()=>$('sheet').close();
+  $('t-btn').onclick = ()=>{ if(timer && timer.id===r.id) stopTimer(); else startTimer(r); };
+  $('plan-plus').onclick = ()=>{ S.plan[r.id]=(S.plan[r.id]||0)+1; save(); $('plan-n').textContent=S.plan[r.id]; toast('Ditambah ke pelan bulanan'); if(S.tab==='kos') renderView(); };
+  if(!$('sheet').open) $('sheet').showModal();
+  $('sheet').scrollTop = 0;
+  tick();
+}
+$('sheet').addEventListener('click', e=>{ if(e.target===$('sheet')) $('sheet').close(); });
+$('sheet').addEventListener('close', ()=>{ openId=null; });
+
+/* ---------- pemasa ---------- */
+const FLIP_MSG = 'Goncang atau terbalikkan sekarang!';
+let timer = null, ac = null, wake = null;
+function ensureAudio(){ try{ ac = ac || new (window.AudioContext||window.webkitAudioContext)(); if(ac.state==='suspended') ac.resume(); }catch(e){} }
+function beep(n){
+  try{ navigator.vibrate && navigator.vibrate(Array(n).fill([300,150]).flat()); }catch(e){}
+  if(!ac) return;
+  for(let i=0;i<n;i++){ const t=ac.currentTime+i*.4, o=ac.createOscillator(), g=ac.createGain();
+    o.type='square'; o.frequency.value=1040; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.2,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+.28);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t+.3); }
+}
+async function keepAwake(){ try{ if('wakeLock' in navigator) wake = await navigator.wakeLock.request('screen'); }catch(e){} }
+function startTimer(r){ ensureAudio(); keepAwake(); timer = {id:r.id, name:r.n, total:r.min*60, end:Date.now()+r.min*60000, flip:r.flip?r.flip*60:null, flipDone:false, done:false, msg:''}; tick(); }
+function stopTimer(){ timer=null; try{ wake && wake.release(); }catch(e){} wake=null; tick(); }
+function tick(){
+  const pill = $('pill');
+  if(timer){
+    const left = (timer.end-Date.now())/1000, el = timer.total-left;
+    if(timer.flip && !timer.flipDone && el>=timer.flip){ timer.flipDone=true; timer.msg=FLIP_MSG; beep(2); setTimeout(()=>{ if(timer && timer.msg===FLIP_MSG) timer.msg=''; }, 20000); }
+    if(left<=0 && !timer.done){ timer.done=true; timer.msg='Siap! Periksa dan makan.'; beep(3); setTimeout(()=>beep(3),2500); }
+    pill.hidden = false;
+    $('pill-open').textContent = timer.msg || timer.name;
+    $('pill-time').textContent = mmss(left);
+    pill.classList.toggle('alert', !!timer.msg);
+  } else pill.hidden = true;
+  if(openId && $('t-display')){
+    const mine = timer && timer.id===openId, r = R.find(x=>x.id===openId);
+    $('t-display').textContent = mine ? mmss((timer.end-Date.now())/1000) : mmss(r.min*60);
+    $('t-btn').textContent = mine ? 'Henti pemasa' : 'Mula pemasa';
+    const m = $('t-msg');
+    if(mine && timer.msg){ m.textContent = timer.msg; m.classList.add('alert'); }
+    else { m.classList.remove('alert'); m.textContent = mine ? (r.flip && !timer.flipDone ? `Sedang berjalan. Goncang atau terbalikkan pada minit ke-${r.flip}.` : 'Sedang berjalan. Biarkan halaman ini terbuka.') : idleMsg(r); }
+  }
+}
+setInterval(tick, 250);
+$('pill-stop').onclick = stopTimer;
+$('pill-open').onclick = ()=>{ if(timer) openRecipe(timer.id); };
+
+/* ---------- mula ---------- */
+(function init(){ const h=location.hash.slice(1); show(validTab(h)?h:(validTab(S.tab)?S.tab:'semua')); })();
+</script>
